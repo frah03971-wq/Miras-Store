@@ -6,85 +6,60 @@
     <title>متجر ميراس - Miras Store</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        
-        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; text-align: center; color: #333; }
-        header { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #d4af37; padding: 40px 20px; margin-bottom: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-bottom: 5px solid #d4af37; }
-        header h1 { margin: 0; font-size: 2.5em; letter-spacing: 2px; }
-        header p { margin: 10px 0 0; font-size: 1.2em; opacity: 0.9; }
-        
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
-        
-        .product-card { background: white; padding: 15px; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid #eee; position: relative; overflow: hidden; }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        
-        .product-card img { width: 100%; height: 300px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
-        
-        .product-card h3 { color: #222; margin: 10px 0; font-size: 1.4em; }
-        .product-card .price { color: #b30000; font-weight: bold; font-size: 1.5em; margin: 10px 0; display: block; }
-        
-        .btn-whatsapp { display: flex; align-items: center; justify-content: center; background-color: #25d366; color: white; padding: 12px; text-decoration: none; border-radius: 15px; font-weight: bold; font-size: 1.1em; transition: 0.3s; margin-top: 15px; }
-        .btn-whatsapp:hover { background-color: #128c7e; transform: scale(1.02); }
-        .btn-whatsapp i { margin-left: 8px; }
-
-        .loading { font-size: 1.5em; color: #d4af37; margin-top: 50px; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; text-align: center; }
+        header { background: #1a1a1a; color: #d4af37; padding: 30px; margin-bottom: 30px; border-radius: 20px; border-bottom: 5px solid #d4af37; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .product-card { background: white; padding: 15px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .product-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 15px; background: #eee; }
+        .price { color: #b30000; font-weight: bold; font-size: 1.4em; display: block; margin: 10px 0; }
+        .btn-whatsapp { display: block; background: #25d366; color: white; padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>✨ متجر ميراس ✨</h1>
-    <p>فخامة الأناقة السودانية</p>
+    <p>جمالك وأناقتك عندنا</p>
 </header>
 
 <div class="products-grid" id="products-container">
-    <div class="loading">جاري تحميل تشكيلة ميراس الفخمة...</div>
+    <p>جاري تحميل المنتجات من الجدول...</p>
 </div>
 
 <script>
-    // رابط جدولك المصلح وجاهز
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv'; 
 
     async function loadProducts() {
         try {
-            const response = await fetch(sheetUrl);
+            const response = await fetch(sheetUrl + '&t=' + new Date().getTime());
             const data = await response.text();
-            const rows = data.split('\n').slice(1);
+            const rows = data.split('\n').filter(row => row.trim() !== '');
             const container = document.getElementById('products-container');
             container.innerHTML = ''; 
 
-            rows.forEach(row => {
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                if (cols.length >= 3) {
+            // بنبدأ من السطر التاني عشان نتخطى العناوين
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (cols.length >= 2) {
                     const name = cols[0].replace(/"/g, '').trim();
                     const price = cols[1].replace(/"/g, '').trim();
-                    const img = cols[2].replace(/"/g, '').trim();
-                    const waNumber = "249967584275"; 
+                    // هنا بنحاول نلقى الرابط في أي عمود لو إنتي مخربطة الترتيب
+                    const img = cols.find(c => c.includes('http'))?.replace(/"/g, '').trim() || '';
 
-                    if(name && img) {
-                        const html = `
-                            <div class="product-card">
-                                <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/300x300?text=الصورة+تحت+التجهيز'">
-                                <h3>${name}</h3>
-                                <span class="price">${price} SDG</span>
-                                <a href="https://wa.me/${waNumber}?text=مرحباً ميراس، أرغب في طلب المنتج الفخم: ${name}" class="btn-whatsapp" target="_blank">
-                                    طلب عبر واتساب 
-                                </a>
-                            </div>
-                        `;
-                        container.innerHTML += html;
-                    }
+                    container.innerHTML += `
+                        <div class="product-card">
+                            <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/280x280?text=الصورة+غير+موجودة'">
+                            <h3>${name}</h3>
+                            <span class="price">${price} SDG</span>
+                            <a href="https://wa.me/249967584275?text=طلب: ${name}" class="btn-whatsapp">اطلب عبر واتساب</a>
+                        </div>`;
                 }
-            });
-            
-            if (container.innerHTML === '') {
-                container.innerHTML = "<h2>أضيفي منتجاتك في الجدول لتظهر هنا ✨</h2>";
             }
         } catch (e) {
-            document.getElementById('products-container').innerHTML = "<h2>عذراً، تأكدي من نشر الجدول بصيغة CSV</h2>";
+            container.innerHTML = "<h2>تأكدي من الجدول يا قلبي</h2>";
         }
     }
     window.onload = loadProducts;
 </script>
-
 </body>
 </html>
