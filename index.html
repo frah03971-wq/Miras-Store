@@ -3,100 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MERAS MALL - مول ميراس الفاخر</title>
+    <title>MERAS LUXURY MALL - مول ميراس للبراندات</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap');
         
-        :root { --gold: #c5a059; --bg: #fdfdfd; --dark: #111; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
+        :root { --gold: #c5a059; --bg: #ffffff; --dark: #111; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; color: #333; }
 
-        /* الهيدر الأسود الفخم */
-        header { background: var(--dark); padding: 30px 20px; text-align: center; color: var(--gold); }
+        /* الهيدر */
+        header { background: var(--dark); padding: 40px 20px; text-align: center; color: var(--gold); }
         .logo-text { font-family: 'Playfair Display', serif; font-size: 3em; margin: 0; letter-spacing: 5px; }
 
         /* شريط التحكم */
         .nav-bar { background: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .search-box { flex: 1; max-width: 400px; margin: 0 15px; position: relative; }
-        .search-box input { width: 100%; padding: 10px 15px; border-radius: 5px; border: 1px solid #ddd; outline: none; background: #f9f9f9; }
+        .search-box input { padding: 10px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 200px; }
         .cart-btn { background: none; border: none; font-size: 1.5em; cursor: pointer; position: relative; }
         .cart-count { position: absolute; top: -5px; right: -10px; background: var(--gold); color: #fff; font-size: 0.6em; padding: 2px 6px; border-radius: 50%; }
 
-        /* واجهة الأقسام (المول) */
-        .mall-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .mall-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
-        .dept-card { background: #fff; border: 1px solid #eee; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; border-radius: 5px; }
-        .dept-card:hover { border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .dept-card img { width: 60px; margin-bottom: 10px; opacity: 0.8; }
-        .dept-card h3 { font-size: 0.9em; margin: 0; color: #111; }
+        /* واجهة البراندات (أصحاب المتاجر) */
+        .mall-section { max-width: 1100px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .brands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
+        .brand-card { background: #fff; border: 1px solid #eee; border-radius: 15px; overflow: hidden; cursor: pointer; transition: 0.3s; }
+        .brand-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--gold); }
+        .brand-img { width: 100%; height: 200px; object-fit: cover; background: #f9f9f9; }
+        .brand-info { padding: 20px; }
+        .brand-info h3 { margin: 0; color: #111; font-family: 'Playfair Display', serif; }
+        .brand-info p { font-size: 0.8em; color: var(--gold); margin-top: 5px; }
 
-        /* صفحة عرض المنتجات */
-        #store-view { display: none; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .back-btn { background: none; border: 1px solid #ccc; padding: 8px 20px; cursor: pointer; margin-bottom: 20px; border-radius: 4px; }
-        
-        .product-card { background: #fff; border: 1px solid #eee; margin-bottom: 40px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        
-        /* الصور تحت بعضها بكل وضوح */
-        .image-gallery { display: flex; flex-direction: column; gap: 2px; background: #f0f0f0; }
-        .image-gallery img { width: 100%; height: auto; display: block; }
-        
-        .info-box { padding: 25px; text-align: center; }
-        .info-box h2 { font-size: 1.4em; margin: 0 0 10px; }
-        .price { color: var(--gold); font-size: 1.8em; font-weight: bold; display: block; margin-bottom: 20px; }
-        
-        .btn-group { display: flex; gap: 10px; }
-        .btn-add { flex: 2; background: #111; color: #fff; border: none; padding: 15px; cursor: pointer; font-weight: bold; border-radius: 4px; }
-        .btn-wa { flex: 1; border: 1px solid #25d366; color: #25d366; text-decoration: none; padding: 15px; text-align: center; font-weight: bold; border-radius: 4px; }
+        /* صفحة المنتجات داخل البراند */
+        #store-view { display: none; padding: 20px; max-width: 900px; margin: 0 auto; }
+        .back-btn { background: none; border: 1px solid #ccc; padding: 8px 20px; cursor: pointer; margin-bottom: 20px; border-radius: 5px; }
+        .product-card { background: #fff; border: 1px solid #eee; margin-bottom: 50px; border-radius: 10px; overflow: hidden; }
+        .image-stack img { width: 100%; display: block; }
+        .product-details { padding: 30px; text-align: center; }
+        .price { color: var(--gold); font-size: 2em; font-weight: bold; margin: 15px 0; display: block; }
+        .buy-now { background: var(--dark); color: #fff; border: none; padding: 15px 40px; border-radius: 30px; cursor: pointer; font-weight: bold; width: 100%; max-width: 300px; }
 
-        /* سلة المشتريات */
-        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; }
-        .cart-inner { background: #fff; width: 90%; max-width: 450px; padding: 25px; border-radius: 8px; }
-        
-        @media (max-width: 600px) {
-            .mall-grid { grid-template-columns: 1fr 1fr; }
-            .logo-text { font-size: 2.2em; }
-        }
+        /* السلة */
+        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .cart-content { background: #fff; width: 90%; max-width: 450px; padding: 30px; border-radius: 15px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="logo-text">MERIAS</h1>
-    <p style="letter-spacing: 3px; font-size: 0.7em;">LUXURY MALL</p>
+    <h1 class="logo-text">MERIAS MALL</h1>
+    <p style="letter-spacing: 3px; font-size: 0.7em;">PLATFORM FOR LUXURY BRANDS</p>
 </header>
 
 <div class="nav-bar">
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="ابحثي عن أي منتج..." onkeyup="search()">
-    </div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="ابحثي..." onkeyup="search()"></div>
     <button class="cart-btn" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></button>
 </div>
 
-<div id="mall-view" class="mall-container">
-    <h2 style="text-align: center; margin-bottom: 30px; color: #111;">أقسام المول</h2>
-    <div class="mall-grid">
-        <div class="dept-card" onclick="openDept('VIRA Boutique')"><h3>الشنط (VIRA)</h3></div>
-        <div class="dept-card" onclick="openDept('ميراس للفساتين')"><h3>الفساتين</h3></div>
-        <div class="dept-card" onclick="openDept('ميراس للجزم')"><h3>الجزم</h3></div>
-        <div class="dept-card" onclick="openDept('ميراس للاكسسوارات')"><h3>الإكسسوارات</h3></div>
-        <div class="dept-card" onclick="openDept('ميراس للعناية')"><h3>العناية</h3></div>
-        <div class="dept-card" onclick="openDept('ميراس للضيافة')"><h3>بوكسات الهدايا</h3></div>
-    </div>
+<div id="mall-view" class="mall-section">
+    <h2 style="font-family: 'Playfair Display';">تسوقي حسب البراند</h2>
+    <div class="brands-grid">
+        <div class="brand-card" onclick="openBrand('متجر زولة')">
+            <img src="https://via.placeholder.com/400x200/f9f9f9/c5a059?text=ZOULA+BAGS" class="brand-img">
+            <div class="brand-info">
+                <h3>متجر زولة للشنط</h3>
+                <p>كوليكشن شنط فريدة وعصرية</p>
+            </div>
+        </div>
+        <div class="brand-card" onclick="openBrand('ميراس للفساتين')">
+            <img src="https://via.placeholder.com/400x200/f9f9f9/c5a059?text=MERAS+DRESSES" class="brand-img">
+            <div class="brand-info">
+                <h3>براند ميراس للفساتين</h3>
+                <p>أرقى الفساتين والموديلات</p>
+            </div>
+        </div>
+        </div>
 </div>
 
 <div id="store-view">
-    <button class="back-btn" onclick="goHome()">⬅ العودة للأقسام</button>
-    <h2 id="deptTitle" style="text-align: center; color: var(--gold);"></h2>
+    <button class="back-btn" onclick="goHome()">⬅ العودة للمول</button>
+    <h2 id="currentBrandName" style="text-align:center; font-family: 'Playfair Display'; color: var(--gold);"></h2>
     <div id="productsGrid"></div>
 </div>
 
 <div id="cart-modal">
-    <div class="cart-inner">
+    <div class="cart-content">
         <h2 style="text-align: center;">حقيبة التسوق</h2>
         <div id="cartItems"></div>
-        <div style="margin-top:20px; font-size:1.3em; font-weight:bold; text-align:center; border-top:1px solid #eee; padding-top:10px;">
+        <div style="margin-top:20px; text-align:center; font-size:1.5em; color:var(--gold); border-top:1px solid #eee; padding-top:10px;">
             المجموع: <span id="totalPrice">0</span> SDG
         </div>
-        <button class="btn-add" style="background:#25d366; margin-top:20px; width:100%;" onclick="sendOrder()">تأكيد الطلب عبر واتساب ✅</button>
+        <button class="buy-now" style="background:#25d366; width:100%; margin-top:20px;" onclick="sendOrder()">تأكيد الطلب واتساب</button>
         <button onclick="toggleCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
     </div>
 </div>
@@ -116,51 +109,37 @@
                 price: parseFloat(c[1]) || 0,
                 shop: c[2]?.replace(/"/g,'').trim(),
                 img: c[3]?.replace(/"/g,''),
-                phone: c[4]?.replace(/[^\d]/g,'') || '249967584275',
-                desc: c[5]?.replace(/"/g,'') || ''
+                phone: c[4]?.replace(/[^\d]/g,'') || '249967584275'
             };
         });
     }
 
-    function openDept(name) {
+    function openBrand(brandName) {
         document.getElementById('mall-view').style.display = 'none';
         document.getElementById('store-view').style.display = 'block';
-        document.getElementById('deptTitle').innerText = name;
-        render(products.filter(p => p.shop === name));
+        document.getElementById('currentBrandName').innerText = brandName;
+        render(products.filter(p => p.shop === brandName));
         window.scrollTo(0,0);
     }
 
-    function render(data) {
+    function render(list) {
         const grid = document.getElementById('productsGrid');
-        grid.innerHTML = data.map(p => {
+        grid.innerHTML = list.map(p => {
             const imgs = p.img.split(',');
-            let gallery = '<div class="image-gallery">';
-            imgs.forEach(i => gallery += `<img src="${i.trim()}" onerror="this.src='https://via.placeholder.com/400'">`);
-            gallery += '</div>';
+            let stack = '<div class="image-stack">';
+            imgs.forEach(i => stack += `<img src="${i.trim()}" onerror="this.src='https://via.placeholder.com/400'">`);
+            stack += '</div>';
 
             return `
                 <div class="product-card">
-                    ${gallery}
-                    <div class="info-box">
+                    ${stack}
+                    <div class="product-details">
                         <h2>${p.name}</h2>
                         <span class="price">${p.price} SDG</span>
-                        <p style="color:#666; margin-bottom:20px;">${p.desc}</p>
-                        <div class="btn-group">
-                            <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.phone}')">إضافة للسلة 🛒</button>
-                            <a href="https://wa.me/${p.phone}?text=أريد طلب: ${p.name}" class="btn-wa">طلب سريع ⚡</a>
-                        </div>
+                        <button class="buy-now" onclick="addToCart('${p.name}', ${p.price}, '${p.phone}')">إضافة للحقيبة 🛒</button>
                     </div>
                 </div>`;
         }).join('');
-    }
-
-    function search() {
-        const term = document.getElementById('searchInput').value.toLowerCase();
-        if(term.length < 2) return;
-        document.getElementById('mall-view').style.display = 'none';
-        document.getElementById('store-view').style.display = 'block';
-        document.getElementById('deptTitle').innerText = 'نتائج البحث';
-        render(products.filter(p => p.name.toLowerCase().includes(term) || p.shop.toLowerCase().includes(term)));
     }
 
     function addToCart(name, price, phone) {
@@ -198,6 +177,7 @@
     }
 
     function goHome() { document.getElementById('mall-view').style.display = 'block'; document.getElementById('store-view').style.display = 'none'; }
+    function search() { /* دالة البحث البسيطة */ }
 
     window.onload = init;
 </script>
