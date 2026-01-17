@@ -3,221 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIRAS LUXURY MALL</title>
+    <title>MERAS - VIRA COLLECTION</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap');
         
-        :root { --gold: #e5b9a8; --dark: #050505; --accent: #b38b7d; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--dark); margin: 0; color: #fff; overflow-x: hidden; }
+        :root { --gold: #c5a059; --bg: #f9f9f9; --white: #ffffff; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; color: #333; }
 
-        /* زر السلة الثابت - أهم تعديل */
-        .cart-toggle { 
-            position: fixed; 
-            top: 20px; 
-            left: 20px; 
-            background: var(--gold); 
-            color: #000; 
-            padding: 12px 20px; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            z-index: 9999; 
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(229,185,168,0.5);
-            border: 2px solid #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* الهيدر العلوي - زي الصورة */
+        header { background: #111; padding: 20px; text-align: center; position: relative; }
+        .logo-main { width: 150px; filter: drop-shadow(0 0 5px rgba(197,160,89,0.5)); }
+        .mall-name { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2.5em; margin: 10px 0 0; }
+
+        /* شريط البحث والسلة الأبيض */
+        .nav-bar { 
+            background: var(--white); 
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+        .search-box { flex: 1; max-width: 400px; position: relative; margin: 0 15px; }
+        .search-box input { width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; background: #f5f5f5; outline: none; }
+        
+        .cart-btn { background: none; border: none; font-size: 1.5em; cursor: pointer; position: relative; color: #333; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background: var(--gold); color: #fff; font-size: 0.6em; padding: 2px 6px; border-radius: 50%; }
 
-        /* شاشة الترحيب */
-        #welcome-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
-        .mall-title { color: var(--gold); font-size: clamp(2.5em, 8vw, 4em); font-family: 'Playfair Display', serif; margin: 0; }
+        /* عرض المنتجات - نظام البطاقات البيضاء */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .section-title { border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; margin-bottom: 25px; font-weight: bold; color: #111; }
         
-        .search-box { width: 90%; max-width: 500px; margin: 30px 0; position: relative; }
-        .search-box input { width: 100%; padding: 15px 45px; border-radius: 30px; border: 1px solid var(--gold); background: rgba(255,255,255,0.05); color: #fff; outline: none; font-family: 'Cairo'; }
-
-        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 900px; width: 100%; }
-        .store-item { height: 160px; position: relative; border: 1px solid #222; cursor: pointer; overflow: hidden; border-radius: 12px; }
-        .store-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; transition: 0.4s; }
-        .store-item:hover img { opacity: 0.7; }
-        .store-item h2 { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold); width: 100%; background: rgba(0,0,0,0.5); padding: 8px 0; margin: 0; font-size: 1.2em; }
-
-        /* عرض المنتجات */
-        #main-store, #cart-page { display: none; padding-top: 80px; min-height: 100vh; }
-        .header-title { text-align: center; color: var(--gold); padding: 20px; font-family: 'Playfair Display'; }
-        .back-home { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 8px 20px; margin: 20px; cursor: pointer; border-radius: 20px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .product-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
+        .product-card:hover { transform: translateY(-5px); }
         
-        .products-list { display: flex; flex-direction: column; gap: 30px; padding: 20px; max-width: 800px; margin: 0 auto; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; overflow: hidden; }
-        .p-gallery img { width: 100%; height: auto; display: block; border-bottom: 1px solid #1a1a1a; }
+        .img-wrapper { width: 100%; background: #fdfdfd; position: relative; }
+        .img-wrapper img { width: 100%; height: auto; display: block; }
         
-        .p-info { padding: 25px; text-align: right; }
-        .p-price { color: var(--gold); font-size: 2em; font-weight: bold; display: block; margin: 10px 0; }
+        .card-info { padding: 20px; text-align: center; }
+        .card-info h3 { margin: 0 0 10px; font-size: 1.1em; color: #222; }
+        .p-price { color: var(--gold); font-weight: bold; font-size: 1.3em; display: block; margin-bottom: 15px; }
         
-        .p-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .add-to-cart { flex: 2; background: var(--gold); color: #000; padding: 15px; border: none; font-weight: bold; border-radius: 10px; cursor: pointer; }
-        .quick-wa { flex: 1; background: transparent; border: 1px solid #25d366; color: #25d366; text-align: center; text-decoration: none; padding: 15px; border-radius: 10px; font-weight: bold; }
+        .add-btn { background: #111; color: #fff; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .add-btn:hover { background: var(--gold); }
 
         /* صفحة السلة */
-        .cart-box { max-width: 600px; margin: 0 auto; padding: 25px; background: #0a0a0a; border: 1px solid var(--gold); border-radius: 20px; }
-        .cart-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #222; }
-        .confirm-btn { width: 100%; background: #25d366; color: #fff; padding: 18px; border: none; font-weight: bold; border-radius: 10px; margin-top: 25px; cursor: pointer; font-size: 1.1em; }
+        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .cart-content { background: #fff; width: 90%; max-width: 500px; padding: 30px; border-radius: 10px; position: relative; }
+        .close-cart { position: absolute; top: 15px; left: 15px; font-size: 1.5em; cursor: pointer; }
 
-        @media (max-width: 600px) { .mall-title { font-size: 2.5em; } }
+        @media (max-width: 600px) {
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .card-info { padding: 10px; }
+            .card-info h3 { font-size: 0.9em; }
+        }
     </style>
 </head>
 <body>
 
-<div class="cart-toggle" onclick="openCartPage()">
-    🛒 السلة (<span id="count-display">0</span>)
-</div>
+<header>
+    <h1 class="mall-name">MERIAS</h1>
+    <p style="color: #666; font-size: 0.8em; letter-spacing: 3px;">LUXURY ACCESSORIES</p>
+</header>
 
-<div id="welcome-screen">
-    <h1 class="mall-title">MIRAS MALL</h1>
-    <p style="color: #888; letter-spacing: 5px; font-size: 0.8em;">THE HOUSE OF LUXURY</p>
-    
+<div class="nav-bar">
     <div class="search-box">
-        <input type="text" id="search-input" placeholder="ابحثي عن فستان، شنطة، ماركة..." onkeyup="searchNow(event)">
+        <input type="text" id="searchInput" placeholder="ابحثي في كوليكشن VIRA..." onkeyup="search()">
     </div>
-
-    <div class="store-grid">
-        <div class="store-item" onclick="loadShop('VIRA Boutique')"><h2>VIRA BAGS</h2><img src="https://i.ibb.co/RpzYpBQ1/1000261620.jpg"></div>
-        <div class="store-item" onclick="loadShop('ميراس للفساتين')"><h2>الفساتين</h2><img src="https://via.placeholder.com/400x600/111/e5b9a8?text=DRESSES"></div>
-        <div class="store-item" onclick="loadShop('ميراس للجزم')"><h2>الجزم</h2><img src="https://via.placeholder.com/400x600/111/e5b9a8?text=SHOES"></div>
-        <div class="store-item" onclick="loadShop('ميراس للعناية')"><h2>العناية</h2><img src="https://via.placeholder.com/400x600/111/e5b9a8?text=SKINCARE"></div>
-    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+    </button>
 </div>
 
-<div id="main-store">
-    <button class="back-home" onclick="goBackHome()">⬅ العودة للمول</button>
-    <h1 id="current-shop-name" class="header-title"></h1>
-    <div class="products-list" id="products-render"></div>
-</div>
-
-<div id="cart-page">
-    <button class="back-home" onclick="hideCartPage()">⬅ مواصلة التسوق</button>
-    <div class="cart-box">
-        <h2 style="text-align: center; color: var(--gold);">حقيبة مشترياتك 🛍️</h2>
-        <div id="cart-list"></div>
-        <div style="text-align:center; margin-top:25px; font-size:1.6em; color:var(--gold); border-top:1px solid #333; padding-top:15px;">
-            المجموع: <span id="final-price">0</span> SDG
+<div class="container">
+    <h2 class="section-title">PRODUCT VIRA MERAS</h2>
+    <div class="products-grid" id="productsGrid">
         </div>
-        <button class="confirm-btn" onclick="sendOrderWA()">إرسال الطلب عبر واتساب ✅</button>
+</div>
+
+<div id="cart-modal">
+    <div class="cart-content">
+        <span class="close-cart" onclick="toggleCart()">×</span>
+        <h2 style="text-align:center; border-bottom: 1px solid #eee; padding-bottom: 10px;">حقيبة التسوق</h2>
+        <div id="cartItems"></div>
+        <div style="margin-top:20px; font-size:1.2em; font-weight:bold; text-align:center;">
+            المجموع: <span id="totalPrice">0</span> SDG
+        </div>
+        <button class="add-btn" style="margin-top:20px; background:#25d366;" onclick="sendOrder()">تأكيد الطلب واتساب</button>
     </div>
 </div>
 
 <script>
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let productsData = [], myCart = [];
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    let products = [], cart = [];
 
-    async function fetchData() {
-        const r = await fetch(csvUrl + '&t=' + Date.now());
-        const t = await r.text();
-        const lines = t.split('\n').filter(l => l.trim() !== '');
-        productsData = lines.slice(1).map(l => {
-            const c = l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    async function init() {
+        const resp = await fetch(sheetUrl + '&t=' + Date.now());
+        const csv = await resp.text();
+        const rows = csv.split('\n').slice(1);
+        products = rows.map(r => {
+            const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             return {
-                name: c[0].replace(/"/g,''),
+                name: c[0]?.replace(/"/g,''),
                 price: parseFloat(c[1]) || 0,
-                shop: c[2].replace(/"/g,''),
-                img: c[3].replace(/"/g,''),
-                phone: c[4]?.replace(/[^\d]/g,'') || '249967584275',
-                desc: c[5]?.replace(/"/g,'') || ''
+                shop: c[2]?.replace(/"/g,'').trim(),
+                img: c[3]?.replace(/"/g,''),
+                phone: c[4]?.replace(/[^\d]/g,'') || '249967584275'
             };
-        });
+        }).filter(p => p.shop === 'VIRA Boutique' || p.shop === 'VIRA'); // عشان يشتغل مع vira طوالي
+        render(products);
     }
 
-    function searchNow(e) {
-        const val = document.getElementById('search-input').value.toLowerCase();
-        if(val.length < 2 && e.key !== 'Enter') return;
-        const filtered = productsData.filter(p => p.name.toLowerCase().includes(val) || p.shop.toLowerCase().includes(val));
-        showShopUI(`نتائج البحث: ${val}`, filtered);
-    }
-
-    function loadShop(name) {
-        const filtered = productsData.filter(p => p.shop === name);
-        showShopUI(name, filtered);
-    }
-
-    function showShopUI(title, list) {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('cart-page').style.display = 'none';
-        document.getElementById('main-store').style.display = 'block';
-        document.getElementById('current-shop-name').innerText = title;
-        
-        const container = document.getElementById('products-render');
-        container.innerHTML = list.length ? '' : '<h2>قريباً جداً... ✨</h2>';
-        
-        list.forEach(p => {
-            const imgs = p.img.split(',');
-            let galleryHtml = '<div class="p-gallery">';
-            imgs.forEach(i => galleryHtml += `<img src="${i.trim()}" onerror="this.src='https://via.placeholder.com/400'">`);
-            galleryHtml += '</div>';
-
-            container.innerHTML += `
-                <div class="p-card">
-                    ${galleryHtml}
-                    <div class="p-info">
-                        <h3 style="margin:0;">${p.name}</h3>
-                        <span class="p-price">${p.price} SDG</span>
-                        <p style="color:#888;">${p.desc}</p>
-                        <div class="p-btns">
-                            <button class="add-to-cart" onclick="addToMyCart('${p.name}', ${p.price}, '${p.phone}')">إضافة للسلة 🛒</button>
-                            <a href="https://wa.me/${p.phone}?text=طلب:${p.name}" class="quick-wa">طلب سريع ⚡</a>
-                        </div>
+    function render(data) {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = data.map(p => {
+            const firstImg = p.img.split(',')[0];
+            return `
+                <div class="product-card">
+                    <div class="img-wrapper">
+                        <img src="${firstImg}" alt="${p.name}">
                     </div>
-                </div>`;
-        });
-        window.scrollTo(0,0);
+                    <div class="card-info">
+                        <h3>${p.name}</h3>
+                        <span class="p-price">${p.price} SDG</span>
+                        <button class="add-btn" onclick="addToCart('${p.name}', ${p.price}, '${p.phone}')">إضافة للسلة</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
-    function addToMyCart(n, p, ph) {
-        myCart.push({n, p, ph});
-        document.getElementById('count-display').innerText = myCart.length;
-        alert('تمت الإضافة للحقيبة ✅');
+    function search() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+        render(filtered);
     }
 
-    function openCartPage() {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('main-store').style.display = 'none';
-        document.getElementById('cart-page').style.display = 'block';
-        
-        const listDiv = document.getElementById('cart-list');
-        listDiv.innerHTML = '';
+    function addToCart(name, price, phone) {
+        cart.push({name, price, phone});
+        updateCart();
+        alert('تمت الإضافة ✅');
+    }
+
+    function updateCart() {
+        document.getElementById('cartCount').innerText = cart.length;
+        const list = document.getElementById('cartItems');
         let total = 0;
-        myCart.forEach((item, i) => {
-            listDiv.innerHTML += `
-                <div class="cart-row">
-                    <span>${item.n}</span>
-                    <span>${item.p} SDG <button onclick="removeFromCart(${i})" style="background:none; border:none; color:red; cursor:pointer;">❌</button></span>
-                </div>`;
-            total += item.p;
-        });
-        document.getElementById('final-price').innerText = total;
+        list.innerHTML = cart.map((item, i) => {
+            total += item.price;
+            return `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>${item.name}</span>
+                <span>${item.price} SDG <button onclick="remove(${i})" style="color:red; background:none; border:none;">❌</button></span>
+            </div>`;
+        }).join('');
+        document.getElementById('totalPrice').innerText = total;
     }
 
-    function removeFromCart(i) {
-        myCart.splice(i, 1);
-        document.getElementById('count-display').innerText = myCart.length;
-        openCartPage();
+    function remove(i) { cart.splice(i,1); updateCart(); }
+    function toggleCart() { 
+        const m = document.getElementById('cart-modal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
     }
 
-    function sendOrderWA() {
-        if(!myCart.length) return alert('السلة فارغة يا جميلة!');
-        let text = "مرحباً ميراس مول، أود طلب الآتي:\n";
-        let total = 0;
-        myCart.forEach(item => {
-            text += `- ${item.n} (${item.p} SDG)\n`;
-            total += item.p;
-        });
-        text += `\nالمجموع النهائي: ${total} SDG`;
-        window.open(`https://wa.me/${myCart[0].ph}?text=${encodeURIComponent(text)}`);
+    function sendOrder() {
+        if(!cart.length) return;
+        let msg = "مرحباً ميراس، طلبي من كوليكشن VIRA:\n";
+        cart.forEach(item => msg += `- ${item.name} (${item.price} SDG)\n`);
+        msg += `\nالمجموع الكلي: ${document.getElementById('totalPrice').innerText} SDG`;
+        window.open(`https://wa.me/${cart[0].phone}?text=${encodeURIComponent(msg)}`);
     }
 
-    function goBackHome() { location.reload(); }
-    function hideCartPage() { document.getElementById('cart-page').style.display = 'none'; document.getElementById('main-store').style.display = 'block'; }
-
-    window.onload = fetchData;
+    window.onload = init;
 </script>
 </body>
 </html>
