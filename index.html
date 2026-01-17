@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة ميراس - Miras Mall</title>
+    <title>VIRA Boutique - Miras Mall</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+        
         body { font-family: 'Cairo', sans-serif; background-color: #000; margin: 0; padding: 0; text-align: center; color: #fff; }
         
-        /* الشريط المتحرك باسم البراند */
-        .ticker { background: #d4af37; color: #000; padding: 12px 0; overflow: hidden; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 1.1em; border-bottom: 2px solid #fff; }
+        /* شريط الترحيب المتحرك */
+        .ticker { background: #d4af37; color: #000; padding: 12px 0; overflow: hidden; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 1.1em; box-shadow: 0 2px 10px rgba(212,175,55,0.5); }
         .ticker-wrap { display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        header { background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); color: #d4af37; padding: 40px 20px; border-radius: 0 0 30px 30px; border: 1px solid #d4af37; margin-bottom: 30px; }
-        .filter-container { margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 0 10px; }
-        .filter-btn { background: #1a1a1a; color: #d4af37; border: 1px solid #d4af37; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .filter-btn.active, .filter-btn:hover { background: #d4af37; color: #000; transform: scale(1.05); }
+        header { background: linear-gradient(135deg, #111 0%, #000 100%); color: #d4af37; padding: 50px 20px; border-bottom: 3px solid #d4af37; margin-bottom: 30px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5em; margin: 0; letter-spacing: 5px; text-transform: uppercase; }
+        header p { font-size: 1.2em; color: #ccc; margin-top: 10px; letter-spacing: 2px; }
+
+        .filter-container { margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 0 10px; }
+        .filter-btn { background: transparent; color: #d4af37; border: 2px solid #d4af37; padding: 10px 30px; border-radius: 0; cursor: pointer; font-weight: bold; transition: 0.4s; text-transform: uppercase; }
+        .filter-btn.active, .filter-btn:hover { background: #d4af37; color: #000; box-shadow: 0 0 15px #d4af37; }
         
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .product-card { background: #111; padding: 20px; border-radius: 30px; border: 1px solid #222; transition: 0.3s; display: flex; flex-direction: column; }
-        .product-card img { width: 100%; height: 300px; object-fit: cover; border-radius: 20px; background: #222; }
-        .shop-tag { font-size: 0.8em; color: #d4af37; background: rgba(212, 175, 55, 0.1); padding: 5px 15px; border-radius: 50px; display: inline-block; margin-bottom: 15px; border: 0.5px solid #d4af37; align-self: center; }
-        .price { color: #d4af37; font-weight: 700; font-size: 1.5em; margin: 10px 0; }
-        .description { font-size: 0.95em; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
-        .btn-whatsapp { display: block; background: #25d366; color: white; padding: 14px; text-decoration: none; border-radius: 15px; font-weight: bold; margin-top: auto; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .product-card { background: #0a0a0a; padding: 0; border-radius: 0; border: 1px solid #1a1a1a; transition: 0.5s; display: flex; flex-direction: column; position: relative; }
+        .product-card:hover { border-color: #d4af37; }
+        .product-card img { width: 100%; height: 350px; object-fit: cover; filter: grayscale(20%); transition: 0.5s; }
+        .product-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        
+        .card-content { padding: 20px; }
+        .shop-tag { font-size: 0.7em; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .price { color: #d4af37; font-weight: bold; font-size: 1.6em; margin: 10px 0; display: block; }
+        .description { font-size: 0.9em; color: #888; margin-bottom: 20px; line-height: 1.6; height: 50px; overflow: hidden; }
+        
+        .btn-whatsapp { display: block; background: #d4af37; color: #000; padding: 15px; text-decoration: none; border-radius: 0; font-weight: bold; transition: 0.3s; text-transform: uppercase; }
+        .btn-whatsapp:hover { background: #fff; color: #000; }
     </style>
 </head>
 <body>
 
 <div class="ticker">
-    <div class="ticker-wrap">✨ عرض خاص بمناسبة شهر الافتتاح: تخفيضات كبرى على جميع تشكيلات الشنط الفاخرة في قسم "Miras Boutique" .. لا تفوتي الفرصة ✨</div>
+    <div class="ticker-wrap">✨ حصرياً: انطلاق تشكيلة VIRA الفاخرة للشنط في منصة ميراس .. شحن مجاني بمناسبة الافتتاح ✨ VIRA: الأناقة التي تليق بكِ ✨</div>
 </div>
 
 <header>
-    <h1>✨ منصة ميراس التجارية ✨</h1>
-    <p>بوابتك للأناقة والجمال الفوري</p>
+    <h1>VIRA</h1>
+    <p>BY MIRAS BOUTIQUE</p>
 </header>
 
 <div class="filter-container" id="filter-buttons">
@@ -43,7 +53,7 @@
 </div>
 
 <div class="products-grid" id="products-container">
-    <p>جاري تحميل المنتجات والوصف...</p>
+    <p>جاري تحميل تشكيلة VIRA الفاخرة...</p>
 </div>
 
 <script>
@@ -92,12 +102,14 @@
         products.forEach(p => {
             container.innerHTML += `
                 <div class="product-card">
-                    <span class="shop-tag">🏬 ${p.shop}</span>
-                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300/111/d4af37?text=Miras+Mall'">
-                    <h3 style="margin:15px 0 5px 0; color:#d4af37;">${p.name}</h3>
-                    <span class="price">${p.price} SDG</span>
-                    <p class="description">${p.desc}</p>
-                    <a href="https://wa.me/${p.phone}?text=مرحباً، أريد طلب: ${p.name}" class="btn-whatsapp">اطلبي الآن</a>
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x500/111/d4af37?text=VIRA+COLLECTION'">
+                    <div class="card-content">
+                        <span class="shop-tag">${p.shop}</span>
+                        <h3 style="margin:5px 0; color:#fff; letter-spacing:1px;">${p.name}</h3>
+                        <span class="price">${p.price} SDG</span>
+                        <p class="description">${p.desc}</p>
+                        <a href="https://wa.me/${p.phone}?text=مرحباً VIRA، أريد طلب هذه القطعة الفاخرة: ${p.name}" class="btn-whatsapp">اطلبي الآن</a>
+                    </div>
                 </div>`;
         });
     }
