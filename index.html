@@ -3,107 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مِـيـراس | Miras Store</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>متجر ميراس - Miras Store</title>
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #fffafb; margin: 0; padding: 0; }
-        .miras-header { background: linear-gradient(135deg, #be185d 0%, #9d174d 100%); }
-        .card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid #fce7f3; }
-        .card:hover { transform: scale(1.03); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #f472b6; }
-        .whatsapp-btn { background: linear-gradient(45deg, #d4af37, #b8860b); text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-        .price-tag { color: #be185d; text-shadow: 1px 1px 0px rgba(255,255,255,1); }
-        .shimmer { background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; text-align: center; color: #333; }
+        header { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #d4af37; padding: 40px 20px; margin-bottom: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-bottom: 5px solid #d4af37; }
+        header h1 { margin: 0; font-size: 2.5em; letter-spacing: 2px; }
+        header p { margin: 10px 0 0; font-size: 1.2em; opacity: 0.9; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        
+        .product-card { background: white; padding: 15px; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid #eee; position: relative; overflow: hidden; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        
+        .product-card img { width: 100%; height: 300px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
+        
+        .product-card h3 { color: #222; margin: 10px 0; font-size: 1.4em; }
+        .product-card .price { color: #b30000; font-weight: bold; font-size: 1.5em; margin: 10px 0; display: block; }
+        
+        .btn-whatsapp { display: flex; align-items: center; justify-content: center; background-color: #25d366; color: white; padding: 12px; text-decoration: none; border-radius: 15px; font-weight: bold; font-size: 1.1em; transition: 0.3s; margin-top: 15px; }
+        .btn-whatsapp:hover { background-color: #128c7e; transform: scale(1.02); }
+        .btn-whatsapp i { margin-left: 8px; }
+
+        .loading { font-size: 1.5em; color: #d4af37; margin-top: 50px; }
     </style>
 </head>
-<body class="antialiased text-gray-900">
+<body>
 
-    <header class="miras-header text-white pt-12 pb-16 px-4 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
-        <div class="container mx-auto text-center relative z-10">
-            <h1 class="text-6xl font-black mb-4 tracking-tighter text-white">مِـيـراس</h1>
-            <div class="h-1.5 w-24 bg-yellow-400 mx-auto rounded-full mb-4"></div>
-            <p class="text-xl opacity-90 font-medium">عالم السماحة والجمال لكنداكات السودان</p>
-        </div>
-    </header>
+<header>
+    <h1>✨ متجر ميراس ✨</h1>
+    <p>فخامة الأناقة السودانية</p>
+</header>
 
-    <main class="container mx-auto px-4 -mt-8 pb-20">
-        <div id="loader" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-4 rounded-3xl shadow-sm h-96 shimmer"></div>
-            <div class="bg-white p-4 rounded-3xl shadow-sm h-96 shimmer"></div>
-            <div class="bg-white p-4 rounded-3xl shadow-sm h-96 shimmer"></div>
-        </div>
+<div class="products-grid" id="products-container">
+    <div class="loading">جاري تحميل تشكيلة ميراس الفخمة...</div>
+</div>
 
-        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
-            </div>
-    </main>
+<script>
+    // رابط جدولك المصلح وجاهز
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv'; 
 
-    <footer class="bg-white border-t border-pink-100 py-10 text-center">
-        <p class="text-gray-400 font-medium tracking-wide italic">صُنع بكل حب لـ مِـيـراس</p>
-    </footer>
+    async function loadProducts() {
+        try {
+            const response = await fetch(sheetUrl);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);
+            const container = document.getElementById('products-container');
+            container.innerHTML = ''; 
 
-    <script>
-        // رابط الزيت المباشر (CSV)
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+            rows.forEach(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (cols.length >= 3) {
+                    const name = cols[0].replace(/"/g, '').trim();
+                    const price = cols[1].replace(/"/g, '').trim();
+                    const img = cols[2].replace(/"/g, '').trim();
+                    const waNumber = "249967584275"; 
 
-        async function fetchProducts() {
-            try {
-                const response = await fetch(csvUrl);
-                const text = await response.text();
-                
-                // تنظيف البيانات وتحويلها لمصفوفة
-                const rows = text.split('\n').map(row => {
-                    const matches = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g);
-                    return matches ? matches.map(m => m.replace(/^"|"$/g, '').trim()) : [];
-                });
-
-                const grid = document.getElementById('products-grid');
-                const loader = document.getElementById('loader');
-                grid.innerHTML = '';
-
-                // الدوران على الصفوف (بدءاً من الثاني)
-                for (let i = 1; i < rows.length; i++) {
-                    const [name, price, link, img] = rows[i];
-                    if (!name || name === "") continue;
-
-                    grid.innerHTML += `
-                        <div class="card bg-white rounded-[2rem] overflow-hidden shadow-sm flex flex-col">
-                            <div class="relative h-80 overflow-hidden bg-pink-50">
-                                <img src="${img || 'https://via.placeholder.com/400x500?text=Miras+Product'}" 
-                                     class="w-full h-full object-cover shadow-inner" 
-                                     onerror="this.src='https://via.placeholder.com/400x500?text=Image+Error'"
-                                     alt="${name}">
-                            </div>
-                            <div class="p-8 text-center flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-2xl font-black text-gray-800 mb-2 leading-tight">${name}</h3>
-                                    <div class="price-tag text-3xl font-black mb-6">
-                                        ${price} <span class="text-sm font-bold opacity-70">ريال</span>
-                                    </div>
-                                </div>
-                                <a href="${link}" target="_blank" 
-                                   class="whatsapp-btn text-white block w-full py-4 rounded-2xl font-black text-lg transform active:scale-95 transition shadow-lg">
-                                    اطلبي الآن عبر واتساب 💬
+                    if(name && img) {
+                        const html = `
+                            <div class="product-card">
+                                <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/300x300?text=الصورة+تحت+التجهيز'">
+                                <h3>${name}</h3>
+                                <span class="price">${price} SDG</span>
+                                <a href="https://wa.me/${waNumber}?text=مرحباً ميراس، أرغب في طلب المنتج الفخم: ${name}" class="btn-whatsapp" target="_blank">
+                                    طلب عبر واتساب 
                                 </a>
                             </div>
-                        </div>
-                    `;
+                        `;
+                        container.innerHTML += html;
+                    }
                 }
-                
-                loader.classList.add('hidden');
-                grid.classList.remove('hidden');
-
-            } catch (error) {
-                console.error('خطأ في التحميل:', error);
-                document.getElementById('loader').innerHTML = `
-                    <div class="col-span-full text-center py-10 bg-red-50 rounded-3xl text-red-500 font-bold">
-                        تأكدي من نشر الجدول على الويب كـ CSV
-                    </div>`;
+            });
+            
+            if (container.innerHTML === '') {
+                container.innerHTML = "<h2>أضيفي منتجاتك في الجدول لتظهر هنا ✨</h2>";
             }
+        } catch (e) {
+            document.getElementById('products-container').innerHTML = "<h2>عذراً، تأكدي من نشر الجدول بصيغة CSV</h2>";
         }
+    }
+    window.onload = loadProducts;
+</script>
 
-        window.onload = fetchProducts;
-    </script>
 </body>
 </html>
