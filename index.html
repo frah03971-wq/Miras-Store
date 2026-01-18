@@ -3,225 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRA - GLOBAL MARKETPLACE</title>
+    <title>VIRA GLOBAL MALL | المول العالمي</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Montserrat:wght@800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Montserrat:wght@800&display=swap');
         
-        :root { --gold: #c5a059; --dark: #111; --light: #f8f8f8; --red: #e74c3c; --amazon-orange: #febd69; }
+        :root { --gold: #c5a059; --dark: #000; --vip-red: #900; --light: #f9f9f9; }
         body { font-family: 'Cairo', sans-serif; background: #fff; margin: 0; color: var(--dark); overflow-x: hidden; }
 
-        /* شريط العروض العلوي */
-        .promo-bar {
-            background: #232f3e; /* لون أمازون الليلي */
-            color: white;
-            white-space: nowrap;
-            overflow: hidden;
-            padding: 12px 0;
-            font-weight: bold;
-            font-size: 0.85em;
-            position: relative;
-            z-index: 1001;
-            border-bottom: 1px solid var(--gold);
-        }
-        .promo-track { display: inline-block; animation: marquee 25s linear infinite; }
+        /* شريط التاجرات الذهبيات (VIP) */
+        .vip-bar { background: var(--vip-red); color: #fff; padding: 12px 0; overflow: hidden; position: relative; z-index: 1001; border-bottom: 2px solid var(--gold); }
+        .vip-track { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; font-weight: 900; letter-spacing: 1px; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* الهيدر الملكي */
-        header { background: var(--dark); padding: 30px 20px; text-align: center; }
-        .logo-vira { font-family: 'Montserrat', sans-serif; font-size: 3.5em; color: #fff; letter-spacing: 8px; margin: 0; }
+        /* هيدر الماركات العالمية */
+        header { background: var(--dark); padding: 50px 20px; text-align: center; position: relative; }
+        .logo-vira { font-family: 'Montserrat', sans-serif; font-size: clamp(3em, 10vw, 5em); color: #fff; letter-spacing: 15px; margin: 0; text-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
         .logo-vira span { color: var(--gold); }
+        .tagline { color: var(--gold); font-size: 0.9em; letter-spacing: 6px; margin-top: 10px; font-weight: bold; }
 
-        /* شريط البحث (Amazon Style) */
-        .nav-bar { background: #131921; padding: 10px 5%; display: flex; flex-direction: column; gap: 10px; position: sticky; top: 0; z-index: 1000; }
-        .search-container { display: flex; width: 100%; max-width: 800px; margin: 0 auto; }
-        .search-container input { flex: 1; padding: 12px; border: none; border-radius: 4px 0 0 4px; outline: none; font-size: 16px; }
-        .search-btn { background: var(--amazon-orange); border: none; padding: 0 20px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; }
+        /* بار البحث الذكي */
+        .nav-sticky { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 5%; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; }
+        .search-box { flex: 1; position: relative; }
+        .search-box input { width: 100%; padding: 12px 45px 12px 20px; border-radius: 30px; border: 2px solid #eee; outline: none; transition: 0.3s; font-size: 16px; }
+        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
+
+        /* شبكة الماركات (نظام امازون الفخم) */
+        .main-container { padding: 40px 5%; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 2.2em; font-weight: 900; margin-bottom: 10px; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; display: block; width: 50px; height: 3px; background: var(--gold); margin: 10px auto; }
+
+        .brands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .brand-card { background: #fff; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .brand-card:hover { transform: translateY(-15px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); border-color: var(--gold); }
+        .brand-img { width: 100%; height: 380px; object-fit: cover; transition: 0.5s; }
+        .brand-card:hover .brand-img { filter: brightness(0.6) scale(1.1); }
         
-        /* الأقسام (الماركات) */
-        .section-title { text-align: center; font-size: 1.5em; margin: 30px 0; font-weight: 700; color: #444; border-bottom: 2px solid var(--light); display: inline-block; width: 100%; padding-bottom: 10px; }
-        .brands-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 0 5%; }
-        .brand-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: 0.3s; text-align: center; padding: 10px; }
-        .brand-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-color: var(--amazon-orange); }
-        .brand-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; margin-bottom: 10px; }
-        .brand-card h3 { font-size: 1.1em; margin: 5px 0; color: #222; }
-
-        /* عرض المنتجات */
-        #store-view, #search-results { display: none; padding: 20px 5%; background: var(--light); }
-        .product-card { background: #fff; margin-bottom: 20px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; }
-        .image-gallery img { width: 100%; max-width: 400px; border-radius: 4px; margin-bottom: 10px; }
-        .p-info { text-align: center; }
-        .p-name { font-size: 1.4em; font-weight: 700; margin: 10px 0; }
-        .p-price { color: #B12704; font-size: 1.6em; font-weight: bold; }
-        .add-btn { background: #ffd814; border: 1px solid #fcd200; border-radius: 20px; padding: 10px 30px; cursor: pointer; margin-top: 15px; font-weight: bold; width: 100%; max-width: 250px; }
+        .brand-info { position: absolute; bottom: 0; width: 100%; padding: 30px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: #fff; transform: translateY(20px); transition: 0.4s; }
+        .brand-card:hover .brand-info { transform: translateY(0); }
+        .brand-info h3 { margin: 0; font-size: 1.8em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+        .verified-badge { background: var(--gold); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.7em; display: inline-block; margin-top: 10px; font-weight: bold; }
 
         /* سلة المشتريات */
-        .cart-float { position: fixed; bottom: 20px; left: 20px; background: var(--amazon-orange); color: #111; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5em; cursor: pointer; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--red); color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; }
+        .cart-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--dark); color: #fff; width: 70px; height: 70px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8em; cursor: pointer; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
+        .cart-badge { position: absolute; top: 0; left: 0; background: var(--gold); color: #000; width: 25px; height: 25px; border-radius: 50%; font-size: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
-        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; }
-        .cart-content { background: #fff; width: 90%; max-width: 400px; padding: 20px; border-radius: 8px; }
+        /* مودال المنتجات والسلة */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; overflow-y: auto; padding: 20px; }
+        .modal-content { background: #fff; max-width: 900px; margin: 40px auto; border-radius: 15px; overflow: hidden; position: relative; }
+        .close-btn { position: absolute; left: 20px; top: 20px; font-size: 2em; cursor: pointer; color: #000; z-index: 10; }
 
-        @media (max-width: 600px) { .brands-container { grid-template-columns: repeat(2, 1fr); } .logo-vira { font-size: 2em; } }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 30px; }
+        .product-item { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .product-item img { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .p-title { font-weight: bold; font-size: 1.2em; }
+        .p-price { color: var(--gold); font-weight: 900; font-size: 1.3em; margin: 10px 0; }
+        .buy-now { background: var(--dark); color: #fff; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
+
+        @media (max-width: 768px) { .brands-grid { grid-template-columns: 1fr; } .logo-vira { font-size: 2.5em; } }
     </style>
 </head>
 <body>
 
-<div class="promo-bar">
-    <div class="promo-track">
-        📦 تسوقي من أشهر الماركات العالمية في مكان واحد | 🚚 شحن لجميع الولايات | 💸 استمتعي بعروض الافتتاح الكبرى في VIRA MALL
+<div class="vip-bar">
+    <div class="vip-track">
+         👑 مساحات إعلانية شاغرة للباقة الذهبية - أجّري مكانك الآن | ✨ انضم إلينا براند (VIRA LUXURY) للعبايات الراقية | 🚚 شحن سريع وآمن لكل ولايات السودان
     </div>
 </div>
 
 <header>
     <h1 class="logo-vira">V<span>I</span>RA</h1>
-    <p style="color: var(--gold); font-size: 0.7em; letter-spacing: 4px;">GLOBAL MARKETPLACE</p>
+    <div class="tagline">GLOBAL MARKETPLACE</div>
 </header>
 
-<div class="nav-bar">
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="ابحثي عن ماركة، منتج، أو سعر..." onkeyup="handleSearch()">
-        <button class="search-btn">🔍</button>
-    </div>
-    <div onclick="goHome()" style="color:white; cursor:pointer; font-size:0.9em; text-align:center;">🏠 العودة للرئيسية</div>
-</div>
-
-<div id="mall-view">
-    <h2 class="section-title">OFFICIAL BRANDS | الماركات الرسمية</h2>
-    <div class="brands-container" id="brandsGrid"></div>
-</div>
-
-<div id="store-view">
-    <div id="productsList"></div>
-</div>
-
-<div id="search-results">
-    <h2 class="section-title">نتائج البحث</h2>
-    <div id="searchResultsList"></div>
-</div>
-
-<div id="cart-modal">
-    <div class="cart-content">
-        <h3>سلة التسوق 🛒</h3>
-        <div id="cartItems"></div>
-        <hr>
-        <div style="font-weight:bold; font-size:1.2em;">الإجمالي: <span id="totalPrice">0</span> SDG</div>
-        <button onclick="sendOrder()" style="background:#2ecc71; color:white; border:none; width:100%; padding:15px; margin-top:10px; border-radius:5px; cursor:pointer;">إرسال الطلب للتاجر</button>
-        <button onclick="toggleCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
+<div class="nav-sticky">
+    <div onclick="location.reload()" style="cursor:pointer; font-size: 1.5em;">🏠</div>
+    <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="mainSearch" placeholder="ابحثي عن ماركة، عباية، بخور..." onkeyup="doSearch()">
     </div>
 </div>
 
-<div class="cart-float" onclick="toggleCart()">🛒 <span class="cart-count" id="cartCount">0</span></div>
+<main class="main-container" id="mallView">
+    <div class="section-header">
+        <h2>OFFICIAL BRANDS | الماركات الرسمية</h2>
+        <p>تسوقي من أرقى المتاجر المختارة بعناية</p>
+    </div>
+    <div class="brands-grid" id="brandsContainer">
+        </div>
+</main>
+
+<div id="storeModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeStore()">&times;</span>
+        <div id="storeProducts" class="product-grid"></div>
+    </div>
+</div>
+
+<div class="cart-trigger" onclick="openCart()">
+    🛒 <div class="cart-badge" id="cartCount">0</div>
+</div>
 
 <script>
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let allProducts = [], cart = [];
+    const sheetID = '1tWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV'; // سحبته من رابطك
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv`;
+    
+    let allData = [], cart = [];
 
-    async function loadData() {
+    async function fetchData() {
         try {
-            const resp = await fetch(sheetUrl + '&t=' + Date.now());
-            const csv = await resp.text();
-            const rows = csv.split('\n').slice(1);
-            allProducts = rows.map(r => {
-                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const response = await fetch(sheetUrl + '&t=' + Date.now());
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);
+            allData = rows.map(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 return {
-                    name: c[0]?.replace(/"/g,'').trim(),
-                    price: c[1]?.trim(),
-                    shop: c[2]?.replace(/"/g,'').trim(),
-                    img: c[3]?.replace(/"/g,'').trim(),
-                    phone: c[4]?.replace(/[^\d]/g,'').trim()
+                    name: cols[0]?.replace(/"/g,'').trim(),
+                    price: cols[1]?.trim(),
+                    shop: cols[2]?.replace(/"/g,'').trim(),
+                    img: cols[3]?.replace(/"/g,'').trim(),
+                    phone: cols[4]?.replace(/[^\d]/g,'').trim()
                 };
-            }).filter(p => p.name && p.shop);
-            renderMall();
-        } catch (e) { console.error("Error loading data"); }
+            }).filter(p => p.shop);
+            renderBrands();
+        } catch (err) { console.log("خطأ في التحميل"); }
     }
 
-    function renderMall() {
-        const shops = [...new Set(allProducts.map(p => p.shop))];
-        const grid = document.getElementById('brandsGrid');
-        grid.innerHTML = shops.map(shop => {
-            const firstP = allProducts.find(p => p.shop === shop);
-            const img = firstP.img.split(',')[0];
-            return `<div class="brand-card" onclick="openStore('${shop}')">
-                <img src="${img}">
-                <h3>${shop}</h3>
-                <small style="color:green;">متجر معتمد ✅</small>
-            </div>`;
+    function renderBrands() {
+        const shops = [...new Set(allData.map(p => p.shop))];
+        const container = document.getElementById('brandsContainer');
+        container.innerHTML = shops.map(shop => {
+            const firstProduct = allData.find(p => p.shop === shop);
+            const img = firstProduct.img.split(',')[0];
+            return `
+                <div class="brand-card" onclick="openStore('${shop}')">
+                    <img src="${img}" class="brand-img">
+                    <div class="brand-info">
+                        <h3>${shop}</h3>
+                        <span class="verified-badge">Official Partner ✅</span>
+                    </div>
+                </div>
+            `;
         }).join('');
     }
 
     function openStore(shopName) {
-        showSection('store-view');
-        const filtered = allProducts.filter(p => p.shop === shopName);
-        renderProductList(filtered, 'productsList');
-    }
-
-    function handleSearch() {
-        const term = document.getElementById('searchInput').value.toLowerCase();
-        if(term.length < 2) { if(term.length === 0) goHome(); return; }
-        showSection('search-results');
-        const filtered = allProducts.filter(p => 
-            p.name.toLowerCase().includes(term) || 
-            p.shop.toLowerCase().includes(term)
-        );
-        renderProductList(filtered, 'searchResultsList');
-    }
-
-    function renderProductList(list, targetId) {
-        const target = document.getElementById(targetId);
-        target.innerHTML = list.map(p => {
+        const products = allData.filter(p => p.shop === shopName);
+        const container = document.getElementById('storeProducts');
+        container.innerHTML = products.map(p => {
             const imgs = p.img.split(',');
-            let gallery = '<div class="image-gallery">';
-            imgs.forEach(i => { if(i.trim()) gallery += `<img src="${i.trim()}">`; });
-            gallery += '</div>';
-            return `<div class="product-card">
-                ${gallery}
-                <div class="p-info">
-                    <div class="p-name">${p.name}</div>
+            return `
+                <div class="product-item">
+                    <img src="${imgs[0]}">
+                    <div class="p-title">${p.name}</div>
                     <div class="p-price">${p.price} SDG</div>
-                    <p style="color:gray; font-size:0.8em;">البائع: ${p.shop}</p>
-                    <button class="add-btn" onclick="addToCart('${p.name}', '${p.price}', '${p.phone}')">إضافة للسلة 🛒</button>
+                    <button class="buy-now" onclick="addToCart('${p.name}', '${p.price}', '${p.phone}')">إضافة للسلة 🛒</button>
                 </div>
-            </div>`;
+            `;
         }).join('');
+        document.getElementById('storeModal').style.display = 'block';
     }
+
+    function closeStore() { document.getElementById('storeModal').style.display = 'none'; }
 
     function addToCart(name, price, phone) {
         cart.push({name, price, phone});
         document.getElementById('cartCount').innerText = cart.length;
-        alert('تمت الإضافة! ✅');
+        alert("تمت الإضافة بنجاح! ✅");
     }
 
-    function toggleCart() {
-        const m = document.getElementById('cart-modal');
-        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
-        if(m.style.display === 'flex') {
-            let total = 0;
-            document.getElementById('cartItems').innerHTML = cart.map((item, i) => {
-                total += parseFloat(item.price);
-                return `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                    <span>${item.name}</span>
-                    <span>${item.price} SDG</span>
-                </div>`;
-            }).join('');
-            document.getElementById('totalPrice').innerText = total;
-        }
-    }
-
-    function sendOrder() {
-        if(!cart.length) return;
-        let msg = "طلب من VIRA AMAZON:\n";
-        cart.forEach((item, i) => msg += `${i+1}. ${item.name} - ${item.price} SDG\n`);
-        msg += `\nالمجموع: ${document.getElementById('totalPrice').innerText} SDG`;
+    function openCart() {
+        if(cart.length === 0) { alert("السلة فارغة يا ملكة!"); return; }
+        let msg = "طلب جديد من VIRA MALL:\n\n";
+        cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)\n`);
         window.open(`https://wa.me/${cart[0].phone}?text=${encodeURIComponent(msg)}`);
     }
 
-    function showSection(id) {
-        ['mall-view', 'store-view', 'search-results'].forEach(s => document.getElementById(s).style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+    function doSearch() {
+        const term = document.getElementById('mainSearch').value.toLowerCase();
+        const filtered = allData.filter(p => p.name.toLowerCase().includes(term) || p.shop.toLowerCase().includes(term));
+        const container = document.getElementById('brandsContainer');
+        if(term === "") { renderBrands(); return; }
+        // عرض المنتجات مباشرة في البحث
+        container.innerHTML = filtered.map(p => `
+            <div class="brand-card" onclick="openStore('${p.shop}')">
+                <img src="${p.img.split(',')[0]}" class="brand-img">
+                <div class="brand-info">
+                    <h3>${p.name}</h3>
+                    <small>${p.shop}</small>
+                </div>
+            </div>
+        `).join('');
     }
 
-    function goHome() { document.getElementById('searchInput').value = ''; showSection('mall-view'); }
-    window.onload = loadData;
+    window.onload = fetchData;
 </script>
+
 </body>
 </html>
