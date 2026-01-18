@@ -16,16 +16,7 @@
         .search-container { flex: 1; margin-right: 15px; }
         .search-container input { width: 100%; padding: 8px 15px; border-radius: 20px; border: none; outline: none; font-size: 13px; }
 
-        /* حركة خيارك الأول في السودان - الشريط الذهبي */
-        .top-banner { 
-            background: linear-gradient(90deg, #D4AF37, #f1c40f, #D4AF37); 
-            color: #000; 
-            text-align: center; 
-            padding: 5px 0; 
-            font-size: 0.9em; 
-            font-weight: 900; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .top-banner { background: linear-gradient(90deg, #D4AF37, #f1c40f, #D4AF37); color: #000; text-align: center; padding: 5px 0; font-size: 0.9em; font-weight: 900; }
 
         /* شريط التنقل السفلي */
         .bottom-app-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--black); height: 75px; display: flex; justify-content: space-around; align-items: center; border-top: 2px solid var(--gold); z-index: 10001; }
@@ -80,7 +71,6 @@
 <div id="wishlist-modal" class="modal"><span class="close-modal" onclick="closeAllModals()">✕</span><h2 style="text-align: center; margin-top: 30px;">مفضلتي ❤️</h2><div class="product-grid" id="wishlistGrid"></div></div>
 
 <script>
-    // نفس كود الجافاسكربت السابق مع إضافة وظيفة البحث والتخفيض
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
     let allProducts = [], cart = JSON.parse(localStorage.getItem('v_cart')) || [], wishlist = JSON.parse(localStorage.getItem('v_wish')) || [];
 
@@ -166,12 +156,22 @@
     }
 
     function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); document.body.style.overflow = 'auto'; }
+
+    // تعديل دالة فتح السلة لتصفيرها بعد الطلب
     function openCart() {
         if(cart.length === 0) return alert("السلة فارغة!");
         let msg = "طلب جديد من VIRA MALL:\n";
         cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)\n`);
+        
+        // فتح واتساب
         window.open(`https://wa.me/${cart[0].phone}?text=${encodeURIComponent(msg)}`);
+        
+        // التصفير بعد الإرسال
+        cart = []; 
+        localStorage.removeItem('v_cart'); 
+        updateUI();
     }
+
     function handleSearch() {
         const term = document.getElementById('mainSearch').value.toLowerCase();
         renderMall(allProducts.filter(p => p.shop.toLowerCase().includes(term) || p.name.toLowerCase().includes(term)));
