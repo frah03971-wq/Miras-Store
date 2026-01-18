@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | النسخة الاحترافية</title>
+    <title>VIRA MALL | النسخة الكاملة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         
@@ -12,179 +12,192 @@
             --amazon-orange: #febd69;
             --amazon-yellow: #ff9900;
             --sale-red: #fa6338;
-            --bg: #f7f8fa;
+            --bg: #f5f6f7;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
+        body { background: var(--bg); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; }
 
-        /* Header & Brand */
-        .header { background: var(--amazon-dark); padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 3000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .header h1 { color: var(--amazon-orange); margin: 0; font-size: 28px; font-weight: 900; letter-spacing: 1px; }
-        .header p { color: #fff; margin: 5px 0 0; font-size: 13px; font-weight: 600; opacity: 0.9; }
-
-        /* Search Bar */
-        .search-box { display: flex; margin: 15px auto 0; background: #fff; border-radius: 10px; overflow: hidden; height: 48px; max-width: 95%; }
-        .search-box input { border: none; padding: 0 15px; width: 100%; font-family: 'Cairo'; font-size: 14px; outline: none; }
-        .search-box button { background: var(--amazon-orange); border: none; width: 60px; cursor: pointer; font-size: 20px; }
-
-        /* Section Titles */
-        .section-header { padding: 25px 15px 10px; display: flex; align-items: center; justify-content: space-between; }
-        .section-header h2 { font-size: 20px; font-weight: 900; margin: 0; color: var(--amazon-dark); position: relative; }
-        .section-header h2::after { content: ''; position: absolute; bottom: -5px; right: 0; width: 40px; height: 3px; background: var(--amazon-yellow); }
-        .view-all { color: var(--amazon-yellow); font-size: 13px; font-weight: 700; cursor: pointer; }
-
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-        .card { background: #fff; border-radius: 15px; overflow: hidden; border: 1px solid #eee; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        /* Header */
+        .main-header { background: var(--amazon-dark); padding: 15px; position: sticky; top: 0; z-index: 3000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .brand-info { text-align: center; }
+        .brand-info h1 { color: var(--amazon-orange); margin: 0; font-size: 26px; font-weight: 900; }
+        .brand-info p { color: #fff; margin: 0; font-size: 13px; font-weight: 600; }
         
-        .img-container { position: relative; width: 100%; height: 280px; overflow: hidden; background: #f9f9f9; display: flex; cursor: zoom-in; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; transition: 0.5s ease; }
-        
-        .sale-badge { position: absolute; top: 12px; right: 12px; background: var(--sale-red); color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 900; z-index: 10; box-shadow: 0 2px 8px rgba(250,99,56,0.4); }
+        .search-container { display: flex; margin-top: 15px; background: #fff; border-radius: 8px; overflow: hidden; height: 45px; }
+        .search-container input { border: none; padding: 0 15px; width: 100%; font-family: 'Cairo'; outline: none; }
+        .search-btn { background: var(--amazon-orange); border: none; padding: 0 15px; cursor: pointer; }
 
-        .dots { position: absolute; bottom: 12px; width: 100%; display: flex; justify-content: center; gap: 5px; }
+        /* Titles */
+        .section-title { padding: 20px 15px 5px; font-weight: 900; font-size: 20px; color: var(--amazon-dark); display: flex; align-items: center; justify-content: space-between; }
+
+        /* Product Grid */
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
+        .p-card { background: #fff; border-radius: 15px; overflow: hidden; border: 1px solid #eee; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        /* Favorite Heart */
+        .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer; transition: 0.3s; }
+        .fav-btn.active { color: var(--sale-red); transform: scale(1.2); }
+
+        /* Sale Badge */
+        .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--sale-red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 900; z-index: 20; }
+
+        /* Large Image Box */
+        .img-box { position: relative; width: 100%; height: 280px; overflow: hidden; display: flex; background: #f9f9f9; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; transition: 0.5s; }
+        
+        .dots { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; gap: 5px; }
         .dot { width: 7px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-        .dot.active { background: #fff; width: 18px; border-radius: 10px; }
+        .dot.active { background: #fff; width: 16px; border-radius: 10px; }
 
-        .p-info { padding: 15px; text-align: center; }
-        .p-name { font-size: 14px; font-weight: 700; color: #333; height: 40px; overflow: hidden; margin-bottom: 8px; line-height: 1.4; }
+        .info { padding: 12px; text-align: center; }
+        .title { font-size: 14px; font-weight: 700; height: 38px; overflow: hidden; margin-bottom: 5px; color: #333; cursor: pointer; }
         
-        .p-price { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 12px; }
-        .old { color: #aaa; text-decoration: line-through; font-size: 12px; }
-        .new { color: var(--sale-red); font-size: 18px; font-weight: 900; }
+        .price-box { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 10px; }
+        .old-p { color: #aaa; text-decoration: line-through; font-size: 12px; }
+        .new-p { color: var(--sale-red); font-size: 18px; font-weight: 900; }
+        
+        .add-btn { background: linear-gradient(180deg, #ffdb7d, #ffbb00); border: 1px solid #c89411; width: 100%; padding: 10px; border-radius: 8px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; }
 
-        .add-btn { background: linear-gradient(180deg, #ffdb7d, #ffbb00); border: 1px solid #c89411; width: 100%; padding: 12px; border-radius: 10px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .add-btn:active { transform: scale(0.95); }
-
-        /* Bottom Nav */
-        .nav { position: fixed; bottom: 15px; left: 5%; width: 90%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px; border-radius: 25px; z-index: 4000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .nav-link { text-align: center; color: #888; text-decoration: none; font-size: 10px; font-weight: 700; flex: 1; position: relative; }
-        .nav-link.active { color: var(--amazon-yellow); }
-        .nav-link i { display: block; font-size: 22px; margin-bottom: 4px; font-style: normal; }
-        .cart-count { position: absolute; top: -10px; right: 20%; background: var(--amazon-yellow); color: #000; font-size: 10px; font-weight: 900; min-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #1a1a1a; }
+        /* Bottom Nav (Elegant Dark) */
+        .nav-bar { position: fixed; bottom: 15px; left: 5%; width: 90%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px; border-radius: 25px; z-index: 4000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .nav-item { text-align: center; text-decoration: none; color: #888; font-size: 10px; font-weight: 700; flex: 1; position: relative; }
+        .nav-item.active { color: var(--amazon-yellow); }
+        .nav-item i { display: block; font-size: 22px; margin-bottom: 4px; font-style: normal; }
+        .badge { position: absolute; top: -10px; right: 20%; background: var(--amazon-yellow); color: #000; font-size: 10px; font-weight: 900; min-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #1a1a1a; }
 
         /* Modal Description */
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; padding: 20px; overflow-y: auto; }
-        .modal-content { background: #fff; border-radius: 20px; padding: 20px; max-width: 500px; margin: auto; position: relative; text-align: center; }
-        .close-modal { position: absolute; top: 15px; left: 15px; font-size: 25px; cursor: pointer; color: #333; }
+        #descModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; padding: 20px; }
+        .modal-body { background: #fff; border-radius: 20px; padding: 20px; max-width: 450px; margin: 40px auto; position: relative; text-align: center; }
+        .close-m { position: absolute; top: 15px; left: 15px; font-size: 24px; cursor: pointer; }
 
-        #backBtn { display: none; position: absolute; right: 15px; top: 22px; color: white; background: rgba(255,255,255,0.2); border: none; padding: 6px 15px; border-radius: 20px; font-weight: bold; }
+        #back { display: none; position: absolute; right: 15px; top: 18px; color: white; background: rgba(255,255,255,0.2); border: none; padding: 5px 12px; border-radius: 20px; }
     </style>
 </head>
 <body>
 
-<header class="header">
-    <button id="backBtn" onclick="home()">❮ رجوع</button>
-    <h1>VIRA MALL</h1>
-    <p>خياركِ الأول للأناقة والرفاهية ✨</p>
-    <div class="search-box">
-        <input type="text" id="search" placeholder="ابحثي عن فستان، حقيبة، ماركة..." oninput="search()">
-        <button>🔍</button>
+<header class="main-header">
+    <button id="back" onclick="goHome()">❮ رجوع</button>
+    <div class="brand-info">
+        <h1>VIRA MALL</h1>
+        <p>خياركِ الأول للأناقة والرفاهية ✨</p>
+    </div>
+    <div class="search-container">
+        <input type="text" id="mainSearch" placeholder="ابحثي عن فستان، ماركة، عروض..." oninput="searchApp()">
+        <button class="search-btn">🔍</button>
     </div>
 </header>
 
-<div id="offers"></div>
-<div id="view"></div>
+<div id="salesArea"></div>
+<div id="contentArea"></div>
 
-<div id="modal" onclick="this.style.display='none'">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close-modal" onclick="document.getElementById('modal').style.display='none'">×</span>
-        <div id="modalBody"></div>
+<div id="descModal" onclick="this.style.display='none'">
+    <div class="modal-body" onclick="event.stopPropagation()">
+        <span class="close-m" onclick="document.getElementById('descModal').style.display='none'">×</span>
+        <div id="modalContent"></div>
     </div>
 </div>
 
-<nav class="nav">
-    <a href="javascript:void(0)" class="nav-link active" onclick="home()"><i>🏠</i>الرئيسية</a>
-    <a href="javascript:void(0)" class="nav-link" onclick="alert('توصيلنا سريع لكل السودان 🚚')"><i>🚚</i>التوصيل</a>
-    <a href="javascript:void(0)" class="nav-link"><i>❤️</i>المفضلة</a>
-    <a href="javascript:void(0)" class="nav-link" onclick="checkout()"><i>🛒</i>الحقيبة<span id="cCount" class="cart-count" style="display:none">0</span></a>
+<nav class="nav-bar">
+    <a href="javascript:void(0)" class="nav-item active" onclick="goHome()"><i>🏠</i>الرئيسية</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="alert('توصيلنا سريع وموثوق 🚚')"><i>🚚</i>التوصيل</a>
+    <a href="javascript:void(0)" class="nav-item"><i>❤️</i>المفضلة<span id="fBadge" class="badge" style="display:none">0</span></a>
+    <a href="javascript:void(0)" class="nav-item" onclick="sendOrder()"><i>🛒</i>السلة<span id="cBadge" class="badge" style="display:none">0</span></a>
 </nav>
 
 <script>
-    const sheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let db = [], cart = [];
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    let database = [], cart = [], favorites = 0;
 
-    async function load() {
-        const r = await fetch(sheet + '&t=' + Date.now());
-        const t = await r.text();
-        const rows = t.split('\n').slice(1);
+    async function init() {
+        const r = await fetch(url + '&t=' + Date.now());
+        const txt = await r.text();
+        const rows = txt.split('\n').slice(1);
         
-        db = rows.map(row => {
+        database = rows.map(row => {
             const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            const clean = (v) => (v && !v.includes('wa.me') && !v.includes('http')) ? v.trim() : "";
+            const clean = (v) => (v && !v.includes('wa.me')) ? v.trim() : "";
             return {
                 name: c[0]?.replace(/"/g,''),
                 price: clean(c[1]),
                 shop: c[2]?.trim() || "VIRA",
                 imgs: c[3]?.replace(/"/g,'').split(',').map(s => s.trim()),
                 old: clean(c[4]),
-                desc: c[5]?.replace(/"/g,'') || "تألقي مع أحدث كوليكشن من فيرا مول." // العمود السادس للوصف
+                desc: c[5]?.replace(/"/g,'') || "خامة ممتازة وتصميم عصري يليق بكِ."
             };
         }).filter(p => p.name && p.price);
-        home();
+        goHome();
     }
 
-    function home() {
-        document.getElementById('backBtn').style.display = 'none';
-        const saleItems = db.filter(p => p.old && p.old.length > 0);
-        if(saleItems.length > 0) {
-            document.getElementById('offers').innerHTML = `<div class="section-header"><h2>🔥 عروض حصرية</h2></div><div class="grid">${saleItems.map(p => card(p)).join('')}</div>`;
-        }
+    function goHome() {
+        document.getElementById('back').style.display = 'none';
         
-        const shops = [...new Set(db.map(p => p.shop))];
+        const flash = database.filter(p => p.old && p.old.length > 0);
+        if(flash.length > 0) {
+            document.getElementById('salesArea').innerHTML = `<div class="section-title">🔥 عروض نارية</div><div class="product-grid">${flash.map(p => createCard(p)).join('')}</div>`;
+        }
+
+        const shops = [...new Set(database.map(p => p.shop))];
         let h = '';
         shops.forEach(s => {
-            const items = db.filter(p => p.shop === s).slice(0, 4);
-            h += `<div class="section-header"><h2>${s}</h2><span class="view-all" onclick="shop('${s}')">عرض الكل ❯</span></div><div class="grid">${items.map(p => card(p)).join('')}</div>`;
+            const items = database.filter(p => p.shop === s).slice(0, 4);
+            h += `<div class="section-title"><h2>${s}</h2><span style="font-size:12px; color:var(--amazon-yellow);" onclick="goShop('${s}')">عرض الكل ❯</span></div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
         });
-        document.getElementById('view').innerHTML = h;
+        document.getElementById('contentArea').innerHTML = h;
         window.scrollTo(0,0);
     }
 
-    function shop(name) {
-        document.getElementById('backBtn').style.display = 'block';
-        document.getElementById('offers').innerHTML = '';
-        const items = db.filter(p => p.shop === name);
-        document.getElementById('view').innerHTML = `<div class="section-header"><h2>كوليكشن ${name}</h2></div><div class="grid">${items.map(p => card(p)).join('')}</div>`;
+    function goShop(name) {
+        document.getElementById('back').style.display = 'block';
+        document.getElementById('salesArea').innerHTML = '';
+        const items = database.filter(p => p.shop === name);
+        document.getElementById('contentArea').innerHTML = `<div class="section-title">كوليكشن ${name}</div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
         window.scrollTo(0,0);
     }
 
-    function card(p) {
+    function createCard(p) {
         const id = 'p' + Math.random().toString(36).substr(2, 5);
-        const isSale = p.old && p.old.length > 0;
+        const sale = p.old && p.old.length > 0;
         return `
-            <div class="card" id="${id}">
-                ${isSale ? '<div class="sale-badge">SALE</div>' : ''}
-                <div class="img-container" onclick="next('${id}')">
+            <div class="p-card" id="${id}">
+                <div class="fav-btn" onclick="toggleFav(this)">❤</div>
+                ${sale ? '<div class="sale-tag">خصم %</div>' : ''}
+                <div class="img-box" onclick="next('${id}')">
                     ${p.imgs.map(src => `<img src="${src}" onerror="this.src='https://via.placeholder.com/500x700?text=VIRA+MALL'">`).join('')}
                     <div class="dots">${p.imgs.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>
                 </div>
-                <div class="p-info">
-                    <div class="p-name" onclick="showDesc('${encodeURIComponent(JSON.stringify(p))}')">${p.name}</div>
-                    <div class="p-price">
-                        ${isSale ? `<span class="old">${p.old} SDG</span>` : ''}
-                        <span class="new">${p.price} SDG</span>
+                <div class="info">
+                    <div class="title" onclick="openDesc('${encodeURIComponent(JSON.stringify(p))}')">${p.name}</div>
+                    <div class="price-box">
+                        ${sale ? `<span class="old-p">${p.old} SDG</span>` : ''}
+                        <span class="new-p">${p.price} SDG</span>
                     </div>
                     <button class="add-btn" onclick="add('${p.name}', '${p.price}')">إضافة للسلة</button>
                 </div>
             </div>`;
     }
 
-    function showDesc(data) {
+    function openDesc(data) {
         const p = JSON.parse(decodeURIComponent(data));
-        document.getElementById('modalBody').innerHTML = `
+        document.getElementById('modalContent').innerHTML = `
             <img src="${p.imgs[0]}" style="width:100%; border-radius:15px; margin-bottom:15px;">
             <h3>${p.name}</h3>
-            <p style="color:#666; line-height:1.6;">${p.desc}</p>
-            <div style="font-size:22px; font-weight:900; color:var(--sale-red); margin:15px 0;">${p.price} SDG</div>
-            <button class="add-btn" onclick="add('${p.name}', '${p.price}'); document.getElementById('modal').style.display='none'">إضافة للحقيبة الآن</button>
+            <p style="color:#555; line-height:1.6;">${p.desc}</p>
+            <div style="font-size:20px; font-weight:900; color:var(--sale-red);">${p.price} SDG</div>
+            <button class="add-btn" style="margin-top:15px" onclick="add('${p.name}', '${p.price}'); document.getElementById('descModal').style.display='none'">أضيفي للحقيبة الآن</button>
         `;
-        document.getElementById('modal').style.display = 'block';
+        document.getElementById('descModal').style.display = 'block';
+    }
+
+    function toggleFav(el) {
+        el.classList.toggle('active');
+        favorites += el.classList.contains('active') ? 1 : -1;
+        const b = document.getElementById('fBadge');
+        b.innerText = favorites; b.style.display = favorites > 0 ? 'flex' : 'none';
     }
 
     function next(id) {
-        const b = document.getElementById(id).querySelector('.img-container');
+        const b = document.getElementById(id).querySelector('.img-box');
         const imgs = b.querySelectorAll('img');
         const dots = b.querySelectorAll('.dot');
         let i = parseInt(b.dataset.idx || 0);
@@ -196,26 +209,26 @@
 
     function add(n, p) {
         cart.push({n, p});
-        const b = document.getElementById('cCount');
+        const b = document.getElementById('cBadge');
         b.innerText = cart.length; b.style.display = 'flex';
     }
 
-    function search() {
-        const q = document.getElementById('search').value.toLowerCase();
+    function searchApp() {
+        const q = document.getElementById('mainSearch').value.toLowerCase();
         if(q.length > 0) {
-            document.getElementById('offers').innerHTML = '';
-            const f = db.filter(p => p.name.toLowerCase().includes(q) || p.shop.toLowerCase().includes(q));
-            document.getElementById('view').innerHTML = `<div class="grid">${f.map(p => card(p)).join('')}</div>`;
-        } else { home(); }
+            document.getElementById('salesArea').innerHTML = '';
+            const f = database.filter(p => p.name.toLowerCase().includes(q) || p.shop.toLowerCase().includes(q));
+            document.getElementById('contentArea').innerHTML = `<div class="product-grid">${f.map(p => createCard(p)).join('')}</div>`;
+        } else { goHome(); }
     }
 
-    function checkout() {
+    function sendOrder() {
         if(!cart.length) return alert("سلتك فارغة!");
         let m = "طلب جديد من VIRA MALL 🛒:\n" + cart.map((it, i) => `${i+1}. ${it.n} (${it.p})`).join('\n');
         window.open(`https://wa.me/249967584275?text=${encodeURIComponent(m)}`);
     }
 
-    load();
+    init();
 </script>
 </body>
 </html>
