@@ -10,11 +10,22 @@
         body { font-family: 'Cairo', sans-serif; background: #f9f9f9; margin: 0; padding-bottom: 95px; }
 
         /* الهيدر */
-        .top-nav { background: var(--black); padding: 12px 15px; display: flex; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
+        .top-nav { background: var(--black); padding: 12px 15px; display: flex; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--gold); }
         .logo { font-size: 1.4em; font-weight: 900; color: #fff; text-decoration: none; }
         .logo span { color: var(--gold); }
         .search-container { flex: 1; margin-right: 15px; }
-        .search-container input { width: 100%; padding: 10px; border-radius: 20px; border: none; outline: none; }
+        .search-container input { width: 100%; padding: 8px 15px; border-radius: 20px; border: none; outline: none; font-size: 13px; }
+
+        /* حركة خيارك الأول في السودان - الشريط الذهبي */
+        .top-banner { 
+            background: linear-gradient(90deg, #D4AF37, #f1c40f, #D4AF37); 
+            color: #000; 
+            text-align: center; 
+            padding: 5px 0; 
+            font-size: 0.9em; 
+            font-weight: 900; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
         /* شريط التنقل السفلي */
         .bottom-app-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--black); height: 75px; display: flex; justify-content: space-around; align-items: center; border-top: 2px solid var(--gold); z-index: 10001; }
@@ -22,10 +33,10 @@
         .nav-link i { display: block; font-size: 1.6em; color: var(--gold); margin-bottom: 2px; }
         .badge { position: absolute; top: -5px; right: 25%; background: var(--red); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; border: 1px solid #fff; }
 
-        .main-content { padding: 20px; }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .brand-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #eee; text-align: center; cursor: pointer; }
-        .brand-image { width: 100%; height: 280px; object-fit: cover; }
+        .main-content { padding: 15px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .brand-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #eee; text-align: center; cursor: pointer; }
+        .brand-image { width: 100%; height: 260px; object-fit: cover; }
 
         /* المودالات */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 10000; overflow-y: auto; }
@@ -34,16 +45,13 @@
         .product-grid { padding: 80px 15px 100px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .product-card { border: 1px solid #eee; border-radius: 15px; padding: 15px; background: #fff; text-align: center; position: relative; }
         
-        .fav-heart { position: absolute; top: 15px; left: 15px; font-size: 1.5em; cursor: pointer; z-index: 10; filter: drop-shadow(0 0 2px rgba(0,0,0,0.3)); }
+        .fav-heart { position: absolute; top: 15px; left: 15px; font-size: 1.5em; cursor: pointer; z-index: 10; }
         .image-container { width: 100%; height: 350px; position: relative; overflow: hidden; border-radius: 10px; }
         .image-slider { display: flex; transition: transform 0.4s ease; height: 100%; }
         .image-slider img { width: 100%; flex-shrink: 0; object-fit: contain; }
         
         .discount-badge { position: absolute; top: 15px; right: 15px; background: var(--red); color: white; padding: 4px 10px; border-radius: 5px; font-weight: bold; z-index: 9; font-size: 0.8em; }
-        
-        /* حركة التوصيل الرهيبة */
-        .delivery-info { color: #2ecc71; font-size: 0.85em; font-weight: bold; margin-bottom: 10px; display: block; }
-
+        .delivery-info { color: #2ecc71; font-size: 0.8em; font-weight: bold; margin-bottom: 8px; display: block; }
         .p-price { color: #B12704; font-size: 1.4em; font-weight: 900; margin: 5px 0; }
         .add-btn { background: var(--gold); border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
     </style>
@@ -55,6 +63,10 @@
     <div class="search-container"><input type="text" id="mainSearch" placeholder="ابحثي عن أناقتك..." oninput="handleSearch()"></div>
 </div>
 
+<div class="top-banner">
+    🇸🇩 VIRA MALL .. خيارك الأول في السودان 🇸🇩
+</div>
+
 <div class="main-content"><div class="grid-container" id="brandsGrid"></div></div>
 
 <div class="bottom-app-bar">
@@ -64,19 +76,11 @@
     <a href="https://wa.me/YOUR_PHONE" class="nav-link"><i>💬</i>تواصل</a>
 </div>
 
-<div id="store-modal" class="modal">
-    <span class="close-modal" onclick="closeAllModals()">✕</span>
-    <h2 id="modalTitle" style="text-align: center; margin-top: 30px;"></h2>
-    <div class="product-grid" id="productsGrid"></div>
-</div>
-
-<div id="wishlist-modal" class="modal">
-    <span class="close-modal" onclick="closeAllModals()">✕</span>
-    <h2 style="text-align: center; margin-top: 30px;">مفضلتي ❤️</h2>
-    <div class="product-grid" id="wishlistGrid"></div>
-</div>
+<div id="store-modal" class="modal"><span class="close-modal" onclick="closeAllModals()">✕</span><h2 id="modalTitle" style="text-align: center; margin-top: 30px;"></h2><div class="product-grid" id="productsGrid"></div></div>
+<div id="wishlist-modal" class="modal"><span class="close-modal" onclick="closeAllModals()">✕</span><h2 style="text-align: center; margin-top: 30px;">مفضلتي ❤️</h2><div class="product-grid" id="wishlistGrid"></div></div>
 
 <script>
+    // نفس كود الجافاسكربت السابق مع إضافة وظيفة البحث والتخفيض
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
     let allProducts = [], cart = JSON.parse(localStorage.getItem('v_cart')) || [], wishlist = JSON.parse(localStorage.getItem('v_wish')) || [];
 
@@ -104,7 +108,7 @@
             const firstImg = allProducts.find(p => p.shop === shop).img.split(',')[0];
             return `<div class="brand-card" onclick="openStore('${shop}')">
                 <img src="${firstImg}" class="brand-image">
-                <h2 style="margin:15px 0;">${shop} 🇸🇩</h2>
+                <h2 style="margin:15px 0; font-size:1.1em;">${shop} 🇸🇩</h2>
             </div>`;
         }).join('');
     }
@@ -125,7 +129,7 @@
                 <div class="image-container">
                     <div class="image-slider" id="slider-${gridId}-${idx}">${p.img.split(',').map(url => `<img src="${url.trim()}">`).join('')}</div>
                 </div>
-                <div style="font-weight:700; margin:10px 5px 2px;">${p.name}</div>
+                <div style="font-weight:700; margin:10px 5px 2px; font-size:0.95em;">${p.name}</div>
                 <div class="p-price">${discPrice} SDG</div>
                 <span class="delivery-info">🚚 متوفر توصيل لجميع الولايات</span>
                 <button class="add-btn" onclick="addToCart('${p.name}', '${discPrice}', '${p.phone}')">إضافة للحقيبة 🛍️</button>
