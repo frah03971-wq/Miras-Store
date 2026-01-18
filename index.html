@@ -18,51 +18,61 @@
         body { font-family: 'Cairo', sans-serif; background: var(--light-gray); margin: 0; color: #111; overflow-x: hidden; }
 
         /* الهيدر */
-        .top-nav { background: var(--amazon-blue); padding: 10px 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .top-nav { background: var(--amazon-blue); padding: 12px 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 2.2em; font-weight: 900; color: #fff; text-decoration: none; }
         .logo span { color: var(--amazon-orange); }
         .search-container { flex: 1; margin: 0 20px; display: flex; max-width: 800px; }
         .search-container input { flex: 1; padding: 12px; border: none; border-radius: 4px; outline: none; font-size: 16px; font-family: 'Cairo'; }
 
-        /* شريط العروض المتحرك - شغال 100% هسي */
-        .sub-nav { background: var(--amazon-navy); color: white; padding: 10px 0; overflow: hidden; position: relative; }
-        .promo-track { display: flex; width: 200%; animation: scrollText 20s linear infinite; }
-        .promo-text { width: 50%; text-align: center; font-weight: bold; }
+        /* شريط العروض المتحرك */
+        .sub-nav { background: var(--amazon-navy); color: white; padding: 10px 0; overflow: hidden; }
+        .promo-track { display: flex; width: 200%; animation: scrollText 25s linear infinite; }
+        .promo-text { width: 50%; text-align: center; font-weight: bold; font-size: 0.9em; }
         @keyframes scrollText { 0% { transform: translateX(0%); } 100% { transform: translateX(50%); } }
 
-        .hero-banner { background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--light-gray)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1350&q=80'); background-size: cover; height: 200px; display: flex; align-items: center; justify-content: center; }
-        .hero-banner h1 { background: rgba(255,255,255,0.9); padding: 15px 30px; border-radius: 8px; font-size: 1.4em; color: var(--amazon-blue); }
+        /* البنر الترحيبي */
+        .hero-banner { background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--light-gray)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1350&q=80'); background-size: cover; height: 180px; display: flex; align-items: center; justify-content: center; }
+        .hero-banner h1 { background: rgba(255,255,255,0.9); padding: 15px 30px; border-radius: 8px; font-size: 1.3em; color: var(--amazon-blue); }
 
         .main-content { padding: 40px 5%; margin-top: -50px; }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 350px)); gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 380px)); gap: 30px; justify-content: center; max-width: 1300px; margin: 0 auto; }
         
-        .brand-card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; border: 1px solid #ddd; display: flex; flex-direction: column; }
+        /* كارت الماركة الرئيسي */
+        .brand-card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; border: 1px solid #ddd; display: flex; flex-direction: column; }
         .brand-card:hover { transform: translateY(-5px); border-color: var(--amazon-orange); }
-        .brand-card h2 { font-size: 1.4em; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-        .brand-image { width: 100%; height: 300px; object-fit: cover; border-radius: 4px; }
+        .brand-card h2 { font-size: 1.6em; text-align: center; border-bottom: 2px solid var(--light-gray); padding-bottom: 15px; margin-bottom: 20px; color: var(--amazon-blue); }
+        .brand-image { width: 100%; height: 350px; object-fit: cover; border-radius: 6px; }
 
-        /* مودال المتجر */
+        /* مودال المتجر - صور كبيرة جداً */
         #store-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; }
-        .modal-body { background: var(--light-gray); width: 95%; max-width: 1100px; height: 90vh; margin: 2vh auto; border-radius: 12px; overflow-y: auto; padding: 20px; position: relative; }
-        .close-modal { position: absolute; left: 20px; top: 10px; font-size: 3em; cursor: pointer; }
+        .modal-body { background: var(--light-gray); width: 95%; max-width: 1200px; height: 92vh; margin: 4vh auto; border-radius: 12px; overflow-y: auto; padding: 25px; position: relative; }
+        .close-modal { position: absolute; left: 20px; top: 10px; font-size: 3.5em; cursor: pointer; color: #333; z-index: 10; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
+        /* شبكة المنتجات وتكبير الصور */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding-top: 20px; }
+        .product-card { background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #ddd; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         
-        /* حاوية صور المنتج المتعددة */
-        .image-container { position: relative; width: 100%; height: 250px; overflow: hidden; border-radius: 6px; margin-bottom: 10px; }
-        .image-slider { display: flex; transition: 0.5s; height: 100%; }
-        .image-slider img { width: 100%; flex-shrink: 0; object-fit: cover; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer; padding: 5px 10px; border-radius: 50%; font-size: 12px; }
-        .prev-btn { right: 5px; } .next-btn { left: 5px; }
+        .image-container { position: relative; width: 100%; height: 420px; /* هنا تكبير الصور للزبونة */ overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: #fefefe; }
+        .image-slider { display: flex; transition: 0.5s ease-in-out; height: 100%; width: 100%; }
+        .image-slider img { width: 100%; flex-shrink: 0; object-fit: contain; /* عشان الصورة تظهر كاملة بدون قطع */ height: 100%; }
+        
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; cursor: pointer; padding: 12px 15px; border-radius: 50%; font-size: 1.2em; transition: 0.3s; }
+        .nav-btn:hover { background: var(--amazon-orange); }
+        .prev-btn { right: 10px; } .next-btn { left: 10px; }
 
-        .p-price { color: #B12704; font-size: 1.4em; font-weight: bold; margin: 10px 0; }
-        .add-btn { background: var(--amazon-yellow); border: 1px solid #fcd200; border-radius: 20px; padding: 12px; width: 100%; font-weight: bold; cursor: pointer; }
+        .p-name { font-weight: bold; font-size: 1.1em; color: #333; margin: 10px 0; height: 2.4em; overflow: hidden; }
+        .p-price { color: #B12704; font-size: 1.6em; font-weight: 900; margin-bottom: 15px; }
+        .add-btn { background: var(--amazon-yellow); border: 1px solid #fcd200; border-radius: 30px; padding: 14px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1em; }
 
-        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--amazon-yellow); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8em; cursor: pointer; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .cart-count { background: #e74c3c; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; position: absolute; top: 0; right: 0; border: 2px solid white; }
+        /* زر السلة العائم */
+        .cart-float { position: fixed; bottom: 35px; right: 35px; background: var(--amazon-yellow); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2em; cursor: pointer; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.3); border: 2px solid white; }
+        .cart-count { background: #e74c3c; color: white; border-radius: 50%; padding: 3px 10px; font-size: 14px; position: absolute; top: -5px; right: -5px; border: 2px solid white; font-weight: bold; }
 
-        @media (max-width: 600px) { .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .product-card img, .image-container { height: 180px; } }
+        @media (max-width: 600px) { 
+            .product-grid { grid-template-columns: 1fr; /* في الموبايل صور كبيرة جداً تحت بعض */ } 
+            .image-container { height: 450px; }
+            .brand-image { height: 300px; }
+        }
     </style>
 </head>
 <body>
@@ -70,19 +80,19 @@
 <div class="top-nav">
     <a href="#" class="logo">VIRA<span>mall</span></a>
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="ابحثي عن ماركة أو منتج..." onkeyup="handleSearch()">
+        <input type="text" id="searchInput" placeholder="ابحثي عن براند، عباية، بخور..." onkeyup="handleSearch()">
     </div>
 </div>
 
 <div class="sub-nav">
     <div class="promo-track">
-        <div class="promo-text">✨ شحن سريع لكل الولايات | ماركات حصرية | عروض العيد بدأت الآن ✨</div>
-        <div class="promo-text">✨ شحن سريع لكل الولايات | ماركات حصرية | عروض العيد بدأت الآن ✨</div>
+        <div class="promo-text">✨ شحن سريع لكل الولايات | ماركات عالمية موثقة | جودة نضمنها لكِ ✨</div>
+        <div class="promo-text">✨ شحن سريع لكل الولايات | ماركات عالمية موثقة | جودة نضمنها لكِ ✨</div>
     </div>
 </div>
 
 <div class="hero-banner">
-    <h1>أهلاً بكِ في مول الماركات العالمية 🇸🇩</h1>
+    <h1>أهلاً بكِ في وجهة الأناقة الأولى 🇸🇩</h1>
 </div>
 
 <div class="main-content">
@@ -92,7 +102,7 @@
 <div id="store-modal">
     <div class="modal-body">
         <span class="close-modal" onclick="closeStore()">&times;</span>
-        <h2 id="modalTitle" style="text-align: center;"></h2>
+        <h2 id="modalTitle" style="text-align: center; font-weight: 900; color: var(--amazon-blue);"></h2>
         <div class="product-grid" id="productsGrid"></div>
     </div>
 </div>
@@ -116,12 +126,12 @@
                     name: c[0]?.replace(/"/g,'').trim(),
                     price: c[1]?.replace(/"/g,'').trim(),
                     shop: c[2]?.replace(/"/g,'').trim(),
-                    img: c[3]?.replace(/"/g,'').trim(), // حيكون فيه رابط أو عدة روابط مفصولة بفاصلة
+                    img: c[3]?.replace(/"/g,'').trim(),
                     phone: c[4]?.replace(/[^\d]/g,'').trim()
                 };
             }).filter(p => p.shop);
             renderMall();
-        } catch (e) { console.error("Error"); }
+        } catch (e) { console.error("Data Error"); }
     }
 
     function renderMall() {
@@ -134,13 +144,13 @@
                 <div class="brand-card" onclick="openStore('${shop}')">
                     <h2>${shop}</h2>
                     <img src="${firstImg}" class="brand-image">
-                    <span style="color:#007185; text-align:center; margin-top:10px; font-weight:bold;">تسوقي الآن ←</span>
+                    <span style="color:#007185; text-align:center; margin-top:15px; font-weight:bold; font-size:1.1em;">عرض المجموعة الكاملة ←</span>
                 </div>`;
         }).join('');
     }
 
     function openStore(shopName) {
-        document.getElementById('modalTitle').innerText = "متجر " + shopName;
+        document.getElementById('modalTitle').innerText = "مجموعة " + shopName;
         const products = allProducts.filter(p => p.shop === shopName);
         const grid = document.getElementById('productsGrid');
         
@@ -158,12 +168,13 @@
                         <div class="image-slider" id="slider-${idx}">${imageHtml}</div>
                         ${navBtns}
                     </div>
-                    <div style="font-weight:bold; height:40px; overflow:hidden;">${p.name}</div>
+                    <div class="p-name">${p.name}</div>
                     <div class="p-price">${p.price} SDG</div>
-                    <button class="add-btn" onclick="addToCart('${p.name}', '${p.price}', '${p.phone}')">إضافة للسلة</button>
+                    <button class="add-btn" onclick="addToCart('${p.name}', '${p.price}', '${p.phone}')">إضافة للسلة 🛒</button>
                 </div>`;
         }).join('');
         document.getElementById('store-modal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
     }
 
     function slide(idx, dir) {
@@ -177,18 +188,21 @@
         slider.dataset.pos = currentPos;
     }
 
-    function closeStore() { document.getElementById('store-modal').style.display = 'none'; }
+    function closeStore() { 
+        document.getElementById('store-modal').style.display = 'none'; 
+        document.body.style.overflow = 'auto';
+    }
 
     function addToCart(name, price, phone) {
         cart.push({name, price, phone});
         document.getElementById('cartCount').innerText = cart.length;
-        alert('تمت الإضافة للسلة! ✅');
+        alert('تمت الإضافة للملكة! ✅');
     }
 
     function openCart() {
         if(cart.length === 0) return alert("السلة فارغة!");
-        let msg = "طلب جديد من VIRA MALL:\n";
-        cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price})\n`);
+        let msg = "طلب جديد من VIRA MALL 🛍️:\n\n";
+        cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)\n`);
         window.open(`https://wa.me/${cart[0].phone}?text=${encodeURIComponent(msg)}`);
     }
 
