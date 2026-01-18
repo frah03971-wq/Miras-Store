@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="VIRA MALL">
+    
+    <link rel="icon" href="رابط_لوقو_متجرك.png">
+    <link rel="apple-touch-icon" href="رابط_لوقو_متجرك.png">
+
     <title>VIRA MALL | فيرا مول</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         :root { --gold: #D4AF37; --black: #000000; --red: #ff4757; }
 
-        html, body { max-width: 100%; overflow-x: hidden; margin: 0; padding: 0; background: #fff; font-family: 'Cairo', sans-serif; }
+        /* ثبات كامل ومنع سحب الصفحة لأسفل (Refresh) لإعطاء شعور التطبيق */
+        html, body { 
+            max-width: 100%; 
+            overflow-x: hidden; 
+            margin: 0; 
+            padding: 0; 
+            background: #fff; 
+            font-family: 'Cairo', sans-serif;
+            overscroll-behavior-y: contain; 
+        }
 
         /* الهيدر الملكي */
         .top-nav { background: var(--black); padding: 15px; display: flex; align-items: center; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--gold); }
@@ -22,50 +39,48 @@
         /* نظام الشبكة الثابت للمول */
         .main-content { padding: 12px; box-sizing: border-box; }
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .brand-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; text-align: center; }
-        .brand-image { width: 100%; height: 200px; object-fit: cover; }
+        .brand-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .brand-image { width: 100%; height: 180px; object-fit: cover; }
         .brand-name { padding: 10px; font-weight: 700; font-size: 13px; }
 
         /* المودال ونظام الكتالوج */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 4000; overflow-y: auto; }
-        .close-modal { position: fixed; left: 15px; top: 15px; background: var(--black); color: var(--gold); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; font-size: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .close-modal { position: fixed; left: 15px; top: 15px; background: var(--black); color: var(--gold); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; font-size: 20px; }
 
-        .product-card { padding: 15px; border-bottom: 10px solid #f9f9f9; position: relative; }
+        .product-card { padding: 15px; border-bottom: 8px solid #f9f9f9; position: relative; }
         
-        /* حاوية السلايدر (الكتالوج) */
-        .catalog-container { width: 100%; height: 450px; position: relative; overflow: hidden; border-radius: 15px; background: #f4f4f4; }
-        .catalog-wrapper { display: flex; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); height: 100%; }
+        /* حاوية السلايدر */
+        .catalog-container { width: 100%; height: 400px; position: relative; overflow: hidden; border-radius: 15px; background: #f4f4f4; }
+        .catalog-wrapper { display: flex; transition: transform 0.4s ease; height: 100%; }
         .catalog-wrapper img { width: 100%; flex-shrink: 0; object-fit: contain; background: #fff; }
 
-        /* أزرار التنقل بين الصور */
-        .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.1); color: #000; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; font-size: 18px; z-index: 10; cursor: pointer; }
+        .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.05); color: #000; border: none; width: 30px; height: 30px; border-radius: 50%; z-index: 10; }
         .prev { right: 10px; } .next { left: 10px; }
         
-        /* مؤشر الصور (النقط) */
-        .dots-container { position: absolute; bottom: 15px; width: 100%; display: flex; justify-content: center; gap: 5px; z-index: 11; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.2); transition: 0.3s; }
-        .dot.active { background: var(--gold); width: 20px; border-radius: 10px; }
+        .dots-container { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; gap: 4px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.1); }
+        .dot.active { background: var(--gold); width: 15px; border-radius: 10px; }
 
-        .p-info { padding: 20px 0; text-align: center; }
-        .p-price { color: #B12704; font-size: 1.6em; font-weight: 900; margin: 5px 0; }
-        .delivery-tag { color: #27ae60; font-weight: bold; font-size: 13px; display: block; margin-bottom: 15px; }
+        .p-info { padding: 15px 0; text-align: center; }
+        .p-price { color: #B12704; font-size: 1.5em; font-weight: 900; }
+        .delivery-tag { color: #27ae60; font-weight: bold; font-size: 12px; display: block; margin-bottom: 10px; }
         
-        .add-btn { background: var(--black); color: var(--gold); width: 100%; padding: 16px; border: 1px solid var(--gold); font-weight: 900; border-radius: 10px; font-size: 16px; }
+        .add-btn { background: var(--black); color: var(--gold); width: 100%; padding: 14px; border: 1px solid var(--gold); font-weight: 900; border-radius: 10px; font-size: 16px; }
 
-        .fav-heart { position: absolute; top: 20px; right: 20px; font-size: 24px; z-index: 12; cursor: pointer; filter: drop-shadow(0 0 5px white); }
+        .fav-heart { position: absolute; top: 20px; right: 20px; font-size: 24px; z-index: 12; }
 
-        /* الشريط السفلي */
-        .bottom-app-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--black); height: 70px; display: flex; border-top: 2px solid var(--gold); z-index: 3000; }
-        .nav-link { flex: 1; color: #fff; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; position: relative; }
-        .nav-link i { font-size: 20px; color: var(--gold); margin-bottom: 3px; }
-        .badge { position: absolute; top: 10px; right: 20%; background: var(--red); color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+        /* الشريط السفلي الاحترافي */
+        .bottom-app-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--black); height: 70px; display: flex; border-top: 2px solid var(--gold); z-index: 3000; padding-bottom: env(safe-area-inset-bottom); }
+        .nav-link { flex: 1; color: #fff; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; }
+        .nav-link i { font-size: 18px; color: var(--gold); margin-bottom: 4px; }
+        .badge { position: absolute; top: 8px; right: 22%; background: var(--red); color: white; font-size: 10px; padding: 2px 5px; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="top-nav">
     <a href="#" class="logo">VIRA<span> MALL</span></a>
-    <div class="search-container"><input type="text" id="mainSearch" placeholder="ابحثي عن أناقتك..." oninput="handleSearch()"></div>
+    <div class="search-container"><input type="text" id="mainSearch" placeholder="ابحثي عن طلبك..." oninput="handleSearch()"></div>
 </div>
 
 <div class="top-banner">🇸🇩 VIRA MALL .. خيارك الأول في السودان 🇸🇩</div>
@@ -79,16 +94,8 @@
     <a href="https://wa.me/YOUR_PHONE" class="nav-link"><i>💬</i>تواصل</a>
 </div>
 
-<div id="store-modal" class="modal">
-    <div class="close-modal" onclick="closeAllModals()">✕</div>
-    <div id="productsGrid"></div>
-</div>
-
-<div id="wishlist-modal" class="modal">
-    <div class="close-modal" onclick="closeAllModals()">✕</div>
-    <h2 style="text-align: center; margin-top: 70px;">مفضلتي ❤️</h2>
-    <div id="wishlistGrid"></div>
-</div>
+<div id="store-modal" class="modal"><div class="close-modal" onclick="closeAllModals()">✕</div><div id="productsGrid"></div></div>
+<div id="wishlist-modal" class="modal"><div class="close-modal" onclick="closeAllModals()">✕</div><h2 style="text-align: center; margin-top: 70px;">مفضلتي ❤️</h2><div id="wishlistGrid"></div></div>
 
 <script>
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
@@ -133,7 +140,6 @@
             const imgs = p.img.split(',');
             const discPrice = (parseFloat(p.price) * 0.85).toFixed(0);
             const isFav = wishlist.some(i => i.name === p.name);
-            
             return `<div class="product-card">
                 <div class="fav-heart" onclick="toggleWish('${p.name}', '${p.price}', '${p.img}', event)">${isFav ? '❤️' : '🤍'}</div>
                 <div class="catalog-container">
@@ -149,7 +155,7 @@
                     ` : ''}
                 </div>
                 <div class="p-info">
-                    <div style="font-weight:700; font-size:18px;">${p.name}</div>
+                    <div style="font-weight:700;">${p.name}</div>
                     <div class="p-price">${discPrice} SDG</div>
                     <span class="delivery-tag">🚚 متوفر توصيل لجميع الولايات</span>
                     <button class="add-btn" onclick="addToCart('${p.name}', '${discPrice}', '${p.phone}')">إضافة للحقيبة 🛍️</button>
@@ -163,10 +169,8 @@
         const dots = document.getElementById(`dots-${gridId}-${pIdx}`).children;
         const total = wrapper.children.length;
         let current = (parseInt(wrapper.getAttribute('data-current') || 0) + step + total) % total;
-        
         wrapper.style.transform = `translateX(${current * 100}%)`;
         wrapper.setAttribute('data-current', current);
-        
         Array.from(dots).forEach((dot, i) => dot.classList.toggle('active', i === current));
     }
 
