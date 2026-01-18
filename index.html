@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | خيارك الأول</title>
+    <title>VIRA MALL | عالم التخفيضات</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         
@@ -11,81 +11,70 @@
             --amazon-orange: #febd69;
             --amazon-dark: #232f3e;
             --amazon-yellow: #ff9900;
+            --sale-red: #B12704;
             --light-bg: #f3f3f3;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--light-bg); color: #111; font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 80px; }
+        body { background: var(--light-bg); color: #111; font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 100px; }
 
-        /* الهيدر العلوي - أمازون ستايل */
-        .top-info { background: #131921; color: white; padding: 8px; text-align: center; font-size: 12px; font-weight: 700; }
-        
+        /* الهيدر */
         .main-header { background: var(--amazon-dark); padding: 15px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .intro-text { text-align: center; color: var(--amazon-orange); margin-bottom: 10px; }
-        .intro-text h1 { margin: 0; font-size: 22px; font-weight: 900; }
-        .intro-text p { margin: 0; font-size: 13px; color: #fff; opacity: 0.8; }
+        .intro-text h1 { margin: 0; font-size: 24px; font-weight: 900; }
+        .intro-text p { margin: 0; font-size: 13px; color: #fff; opacity: 0.9; }
 
-        /* البحث الاحترافي */
-        .search-box { position: relative; width: 100%; display: flex; gap: 0; }
-        .search-box input { 
-            width: 100%; padding: 12px 15px; border-radius: 8px 0 0 8px; border: none; 
-            outline: none; font-family: 'Cairo'; 
-        }
-        .search-btn { 
-            background: var(--amazon-orange); border: none; padding: 0 15px; 
-            border-radius: 0 8px 8px 0; cursor: pointer; font-size: 18px;
-        }
+        /* البحث */
+        .search-box { position: relative; width: 100%; display: flex; margin-top: 10px; }
+        .search-box input { width: 100%; padding: 12px 15px; border-radius: 8px 0 0 8px; border: none; outline: none; font-family: 'Cairo'; }
+        .search-btn { background: var(--amazon-orange); border: none; padding: 0 15px; border-radius: 0 8px 8px 0; cursor: pointer; }
 
-        /* الكوليكشنات */
-        .section-header { padding: 15px 15px 5px; font-weight: 900; font-size: 18px; color: var(--amazon-dark); }
-        
+        /* الأقسام */
+        .section-title { padding: 15px 15px 5px; font-weight: 900; font-size: 18px; color: var(--amazon-dark); display: flex; align-items: center; gap: 8px; }
+
+        /* كرت المنتج المطور بالتخفيضات */
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .p-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); position: relative; transition: 0.3s; }
         
-        /* كرت المنتج بـ 3 وجهات (Slider) */
-        .p-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .img-slider { position: relative; width: 100%; height: 220px; overflow: hidden; }
-        .slider-track { display: flex; transition: transform 0.4s ease-in-out; height: 100%; }
-        .slider-track img { width: 100%; flex-shrink: 0; object-fit: cover; }
-        
-        /* نقط التنقل بين الصور */
-        .dots { position: absolute; bottom: 8px; width: 100%; display: flex; justify-content: center; gap: 4px; }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; }
-        .dot.active { background: var(--amazon-orange); width: 12px; border-radius: 4px; }
+        .img-container { width: 100%; height: 210px; background: #eee; overflow: hidden; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s; }
+        .img-container img.loaded { opacity: 1; }
 
-        .p-info { padding: 10px; }
-        .p-title { font-size: 13px; font-weight: 700; height: 38px; overflow: hidden; line-height: 1.4; }
-        .p-price { color: #B12704; font-size: 17px; font-weight: 700; margin: 5px 0; }
+        /* ملصق SALE */
+        .sale-badge { 
+            position: absolute; top: 10px; right: 10px; background: var(--sale-red); 
+            color: white; padding: 4px 10px; border-radius: 5px; font-size: 10px; 
+            font-weight: 900; z-index: 10; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        .fav-icon { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.9); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer; color: #ddd; }
+        .fav-icon.active { color: #ff4757; }
+
+        .p-info { padding: 12px; }
+        .p-title { font-size: 13px; font-weight: 700; height: 38px; overflow: hidden; margin-bottom: 5px; }
         
+        /* تنسيق السعر الجديد والقديم */
+        .price-area { display: flex; flex-direction: column; }
+        .old-price { color: #888; text-decoration: line-through; font-size: 11px; }
+        .new-price { color: var(--sale-red); font-size: 17px; font-weight: 900; }
+
         .add-to-cart { 
             background: linear-gradient(to bottom, #f7dfa1, #f0c14b);
-            border: 1px solid #a88734; width: 100%; padding: 8px; 
-            border-radius: 5px; font-family: 'Cairo'; font-weight: 700; font-size: 12px;
-            cursor: pointer; box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+            border: 1px solid #a88734; width: 100%; padding: 10px; 
+            border-radius: 7px; font-weight: 900; font-family: 'Cairo';
+            margin-top: 10px; cursor: pointer; font-size: 12px;
         }
 
-        /* السلة والناف بار */
-        .bottom-nav { 
-            position: fixed; bottom: 0; width: 100%; background: #fff; 
-            display: flex; justify-content: space-around; padding: 10px; 
-            border-top: 1px solid #ddd; z-index: 3000;
-        }
-        .nav-item { text-align: center; text-decoration: none; color: #555; position: relative; }
+        /* البار السفلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #ddd; z-index: 3000; }
+        .nav-item { text-align: center; text-decoration: none; color: #555; position: relative; font-size: 11px; font-weight: 700; flex: 1; }
+        .nav-item i { display: block; font-size: 20px; font-style: normal; margin-bottom: 4px; }
         .nav-item.active { color: var(--amazon-yellow); }
-        .nav-item i { display: block; font-size: 22px; font-style: normal; margin-bottom: 2px; }
-        .cart-badge { 
-            position: absolute; top: -5px; right: -8px; background: #e47911; 
-            color: white; font-size: 11px; font-weight: 900; width: 18px; 
-            height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center;
-        }
-
-        /* المودال */
-        .modal { display: none; position: fixed; inset: 0; background: white; z-index: 5000; overflow-y: auto; padding-top: 60px; }
-        .close-modal { position: fixed; top: 15px; left: 15px; background: var(--amazon-dark); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 6000; }
+        .badge { position: absolute; top: -8px; left: 55%; background: var(--amazon-yellow); color: var(--amazon-dark); font-size: 10px; min-width: 18px; padding: 2px; border-radius: 10px; font-weight: 900; }
     </style>
 </head>
 <body>
-
-<div class="top-info">🚚 التوصيل لكل ولايات السودان • خياركِ الأول للجمال</div>
 
 <header class="main-header">
     <div class="intro-text">
@@ -93,122 +82,104 @@
         <p>خياركِ الأول للأناقة والرفاهية ✨</p>
     </div>
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="ابحثي عن فستان، أحذية، كوليكشن..." oninput="doSearch()">
+        <input type="text" id="searchInput" placeholder="ابحثي عن فستان، تخفيضات..." oninput="doSearch()">
         <button class="search-btn">🔍</button>
     </div>
 </header>
 
-<div id="mainContent">
-    </div>
-
-<div id="shop-modal" class="modal">
-    <div class="close-modal" onclick="closeModal()">✕</div>
-    <div id="modalBody"></div>
-</div>
+<div id="offersArea"></div>
+<div class="section-title">✨ كل المنتجات</div>
+<div id="mainContent" class="product-grid"></div>
 
 <nav class="bottom-nav">
-    <a href="#" class="nav-item active" onclick="closeModal()"><i>🏠</i>الرئيسية</a>
-    <div class="nav-item" onclick="sendOrder()">
-        <i>🛒</i>السلة
-        <span id="cartCount" class="cart-badge">0</span>
-    </div>
+    <a href="#" class="nav-item active"><i>🏠</i>الرئيسية</a>
+    <a href="#" class="nav-item" onclick="alert('توصيلنا سريع لجميع الولايات 🚚')"><i>🚚</i>التوصيل</a>
+    <a href="#" class="nav-item" onclick="showFavs()"><i>❤️</i>المفضلة<span id="favCount" class="badge">0</span></a>
+    <a href="#" class="nav-item" onclick="sendOrder()"><i>🛒</i>الحقيبة<span id="cartCount" class="badge">0</span></a>
     <a href="https://wa.me/249967584275" class="nav-item"><i>💬</i>تواصل</a>
 </nav>
 
 <script>
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let products = [], cart = [];
+    let products = [], cart = [], favorites = [];
 
     async function init() {
-        const r = await fetch(sheetUrl + '&t=' + Date.now());
-        const text = await r.text();
-        const rows = text.split('\n').slice(1);
-        products = rows.map(row => {
-            const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            return { name: c[0]?.replace(/"/g,''), price: c[1], shop: c[2], img: c[3] };
-        }).filter(p => p.shop);
-        renderMall();
+        try {
+            const r = await fetch(sheetUrl + '&t=' + Date.now());
+            const text = await r.text();
+            const rows = text.split('\n').slice(1);
+            products = rows.map(row => {
+                const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                return { 
+                    name: c[0]?.replace(/"/g,''), 
+                    price: c[1], 
+                    shop: c[2], 
+                    img: c[3]?.split(',')[0].trim(),
+                    oldPrice: c[4] // افترضنا العمود الخامس للسعر القديم
+                };
+            }).filter(p => p.name);
+            renderAll();
+        } catch (e) { console.error("Error"); }
     }
 
-    function renderMall() {
-        const shops = [...new Set(products.map(p => p.shop))];
-        let html = '';
-        shops.forEach(shop => {
-            const items = products.filter(p => p.shop === shop);
-            html += `
-                <div class="section-header">${shop}</div>
-                <div class="product-grid">
-                    ${items.map((p, idx) => createCard(p, idx, shop)).join('')}
-                </div>
-            `;
-        });
-        document.getElementById('mainContent').innerHTML = html;
+    function renderAll() {
+        // قسم العروض (اللي عندها سعر قديم)
+        const saleItems = products.filter(p => p.oldPrice && p.oldPrice.trim() !== "");
+        if(saleItems.length > 0) {
+            let offersHTML = `<div class="section-title">🔥 عروض نارية</div><div class="product-grid">`;
+            offersHTML += saleItems.map(p => createCard(p)).join('') + `</div>`;
+            document.getElementById('offersArea').innerHTML = offersHTML;
+        }
+
+        // كل المنتجات
+        document.getElementById('mainContent').innerHTML = products.map(p => createCard(p)).join('');
     }
 
-    function createCard(p, idx, shopId) {
-        const imgs = p.img.split(',');
-        const sliderId = `slider-${shopId.replace(/\s/g,'')}-${idx}`;
+    function createCard(p) {
+        const isSale = p.oldPrice && p.oldPrice.trim() !== "";
         return `
             <div class="p-card">
-                <div class="img-slider" id="${sliderId}" onclick="nextImg('${sliderId}', ${imgs.length})">
-                    <div class="slider-track">
-                        ${imgs.map(img => `<img src="${img.trim()}" onerror="this.src='https://via.placeholder.com/300x400?text=VIRA+MALL'">`).join('')}
-                    </div>
-                    <div class="dots">
-                        ${imgs.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}
-                    </div>
+                ${isSale ? '<div class="sale-badge">خصم %</div>' : ''}
+                <div class="fav-icon" onclick="toggleFav(this, '${p.name}')">❤</div>
+                <div class="img-container">
+                    <img src="${p.img}" onload="this.classList.add('loaded')" onerror="this.src='https://via.placeholder.com/300x400?text=VIRA+MALL'">
                 </div>
                 <div class="p-info">
                     <div class="p-title">${p.name}</div>
-                    <div class="p-price">${p.price} SDG</div>
+                    <div class="price-area">
+                        ${isSale ? `<span class="old-price">${p.oldPrice} SDG</span>` : ''}
+                        <span class="new-price">${p.price} SDG</span>
+                    </div>
                     <button class="add-to-cart" onclick="addToCart('${p.name}', '${p.price}')">إضافة للسلة</button>
                 </div>
-            </div>
-        `;
-    }
-
-    // وظيفة تقليب الصور داخل الكرت
-    function nextImg(id, total) {
-        const slider = document.getElementById(id);
-        const track = slider.querySelector('.slider-track');
-        const dots = slider.querySelectorAll('.dot');
-        let current = parseInt(slider.dataset.index || 0);
-        
-        current = (current + 1) % total;
-        track.style.transform = `translateX(${current * 100}%)`;
-        slider.dataset.index = current;
-        
-        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            </div>`;
     }
 
     function addToCart(name, price) {
         cart.push({name, price});
         const badge = document.getElementById('cartCount');
-        badge.innerText = cart.length;
-        badge.style.display = 'flex';
-        // حركة خفيفة للزر
-        event.target.innerText = "✅ تمت الإضافة";
-        setTimeout(() => event.target.innerText = "إضافة للسلة", 1000);
+        badge.innerText = cart.length; badge.style.display = 'block';
+    }
+
+    function toggleFav(el, name) {
+        el.classList.toggle('active');
+        if(el.classList.contains('active')) favorites.push(name);
+        else favorites = favorites.filter(f => f !== name);
+        const badge = document.getElementById('favCount');
+        badge.innerText = favorites.length; badge.style.display = favorites.length > 0 ? 'block' : 'none';
+    }
+
+    function sendOrder() {
+        if(!cart.length) return alert("الحقيبة فارغة!");
+        let msg = "طلب جديد من VIRA MALL 🛍️:\n" + cart.map((it, i) => `${i+1}. ${it.name} (${it.price} SDG)`).join('\n');
+        window.open(`https://wa.me/249967584275?text=${encodeURIComponent(msg)}`);
     }
 
     function doSearch() {
         const t = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = products.filter(p => p.name.toLowerCase().includes(t) || p.shop.toLowerCase().includes(t));
-        if(t.length > 2) {
-            document.getElementById('modalBody').innerHTML = `<div class="product-grid">${filtered.map((p, i) => createCard(p, i, 'search')).join('')}</div>`;
-            document.getElementById('shop-modal').style.display = 'block';
-        }
+        const f = products.filter(p => p.name.toLowerCase().includes(t));
+        document.getElementById('mainContent').innerHTML = f.map(p => createCard(p)).join('');
     }
-
-    function sendOrder() {
-        if(!cart.length) return alert("سلتك فارغة!");
-        let msg = "طلب جديد من VIRA MALL 🛒:\n\n";
-        cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)\n`);
-        window.open(`https://wa.me/249967584275?text=${encodeURIComponent(msg)}`);
-        cart = []; document.getElementById('cartCount').style.display = 'none';
-    }
-
-    function closeModal() { document.getElementById('shop-modal').style.display = 'none'; }
 
     init();
 </script>
