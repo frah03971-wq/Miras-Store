@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRA MALL | فيرا مول العالمي</title>
+    <title>VIRA MALL | فيرا مول</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         :root { --gold: #D4AF37; --black: #000000; --red: #ff4757; }
-        body { font-family: 'Cairo', sans-serif; background: #f8f8f8; margin: 0; padding-bottom: 90px; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background: #f9f9f9; margin: 0; padding-bottom: 90px; }
 
         /* الهيدر */
         .top-nav { background: var(--black); padding: 12px 15px; display: flex; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
         .logo { font-size: 1.4em; font-weight: 900; color: #fff; text-decoration: none; }
         .logo span { color: var(--gold); }
         .search-container { flex: 1; margin-right: 15px; }
-        .search-container input { width: 100%; padding: 10px 15px; border-radius: 25px; border: none; outline: none; font-size: 14px; }
+        .search-container input { width: 100%; padding: 10px; border-radius: 20px; border: none; outline: none; }
 
-        /* شريط التطبيق السفلي */
+        /* شريط التطبيق السفلي - معدل لإظهار المفضلة */
         .bottom-app-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--black); height: 75px; display: flex; justify-content: space-around; align-items: center; border-top: 2px solid var(--gold); z-index: 10001; }
-        .nav-link { color: #fff; text-decoration: none; text-align: center; font-size: 0.75em; cursor: pointer; position: relative; min-width: 60px; }
-        .nav-link i { display: block; font-size: 1.5em; color: var(--gold); margin-bottom: 2px; }
-        
-        .badge { position: absolute; top: -5px; right: 10px; background: var(--red); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+        .nav-link { color: #fff; text-decoration: none; text-align: center; font-size: 0.7em; cursor: pointer; position: relative; flex: 1; }
+        .nav-link i { display: block; font-size: 1.6em; color: var(--gold); margin-bottom: 2px; }
+        .badge { position: absolute; top: -5px; right: 25%; background: var(--red); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; border: 1px solid #fff; }
 
         .main-content { padding: 20px; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .brand-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; text-align: center; cursor: pointer; }
+        .brand-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #eee; text-align: center; cursor: pointer; }
         .brand-image { width: 100%; height: 280px; object-fit: cover; }
 
         /* المودالات */
@@ -35,9 +34,8 @@
         .product-grid { padding: 80px 15px 100px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .product-card { border: 1px solid #eee; border-radius: 15px; padding: 15px; background: #fff; text-align: center; position: relative; }
         
-        /* زر المفضلة (القلب) */
-        .fav-btn { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; border: none; font-size: 1.2em; color: #ccc; transition: 0.3s; }
-        .fav-btn.active { color: var(--red); }
+        /* زر القلب للمفضلة */
+        .fav-heart { position: absolute; top: 15px; left: 15px; font-size: 1.5em; cursor: pointer; z-index: 10; filter: drop-shadow(0 0 2px rgba(0,0,0,0.3)); }
 
         .image-container { width: 100%; height: 350px; position: relative; overflow: hidden; border-radius: 10px; }
         .image-slider { display: flex; transition: transform 0.4s ease; height: 100%; }
@@ -45,7 +43,7 @@
         
         .discount-badge { position: absolute; top: 15px; right: 15px; background: var(--red); color: white; padding: 4px 10px; border-radius: 5px; font-weight: bold; z-index: 9; font-size: 0.8em; }
         .p-price { color: #B12704; font-size: 1.4em; font-weight: 900; margin: 10px 0; }
-        .add-btn { background: var(--gold); border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; color: black; }
+        .add-btn { background: var(--gold); border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
         
         .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); color: white; border: none; padding: 10px; cursor: pointer; z-index: 5; }
         .prev-btn { right: 0; } .next-btn { left: 0; }
@@ -54,44 +52,43 @@
 <body>
 
 <div class="top-nav">
-    <a href="#" class="logo" onclick="location.reload()">VIRA<span> MALL</span></a>
-    <div class="search-container"><input type="text" id="mainSearch" placeholder="ابحثي عن أناقتك..." oninput="handleSearch()"></div>
+    <a href="#" class="logo">VIRA<span> MALL</span></a>
+    <div class="search-container"><input type="text" id="mainSearch" placeholder="ابحثي هنا..." oninput="handleSearch()"></div>
 </div>
 
 <div class="main-content"><div class="grid-container" id="brandsGrid"></div></div>
 
 <div class="bottom-app-bar">
     <a class="nav-link" onclick="closeAllModals();"><i>🏠</i>الرئيسية</a>
-    <a class="nav-link" onclick="openWishlist();"><i>❤️</i>المفضلة<span id="wishCountBadge" class="badge">0</span></a>
-    <a class="nav-link" onclick="openCart();"><i>🛒</i>السلة<span id="cartCountBadge" class="badge">0</span></a>
+    <a class="nav-link" onclick="openWishlist();"><i>❤️</i>المفضلة <span id="wishCount" class="badge">0</span></a>
+    <a class="nav-link" onclick="openCart();"><i>🛒</i>السلة <span id="cartCount" class="badge">0</span></a>
     <a href="https://wa.me/YOUR_PHONE" class="nav-link"><i>💬</i>تواصل</a>
 </div>
 
 <div id="store-modal" class="modal">
     <span class="close-modal" onclick="closeAllModals()">✕</span>
-    <h2 id="modalTitle" style="text-align: center; margin-top: 30px; font-weight: 900;"></h2>
+    <h2 id="modalTitle" style="text-align: center; margin-top: 30px;"></h2>
     <div class="product-grid" id="productsGrid"></div>
 </div>
 
 <div id="wishlist-modal" class="modal">
     <span class="close-modal" onclick="closeAllModals()">✕</span>
-    <h2 style="text-align: center; margin-top: 30px; font-weight: 900;">مفضلتي ❤️</h2>
+    <h2 style="text-align: center; margin-top: 30px;">مفضلتي ❤️</h2>
     <div class="product-grid" id="wishlistGrid"></div>
 </div>
 
 <script>
     const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let allProducts = [], cart = JSON.parse(localStorage.getItem('vira_cart')) || [], wishlist = JSON.parse(localStorage.getItem('vira_wishlist')) || [];
+    let allProducts = [], cart = JSON.parse(localStorage.getItem('v_cart')) || [], wishlist = JSON.parse(localStorage.getItem('v_wish')) || [];
 
     async function loadData() {
-        updateBadges();
+        updateUI();
         const resp = await fetch(sheetUrl + '&t=' + Date.now());
         const csv = await resp.text();
         const rows = csv.split('\n').slice(1);
         allProducts = rows.map(r => {
             const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             return {
-                id: Math.random().toString(36).substr(2, 9),
                 name: (c[0] || '').replace(/"/g,'').trim(),
                 price: (c[1] || '').replace(/"/g,'').trim(),
                 shop: (c[2] || '').replace(/"/g,'').trim(),
@@ -105,9 +102,9 @@
     function renderMall(products) {
         const shops = [...new Set(products.map(p => p.shop))];
         document.getElementById('brandsGrid').innerHTML = shops.map(shop => {
-            const firstP = allProducts.find(p => p.shop === shop);
+            const firstImg = allProducts.find(p => p.shop === shop).img.split(',')[0];
             return `<div class="brand-card" onclick="openStore('${shop}')">
-                <img src="${firstP.img.split(',')[0].trim()}" class="brand-image">
+                <img src="${firstImg}" class="brand-image">
                 <h2 style="margin:15px 0;">${shop} 🇸🇩</h2>
             </div>`;
         }).join('');
@@ -115,23 +112,19 @@
 
     function openStore(shopName) {
         document.getElementById('modalTitle').innerText = shopName;
-        const products = allProducts.filter(p => p.shop === shopName);
-        renderProducts(products, 'productsGrid');
+        renderProducts(allProducts.filter(p => p.shop === shopName), 'productsGrid');
         document.getElementById('store-modal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
     }
 
     function renderProducts(products, gridId) {
-        document.getElementById(gridId).innerHTML = products.map((p, pIdx) => {
-            const images = p.img.split(',');
+        document.getElementById(gridId).innerHTML = products.map((p, idx) => {
             const discPrice = (parseFloat(p.price) * 0.85).toFixed(0);
-            const isFav = wishlist.some(item => item.name === p.name);
+            const isFav = wishlist.some(i => i.name === p.name);
             return `<div class="product-card">
-                <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleWishlist('${p.name}', '${p.price}', '${p.img}', event)">${isFav ? '❤️' : '🤍'}</button>
+                <div class="fav-heart" onclick="toggleWish('${p.name}', '${p.price}', '${p.img}', event)">${isFav ? '❤️' : '🤍'}</div>
                 <div class="discount-badge">15% OFF</div>
                 <div class="image-container">
-                    <div class="image-slider" id="slider-${gridId}-${pIdx}" data-current="0">${images.map(url => `<img src="${url.trim()}">`).join('')}</div>
-                    ${images.length > 1 ? `<button class="slider-btn prev-btn" onclick="moveSlide('${gridId}', ${pIdx}, 1)">❯</button><button class="slider-btn next-btn" onclick="moveSlide('${gridId}', ${pIdx}, -1)">❮</button>` : ''}
+                    <div class="image-slider" id="slider-${gridId}-${idx}">${p.img.split(',').map(url => `<img src="${url.trim()}">`).join('')}</div>
                 </div>
                 <div style="font-weight:700; margin:10px 0;">${p.name}</div>
                 <div class="p-price">${discPrice} SDG</div>
@@ -140,57 +133,41 @@
         }).join('');
     }
 
-    function toggleWishlist(name, price, img, event) {
-        event.stopPropagation();
-        const index = wishlist.findIndex(item => item.name === name);
-        if(index > -1) wishlist.splice(index, 1);
+    function toggleWish(name, price, img, e) {
+        e.stopPropagation();
+        const idx = wishlist.findIndex(i => i.name === name);
+        if(idx > -1) wishlist.splice(idx, 1);
         else wishlist.push({name, price, img});
-        localStorage.setItem('vira_wishlist', JSON.stringify(wishlist));
-        updateBadges();
-        event.target.classList.toggle('active');
-        event.target.innerText = event.target.classList.contains('active') ? '❤️' : '🤍';
+        localStorage.setItem('v_wish', JSON.stringify(wishlist));
+        updateUI();
+        e.target.innerText = wishlist.some(i => i.name === name) ? '❤️' : '🤍';
     }
 
     function openWishlist() {
-        if(wishlist.length === 0) return alert("مفضلتك فارغة حالياً!");
+        if(wishlist.length === 0) return alert("مفضلتك فارغة ❤️");
         renderProducts(wishlist.map(w => ({...w, shop: 'fav', phone: allProducts[0].phone})), 'wishlistGrid');
         document.getElementById('wishlist-modal').style.display = 'block';
     }
 
     function addToCart(name, price, phone) {
         cart.push({name, price, phone});
-        localStorage.setItem('vira_cart', JSON.stringify(cart));
-        updateBadges();
-        const btn = event.target;
-        btn.innerText = "تمت الإضافة ✅";
-        setTimeout(() => { btn.innerText = "إضافة للحقيبة 🛍️"; }, 1500);
+        localStorage.setItem('v_cart', JSON.stringify(cart));
+        updateUI();
+        alert('تمت الإضافة لـ VIRA MALL ✅');
     }
 
-    function updateBadges() {
-        document.getElementById('cartCountBadge').innerText = cart.length;
-        document.getElementById('wishCountBadge').innerText = wishlist.length;
+    function updateUI() {
+        document.getElementById('cartCount').innerText = cart.length;
+        document.getElementById('wishCount').innerText = wishlist.length;
     }
 
-    function moveSlide(gridId, pIdx, step) {
-        const slider = document.getElementById(`slider-${gridId}-${pIdx}`);
-        const imgs = slider.getElementsByTagName('img');
-        let current = (parseInt(slider.getAttribute('data-current') || 0) + step + imgs.length) % imgs.length;
-        slider.style.transform = `translateX(${current * 100}%)`;
-        slider.setAttribute('data-current', current);
-    }
-
-    function closeAllModals() {
-        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        document.body.style.overflow = 'auto';
-    }
-
+    function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); document.body.style.overflow = 'auto'; }
     function openCart() {
-        if(cart.length === 0) return alert("سلتك فارغة!");
-        let msg = "طلب من VIRA MALL 🛍️:\n";
+        if(cart.length === 0) return alert("السلة فارغة!");
+        let msg = "طلب جديد:\n";
         cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)\n`);
         window.open(`https://wa.me/${cart[0].phone}?text=${encodeURIComponent(msg)}`);
     }
-
     function handleSearch() {
         const term = document.getElementById('mainSearch').value.toLowerCase();
         renderMall(allProducts.filter(p => p.shop.toLowerCase().includes(term) || p.name.toLowerCase().includes(term)));
