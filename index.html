@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | النسخة الأنيقة</title>
+    <title>VIRA BRAND | النسخة الملكية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         
@@ -35,34 +35,32 @@
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
         .p-card { background: #fff; border-radius: 15px; overflow: hidden; border: 1px solid #eee; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         
-        .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer; }
-        .fav-btn.active { color: var(--sale-red); }
+        .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer; color: #ccc; transition: 0.3s; }
+        .fav-btn.active { color: var(--sale-red); transform: scale(1.1); }
 
-        .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--sale-red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 900; z-index: 20; }
-
-        /* Image Box - Clean Look */
+        /* Image Box - Zoom & Slide */
         .img-box { position: relative; width: 100%; height: 280px; overflow: hidden; display: flex; background: #f9f9f9; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; transition: 0.5s; cursor: pointer; }
         
         .dots { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; gap: 5px; z-index: 60; }
-        .dot { width: 7px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
+        .dot { width: 7px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 50%; }
         .dot.active { background: #fff; width: 16px; border-radius: 10px; }
 
         .info { padding: 12px; text-align: center; }
-        .title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 5px; height: 40px; overflow: hidden; }
-        
-        .price-box { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 10px; }
-        .old-p { color: #aaa; text-decoration: line-through; font-size: 12px; }
+        .title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 5px; height: 40px; overflow: hidden; cursor: pointer; }
         .new-p { color: var(--sale-red); font-size: 18px; font-weight: 900; }
-        
         .add-btn { background: linear-gradient(180deg, #ffdb7d, #ffbb00); border: 1px solid #c89411; width: 100%; padding: 10px; border-radius: 8px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; }
+
+        /* Description Modal */
+        #descModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 5000; padding: 20px; overflow-y: auto; }
+        .modal-body { background: #fff; border-radius: 25px; padding: 25px; max-width: 450px; margin: auto; position: relative; text-align: center; }
+        .close-m { position: absolute; top: 15px; left: 15px; font-size: 25px; cursor: pointer; }
 
         /* Fullscreen Viewer */
         #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9000; justify-content: center; align-items: center; }
         #viewer img { max-width: 100%; max-height: 90%; object-fit: contain; }
-        .close-v { position: absolute; top: 20px; left: 20px; color: #fff; font-size: 35px; cursor: pointer; z-index: 9001; }
 
-        /* Bottom Nav */
+        /* Nav Bar */
         .nav-bar { position: fixed; bottom: 15px; left: 5%; width: 90%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px; border-radius: 25px; z-index: 4000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .nav-item { text-align: center; text-decoration: none; color: #888; font-size: 10px; font-weight: 700; flex: 1; position: relative; }
         .nav-item.active { color: var(--amazon-yellow); }
@@ -77,11 +75,11 @@
 <header class="main-header">
     <button id="back" onclick="goHome()">❮ رجوع</button>
     <div class="brand-info">
-        <h1>VIRA MALL</h1>
-        <p>خياركِ الأول للأناقة والرفاهية ✨</p>
+        <h1>VIRA BRAND</h1>
+        <p>خياركِ الأول للأناقة ✨</p>
     </div>
     <div class="search-container">
-        <input type="text" id="mainSearch" placeholder="ابحثي عن فستان، ماركة، عروض..." oninput="searchApp()">
+        <input type="text" id="mainSearch" placeholder="ابحثي عن طلبك..." oninput="searchApp()">
         <button class="search-btn">🔍</button>
     </div>
 </header>
@@ -89,8 +87,14 @@
 <div id="salesArea"></div>
 <div id="contentArea"></div>
 
+<div id="descModal" onclick="this.style.display='none'">
+    <div class="modal-body" onclick="event.stopPropagation()">
+        <span class="close-m" onclick="document.getElementById('descModal').style.display='none'">×</span>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
 <div id="viewer" onclick="this.style.display='none'">
-    <span class="close-v">×</span>
     <img id="vImg" src="">
 </div>
 
@@ -109,16 +113,15 @@
         const r = await fetch(url + '&t=' + Date.now());
         const txt = await r.text();
         const rows = txt.split('\n').slice(1);
-        
         database = rows.map(row => {
             const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            const clean = (v) => (v && !v.includes('wa.me')) ? v.trim() : "";
             return {
                 name: c[0]?.replace(/"/g,''),
-                price: clean(c[1]),
+                price: c[1]?.trim(),
                 shop: c[2]?.trim() || "VIRA",
                 imgs: c[3]?.replace(/"/g,'').split(',').map(s => s.trim()),
-                old: clean(c[4])
+                old: c[4]?.trim(),
+                desc: c[5]?.replace(/"/g,'') || "خامة فخمة وتصميم راقي من فيرا."
             };
         }).filter(p => p.name && p.price);
         goHome();
@@ -126,17 +129,14 @@
 
     function goHome() {
         document.getElementById('back').style.display = 'none';
-        const flash = database.filter(p => p.old && p.old.length > 0);
         let h = '';
-        if(flash.length > 0) {
-            h += `<div class="section-title">🔥 عروض نارية</div><div class="product-grid">${flash.map(p => createCard(p)).join('')}</div>`;
-        }
         const shops = [...new Set(database.map(p => p.shop))];
         shops.forEach(s => {
             const items = database.filter(p => p.shop === s).slice(0, 4);
             h += `<div class="section-title"><h2>${s}</h2><span style="font-size:12px; color:var(--amazon-yellow); cursor:pointer;" onclick="goShop('${s}')">عرض الكل ❯</span></div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
         });
         document.getElementById('contentArea').innerHTML = h;
+        document.getElementById('salesArea').innerHTML = '';
         window.scrollTo(0,0);
     }
 
@@ -144,27 +144,21 @@
         document.getElementById('back').style.display = 'block';
         const items = database.filter(p => p.shop === name);
         document.getElementById('contentArea').innerHTML = `<div class="section-title">كوليكشن ${name}</div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
-        document.getElementById('salesArea').innerHTML = '';
         window.scrollTo(0,0);
     }
 
     function createCard(p) {
         const id = 'p' + Math.random().toString(36).substr(2, 5);
-        const sale = p.old && p.old.length > 0;
         return `
             <div class="p-card" id="${id}">
                 <div class="fav-btn" onclick="toggleFav(this)">❤</div>
-                ${sale ? '<div class="sale-tag">SALE</div>' : ''}
                 <div class="img-box" onclick="handleImgClick(event, '${id}')">
-                    ${p.imgs.map((src, i) => `<img src="${src}" data-src="${src}">`).join('')}
-                    <div class="dots">${p.imgs.map((_,i)=>`<div class="dot ${i===0?'active':''}" onclick="event.stopPropagation(); goToSlide('${id}', ${i})"></div>`).join('')}</div>
+                    ${p.imgs.map(src => `<img src="${src}">`).join('')}
+                    <div class="dots">${p.imgs.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>
                 </div>
                 <div class="info">
-                    <div class="title">${p.name}</div>
-                    <div class="price-box">
-                        ${sale ? `<span class="old-p">${p.old} SDG</span>` : ''}
-                        <span class="new-p">${p.price} SDG</span>
-                    </div>
+                    <div class="title" onclick="openDesc('${encodeURIComponent(JSON.stringify(p))}')">${p.name}</div>
+                    <div class="new-p">${p.price} SDG</div>
                     <button class="add-btn" onclick="add('${p.name}', '${p.price}')">إضافة للسلة</button>
                 </div>
             </div>`;
@@ -173,42 +167,48 @@
     function handleImgClick(event, id) {
         const box = document.getElementById(id).querySelector('.img-box');
         const imgs = box.querySelectorAll('img');
+        const dots = box.querySelectorAll('.dot');
         let idx = parseInt(box.dataset.idx || 0);
         const rect = box.getBoundingClientRect();
         const x = event.clientX - rect.left;
         
         if (x > rect.width / 2) {
-            openViewer(imgs[idx].src);
+            document.getElementById('vImg').src = imgs[idx].src;
+            document.getElementById('viewer').style.display = 'flex';
         } else {
-            goToSlide(id, (idx + 1) % imgs.length);
+            idx = (idx + 1) % imgs.length;
+            imgs.forEach(img => img.style.transform = `translateX(${idx * 100}%)`);
+            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            box.dataset.idx = idx;
         }
     }
 
-    function goToSlide(id, idx) {
-        const box = document.getElementById(id).querySelector('.img-box');
-        const imgs = box.querySelectorAll('img');
-        const dots = box.querySelectorAll('.dot');
-        imgs.forEach(img => img.style.transform = `translateX(${idx * 100}%)`);
-        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-        box.dataset.idx = idx;
-    }
-
-    function openViewer(src) {
-        document.getElementById('vImg').src = src;
-        document.getElementById('viewer').style.display = 'flex';
+    function openDesc(data) {
+        const p = JSON.parse(decodeURIComponent(data));
+        document.getElementById('modalContent').innerHTML = `
+            <img src="${p.imgs[0]}" style="width:100%; border-radius:15px; margin-bottom:15px;">
+            <h3 style="margin-bottom:10px;">${p.name}</h3>
+            <div style="background:#f9f9f9; padding:15px; border-radius:12px; text-align:right; margin:10px 0;">
+                <strong style="display:block; margin-bottom:5px; color:var(--amazon-dark);">المقاسات والتفاصيل:</strong>
+                <p style="color:#555; margin:0; line-height:1.6;">${p.desc}</p>
+            </div>
+            <div style="font-size:24px; font-weight:900; color:var(--sale-red); margin:15px 0;">${p.price} SDG</div>
+            <button class="add-btn" onclick="add('${p.name}', '${p.price}'); document.getElementById('descModal').style.display='none'">أضيفي للحقيبة</button>
+        `;
+        document.getElementById('descModal').style.display = 'block';
     }
 
     function toggleFav(el) {
         el.classList.toggle('active');
         favorites += el.classList.contains('active') ? 1 : -1;
-        const b = document.getElementById('fBadge');
-        b.innerText = favorites; b.style.display = favorites > 0 ? 'flex' : 'none';
+        document.getElementById('fBadge').innerText = favorites;
+        document.getElementById('fBadge').style.display = favorites > 0 ? 'flex' : 'none';
     }
 
     function add(n, p) {
         cart.push({n, p});
-        const b = document.getElementById('cBadge');
-        b.innerText = cart.length; b.style.display = 'flex';
+        document.getElementById('cBadge').innerText = cart.length;
+        document.getElementById('cBadge').style.display = 'flex';
     }
 
     function searchApp() {
@@ -219,7 +219,7 @@
 
     function sendOrder() {
         if(!cart.length) return alert("سلتك فارغة!");
-        let m = "طلب جديد من VIRA MALL 🛒:\n" + cart.map((it, i) => `${i+1}. ${it.n} (${it.p})`).join('\n');
+        let m = "طلب جديد من VIRA BRAND 🛒:\n" + cart.map(it => `- ${it.n} (${it.p})`).join('\n');
         window.open(`https://wa.me/249967584275?text=${encodeURIComponent(m)}`);
     }
 
