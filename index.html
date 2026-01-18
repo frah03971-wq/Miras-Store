@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | النسخة الكاملة</title>
+    <title>VIRA MALL | النسخة الأنيقة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         
@@ -40,18 +40,16 @@
 
         .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--sale-red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 900; z-index: 20; }
 
-        /* Image Box with Slider & Zoom */
+        /* Image Box - Clean Look */
         .img-box { position: relative; width: 100%; height: 280px; overflow: hidden; display: flex; background: #f9f9f9; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; transition: 0.5s; cursor: zoom-in; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; transition: 0.5s; cursor: pointer; }
         
-        .zoom-icon { position: absolute; top: 10px; right: 40px; background: rgba(0,0,0,0.4); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 50; pointer-events: none; }
-
         .dots { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; gap: 5px; z-index: 60; }
         .dot { width: 7px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
         .dot.active { background: #fff; width: 16px; border-radius: 10px; }
 
         .info { padding: 12px; text-align: center; }
-        .title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 5px; cursor: pointer; height: 40px; overflow: hidden; }
+        .title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 5px; height: 40px; overflow: hidden; }
         
         .price-box { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 10px; }
         .old-p { color: #aaa; text-decoration: line-through; font-size: 12px; }
@@ -64,7 +62,7 @@
         #viewer img { max-width: 100%; max-height: 90%; object-fit: contain; }
         .close-v { position: absolute; top: 20px; left: 20px; color: #fff; font-size: 35px; cursor: pointer; z-index: 9001; }
 
-        /* Nav Bar - All Options Included */
+        /* Bottom Nav */
         .nav-bar { position: fixed; bottom: 15px; left: 5%; width: 90%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px; border-radius: 25px; z-index: 4000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .nav-item { text-align: center; text-decoration: none; color: #888; font-size: 10px; font-weight: 700; flex: 1; position: relative; }
         .nav-item.active { color: var(--amazon-yellow); }
@@ -128,14 +126,12 @@
 
     function goHome() {
         document.getElementById('back').style.display = 'none';
-        
         const flash = database.filter(p => p.old && p.old.length > 0);
-        if(flash.length > 0) {
-            document.getElementById('salesArea').innerHTML = `<div class="section-title">🔥 عروض نارية</div><div class="product-grid">${flash.map(p => createCard(p)).join('')}</div>`;
-        }
-
-        const shops = [...new Set(database.map(p => p.shop))];
         let h = '';
+        if(flash.length > 0) {
+            h += `<div class="section-title">🔥 عروض نارية</div><div class="product-grid">${flash.map(p => createCard(p)).join('')}</div>`;
+        }
+        const shops = [...new Set(database.map(p => p.shop))];
         shops.forEach(s => {
             const items = database.filter(p => p.shop === s).slice(0, 4);
             h += `<div class="section-title"><h2>${s}</h2><span style="font-size:12px; color:var(--amazon-yellow); cursor:pointer;" onclick="goShop('${s}')">عرض الكل ❯</span></div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
@@ -146,9 +142,9 @@
 
     function goShop(name) {
         document.getElementById('back').style.display = 'block';
-        document.getElementById('salesArea').innerHTML = '';
         const items = database.filter(p => p.shop === name);
         document.getElementById('contentArea').innerHTML = `<div class="section-title">كوليكشن ${name}</div><div class="product-grid">${items.map(p => createCard(p)).join('')}</div>`;
+        document.getElementById('salesArea').innerHTML = '';
         window.scrollTo(0,0);
     }
 
@@ -158,10 +154,9 @@
         return `
             <div class="p-card" id="${id}">
                 <div class="fav-btn" onclick="toggleFav(this)">❤</div>
-                ${sale ? '<div class="sale-tag">خصم %</div>' : ''}
+                ${sale ? '<div class="sale-tag">SALE</div>' : ''}
                 <div class="img-box" onclick="handleImgClick(event, '${id}')">
-                    <div class="zoom-icon">🔍</div>
-                    ${p.imgs.map((src, i) => `<img src="${src}" data-src="${src}" onerror="this.src='https://via.placeholder.com/500x700?text=VIRA+MALL'">`).join('')}
+                    ${p.imgs.map((src, i) => `<img src="${src}" data-src="${src}">`).join('')}
                     <div class="dots">${p.imgs.map((_,i)=>`<div class="dot ${i===0?'active':''}" onclick="event.stopPropagation(); goToSlide('${id}', ${i})"></div>`).join('')}</div>
                 </div>
                 <div class="info">
@@ -179,16 +174,12 @@
         const box = document.getElementById(id).querySelector('.img-box');
         const imgs = box.querySelectorAll('img');
         let idx = parseInt(box.dataset.idx || 0);
-        
-        // إذا ضغط في النصف اليمين كبّر الصورة، إذا في الشمال قلب (أو العكس)
         const rect = box.getBoundingClientRect();
         const x = event.clientX - rect.left;
         
         if (x > rect.width / 2) {
-            // تكبير الصورة الحالية
             openViewer(imgs[idx].src);
         } else {
-            // تقليب للصور التالية
             goToSlide(id, (idx + 1) % imgs.length);
         }
     }
@@ -224,7 +215,6 @@
         const q = document.getElementById('mainSearch').value.toLowerCase();
         const f = database.filter(p => p.name.toLowerCase().includes(q) || p.shop.toLowerCase().includes(q));
         document.getElementById('contentArea').innerHTML = `<div class="product-grid">${f.map(p => createCard(p)).join('')}</div>`;
-        document.getElementById('salesArea').innerHTML = '';
     }
 
     function sendOrder() {
