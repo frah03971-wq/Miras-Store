@@ -3,150 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | المنصة الشاملة</title>
+    <title>VIRA MALL | Total Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        
-        :root { --primary: #febd69; --dark: #131921; --bg: #f5f6f7; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; }
+        :root { --primary: #febd69; --dark: #131921; --bg: #f5f6f7; --red: #ff4757; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; overflow-x: hidden; }
 
-        /* Header & Logo */
+        /* Header */
         .app-header { background: var(--dark); padding: 15px; color: white; position: sticky; top: 0; z-index: 3000; border-bottom: 2px solid var(--primary); }
-        .logo-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .logo { font-size: 24px; font-weight: 900; color: var(--primary); }
+        .logo-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .logo { font-size: 24px; font-weight: 900; color: var(--primary); text-decoration: none; }
         
-        /* زرار التاجرات الذهبي */
-        .merchant-btn { background: var(--primary); color: var(--dark); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 900; text-decoration: none; box-shadow: 0 4px 10px rgba(254, 189, 105, 0.3); }
+        .cart-icon-box { position: relative; cursor: pointer; font-size: 26px; }
+        .cart-count { position: absolute; top: -5px; right: -8px; background: var(--red); color: white; font-size: 12px; padding: 2px 6px; border-radius: 50%; font-weight: 700; }
 
         .search-box { background: white; border-radius: 12px; display: flex; padding: 5px 15px; align-items: center; }
-        .search-box input { border: none; width: 100%; padding: 8px; outline: none; font-family: 'Cairo'; font-size: 14px; }
+        .search-box input { border: none; width: 100%; padding: 8px; outline: none; font-family: 'Cairo'; width: 100%; }
 
-        /* الأقسام الدائرية */
-        .cats-container { display: flex; overflow-x: auto; padding: 15px; gap: 15px; background: white; margin-bottom: 10px; }
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 75px; cursor: pointer; }
-        .cat-circle { width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; border: 2px solid var(--primary); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        .cat-item span { font-size: 11px; font-weight: 700; margin-top: 6px; color: var(--dark); }
+        /* Categories */
+        .cats-scroll { display: flex; overflow-x: auto; padding: 15px; gap: 15px; background: white; border-bottom: 1px solid #eee; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 70px; cursor: pointer; }
+        .cat-circle { width: 55px; height: 55px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 2px solid var(--primary); box-shadow: 0 3px 6px rgba(0,0,0,0.05); }
+        .cat-item span { font-size: 11px; font-weight: 700; margin-top: 5px; color: var(--dark); }
 
-        /* شبكة المنتجات */
+        /* Product Grid */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
-        .card { background: white; border-radius: 18px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-        .img-wrap { height: 220px; background: #eee; position: relative; overflow: hidden; }
-        .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card { background: white; border-radius: 18px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .img-box { height: 210px; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
         
-        .price-chip { position: absolute; bottom: 10px; left: 10px; background: var(--dark); color: var(--primary); padding: 4px 10px; border-radius: 8px; font-weight: 900; font-size: 13px; }
+        .wishlist-heart { position: absolute; top: 10px; right: 10px; font-size: 24px; color: white; cursor: pointer; filter: drop-shadow(0 0 3px rgba(0,0,0,0.5)); transition: 0.3s; }
+        .wishlist-heart.active { color: var(--red); transform: scale(1.2); }
 
-        .details { padding: 12px; text-align: center; flex-grow: 1; }
-        .p-name { font-size: 14px; font-weight: 700; height: 40px; overflow: hidden; margin-bottom: 8px; color: #333; }
-        .order-btn { width: 100%; background: var(--primary); border: none; padding: 10px; border-radius: 12px; font-family: 'Cairo'; font-weight: 900; cursor: pointer; transition: 0.3s; }
-        .order-btn:active { transform: scale(0.95); }
+        .price-badge { position: absolute; bottom: 10px; left: 10px; background: var(--dark); color: var(--primary); padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 12px; }
 
-        /* شريط التنقل السفلي */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 4000; }
-        .nav-link { text-align: center; text-decoration: none; color: #888; font-size: 11px; font-weight: 700; }
+        .info { padding: 12px; text-align: center; }
+        .p-title { font-size: 13px; font-weight: 700; height: 38px; overflow: hidden; margin-bottom: 10px; color: #333; }
+        .add-btn { width: 100%; background: var(--primary); border: none; padding: 10px; border-radius: 12px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; transition: 0.2s; }
+        .add-btn:active { transform: scale(0.95); }
+
+        /* Cart Modal */
+        #cartOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; backdrop-filter: blur(5px); }
+        .cart-modal { background: white; width: 90%; max-width: 400px; margin: 40px auto; border-radius: 25px; padding: 25px; max-height: 80vh; overflow-y: auto; position: relative; }
+        .cart-item-row { display: flex; justify-content: space-between; border-bottom: 1px dotted #ccc; padding: 12px 0; align-items: center; font-size: 14px; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #ddd; z-index: 4000; }
+        .nav-link { text-align: center; text-decoration: none; color: #888; font-size: 12px; font-weight: 700; background: none; border: none; flex: 1; }
         .nav-link.active { color: var(--dark); }
-        .nav-link i { display: block; font-size: 20px; margin-bottom: 3px; }
 
-        /* إخفاء السكرول بار */
-        .cats-container::-webkit-scrollbar { display: none; }
+        .cats-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
 <header class="app-header">
     <div class="logo-area">
-        <div class="logo">VIRA MALL</div>
-        <a href="حطي_رابط_الفورم_هنا" target="_blank" class="merchant-btn">انضمي كتاجرة ➕</a>
+        <a href="#" class="logo">VIRA MALL</a>
+        <div class="cart-icon-box" onclick="toggleCart()">
+            🛒<span class="cart-count" id="cartCount">0</span>
+        </div>
     </div>
     <div class="search-box">
-        <input type="text" placeholder="ابحثي عن عطور، أطقم، عروض..." oninput="searchApp(this.value)">
-        <span>🔍</span>
+        <input type="text" placeholder="ابحثي عن طلبك هنا..." oninput="search(this.value)">
     </div>
 </header>
 
-<div class="cats-container" id="categoryBar"></div>
+<div class="cats-scroll" id="catBar"></div>
+<div id="gridArea" class="grid"></div>
 
-<div id="mainGrid" class="grid">
+<div id="cartOverlay" onclick="toggleCart()">
+    <div class="cart-modal" onclick="event.stopPropagation()">
+        <h3 style="text-align: center; color: var(--dark);">سلة التسوق حقتك 🛍️</h3>
+        <div id="cartItemsList"></div>
+        <div style="display:flex; justify-content:space-between; font-weight:900; margin:20px 0; font-size: 18px; color: var(--red);">
+            <span>الإجمالي الكلي:</span>
+            <span id="cartTotal">0 SDG</span>
+        </div>
+        <button class="add-btn" style="background:var(--dark); color:var(--primary); padding: 15px; font-size: 16px;" onclick="checkout()">إرسال الطلب للواتساب ✅</button>
+        <button onclick="toggleCart()" style="width:100%; background:none; border:none; color:#999; margin-top:15px; font-family:'Cairo';">إغلاق</button>
     </div>
+</div>
 
 <nav class="bottom-nav">
-    <a href="javascript:void(0)" onclick="loadData()" class="nav-link active"><i>🏠</i>الرئيسية</a>
-    <a href="https://wa.me/249967584275" class="nav-link"><i>💬</i>تواصل</a>
-    <a href="javascript:void(0)" onclick="alert('قسم العروض الحصرية قريباً!')" class="nav-link"><i>🔥</i>العروض</a>
-    <a href="javascript:void(0)" onclick="alert('فيرا مول - فخامة الاختيار')" class="nav-link"><i>👑</i>عن فيرا</a>
+    <button class="nav-link active" onclick="loadData()"><i>🏠</i>الرئيسية</button>
+    <button class="nav-link" onclick="sendDirect('توصيل')"><i>🚚</i>التوصيل</button>
+    <button class="nav-link" onclick="alert('قسم المفضلة قريباً!')"><i>❤️</i>المفضلة</button>
+    <button class="nav-link" onclick="sendDirect('استفسار')"><i>💬</i>تواصل</button>
 </nav>
 
 <script>
-    // رابط جدولك (تأكدي إنه المنشور CSV)
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    
-    let allProducts = [];
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    let products = [];
+    let cart = [];
 
     async function loadData() {
-        const response = await fetch(sheetUrl + '&t=' + Date.now());
-        const data = await response.text();
-        const rows = data.split('\n').slice(1);
-        
-        allProducts = rows.map(row => {
-            const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            return {
-                name: cols[0]?.replace(/"/g,''),
-                price: cols[1]?.trim(),
-                category: cols[2]?.trim() || "عام",
-                img: cols[3]?.replace(/"/g,'').split(',')[0].trim()
-            };
-        }).filter(p => p.name && p.img.startsWith('http'));
-
-        renderCategories();
-        renderProducts(allProducts);
+        try {
+            const res = await fetch(url + '&t=' + Date.now());
+            const text = await res.text();
+            const rows = text.split('\n').slice(1);
+            products = rows.map(r => {
+                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                return { name: c[0]?.replace(/"/g,''), price: c[1]?.trim(), cat: c[2]?.trim() || "عام", img: c[3]?.replace(/"/g,'').trim() };
+            }).filter(p => p.name && p.img.startsWith('http'));
+            renderCats();
+            renderProducts(products);
+        } catch(e) { console.log("خطأ في التحميل"); }
     }
 
-    function renderCategories() {
-        const cats = [...new Set(allProducts.map(p => p.category))];
-        const icons = { 'الرجال': '👔', 'الأطفال': '👶', 'العطور': '🌸', 'البخور': '💨' };
-        
-        let html = `<div class="cat-item" onclick="renderProducts(allProducts)">
-                        <div class="cat-circle">🌈</div><span>الكل</span>
-                    </div>`;
-        
-        cats.forEach(c => {
-            html += `<div class="cat-item" onclick="filterByCat('${c}')">
-                        <div class="cat-circle">${icons[c] || '📦'}</div><span>${c}</span>
-                    </div>`;
-        });
-        document.getElementById('categoryBar').innerHTML = html;
+    function renderCats() {
+        const cats = [...new Set(products.map(p => p.cat))];
+        const icons = {'الرجال':'👔', 'الأطفال':'👶', 'العطور':'🌸', 'البخور':'💨'};
+        let h = `<div class="cat-item" onclick="renderProducts(products)"><div class="cat-circle">🌈</div><span>الكل</span></div>`;
+        cats.forEach(c => { h += `<div class="cat-item" onclick="filterCat('${c}')"><div class="cat-circle">${icons[c] || '📦'}</div><span>${c}</span></div>`; });
+        document.getElementById('catBar').innerHTML = h;
     }
 
     function renderProducts(list) {
-        let html = list.map(p => `
+        document.getElementById('gridArea').innerHTML = list.map(p => `
             <div class="card">
-                <div class="img-wrap">
-                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300x400?text=VIRA+MALL'">
-                    <div class="price-chip">${p.price} SDG</div>
+                <div class="img-box">
+                    <img src="${p.img}" loading="lazy">
+                    <span class="wishlist-heart" onclick="this.classList.toggle('active')">❤</span>
+                    <div class="price-badge">${p.price} SDG</div>
                 </div>
-                <div class="details">
-                    <div class="p-name">${p.name}</div>
-                    <button class="order-btn" onclick="sendWhatsApp('${p.name}', '${p.price}')">اطلبي الآن</button>
+                <div class="info">
+                    <div class="p-title">${p.name}</div>
+                    <button class="add-btn" onclick="addToCart('${p.name}', '${p.price}')">أضيفي للسلة 🛒</button>
                 </div>
             </div>
         `).join('');
-        document.getElementById('mainGrid').innerHTML = html;
     }
 
-    function filterByCat(cat) {
-        const filtered = allProducts.filter(p => p.category === cat);
-        renderProducts(filtered);
+    function addToCart(name, price) {
+        cart.push({name, price});
+        document.getElementById('cartCount').innerText = cart.length;
+        // حركة بسيطة للتأكيد
+        let btn = event.target;
+        btn.innerText = "تمت الإضافة ✅";
+        btn.style.background = "#2ecc71";
+        setTimeout(() => { btn.innerText = "أضيفي للسلة 🛒"; btn.style.background = "var(--primary)"; }, 1000);
     }
 
-    function searchApp(query) {
-        const filtered = allProducts.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
-        renderProducts(filtered);
+    function toggleCart() {
+        const overlay = document.getElementById('cartOverlay');
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+        if(overlay.style.display === 'block') renderCartItems();
     }
 
-    function sendWhatsApp(name, price) {
-        const phone = "249967584275";
-        const message = `مرحباً VIRA MALL 🛒\n\nأود طلب المنتج: *${name}*\nالسعر: *${price} SDG*\n\nالرجاء تزويدي بالتفاصيل وإرسال موقعي (Location) للتوصيل 🚚.`;
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`);
+    function renderCartItems() {
+        let total = 0;
+        const h = cart.map((item, index) => {
+            let pNum = parseInt(item.price.replace(/\D/g,'')) || 0;
+            total += pNum;
+            return `<div class="cart-item-row">
+                        <span style="width:60%">${item.name}</span>
+                        <span style="font-weight:bold;">${item.price}</span>
+                        <button onclick="cart.splice(${index},1); renderCartItems();" style="border:none; background:none; color:red; font-size:18px;">✕</button>
+                    </div>`;
+        }).join('');
+        document.getElementById('cartItemsList').innerHTML = h || '<p style="text-align:center; padding:20px;">سلتك لسه فاضية يا عسل 🍯</p>';
+        document.getElementById('cartTotal').innerText = total + ' SDG';
+        document.getElementById('cartCount').innerText = cart.length;
     }
+
+    function checkout() {
+        if(cart.length === 0) return alert('أضيفي منتجات أولاً يا بيب!');
+        let totalStr = document.getElementById('cartTotal').innerText;
+        let msg = `طلب جديد من VIRA MALL 🛒:\n\n` + cart.map(i => `• ${i.name} (${i.price} SDG)`).join('\n');
+        msg += `\n\n💰 *الإجمالي الكلي: ${totalStr}*\n\n📍 الرجاء تأكيد الحجز وكتابة موقع التوصيل بالتفصيل 🚚.`;
+        window.open(`https://wa.me/249967584275?text=${encodeURIComponent(msg)}`);
+    }
+
+    function filterCat(c) { renderProducts(products.filter(p => p.cat === c)); }
+    function search(q) { renderProducts(products.filter(p => p.name.toLowerCase().includes(q.toLowerCase()))); }
+    function sendDirect(t) { window.open(`https://wa.me/249967584275?text=${t === 'توصيل' ? 'استفسار عن خدمة التوصيل لموقعي 🚚' : 'مرحبا فيرا مول، أريد الاستفسار عن بضاعة 💬'}`); }
 
     loadData();
 </script>
