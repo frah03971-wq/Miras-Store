@@ -3,297 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL VERSION</title>
+    <title>VIRA MALL | LUXURY EDITION</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         
         :root {
-            --amazon-dark: #131921;
-            --amazon-gold: #febd69;
-            --amazon-blue: #232f3e;
-            --bg-light: #eaeded;
+            --gold: #D4AF37;
+            --black: #0f1111;
+            --deep-dark: #050505;
             --white: #ffffff;
-            --red: #cc0c39;
+            --bg: #f4f4f4;
+            --soft-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-light);
+            background-color: var(--bg);
             margin: 0;
-            padding-bottom: 80px;
-            color: var(--amazon-dark);
-            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 90px;
+            color: var(--black);
+            overflow-x: hidden;
         }
 
-        /* Navbar - Amazon Style */
-        .navbar {
-            background-color: var(--amazon-dark);
-            padding: 10px 15px;
+        /* Glassmorphism Header */
+        .header {
+            background: linear-gradient(135deg, var(--black), var(--deep-dark));
+            padding: 20px 15px;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            border-bottom: 2px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .nav-top {
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
-            color: var(--amazon-gold);
+            color: var(--gold);
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .merchant-pill {
-            background: var(--amazon-gold);
-            color: var(--amazon-dark);
-            padding: 6px 14px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: 700;
+        .join-merchant {
+            background: var(--gold);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 11px;
             text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
 
-        .search-container {
+        .search-wrapper {
+            background: rgba(255,255,255,0.15);
+            border-radius: 30px;
+            padding: 8px 20px;
             display: flex;
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 2px solid transparent;
+            align-items: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
-        .search-container:focus-within {
-            border-color: var(--amazon-gold);
-        }
-
-        .search-container input {
+        .search-wrapper input {
+            background: none;
             border: none;
+            color: white;
             width: 100%;
-            padding: 10px 15px;
             font-family: 'Cairo';
-            font-size: 14px;
             outline: none;
+            font-size: 14px;
         }
 
-        .search-btn {
-            background: var(--amazon-gold);
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-
-        /* Category Scrollbar */
-        .categories {
+        /* Luxury Categories */
+        .cat-section {
             display: flex;
             overflow-x: auto;
-            background: var(--amazon-blue);
-            padding: 10px 0;
-            gap: 10px;
-        }
-
-        .categories::-webkit-scrollbar { display: none; }
-
-        .cat-chip {
-            color: white;
-            padding: 5px 15px;
-            white-space: nowrap;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        .cat-chip:active { border-color: white; }
-
-        /* Main Grid */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 10px;
-        }
-
-        .product-card {
+            padding: 20px 10px;
+            gap: 15px;
             background: var(--white);
-            border-radius: 4px;
-            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .cat-section::-webkit-scrollbar { display: none; }
+
+        .cat-card {
             display: flex;
             flex-direction: column;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            align-items: center;
+            min-width: 75px;
+            cursor: pointer;
         }
 
-        .product-image {
+        .cat-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            transition: 0.3s;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .cat-card span { font-size: 11px; font-weight: 800; margin-top: 8px; color: var(--black); }
+
+        /* Product Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .product-item {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--soft-shadow);
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .product-item:active { transform: scale(0.96); }
+
+        .image-container {
+            height: 230px;
+            position: relative;
+        }
+
+        .image-container img {
             width: 100%;
-            height: 180px;
+            height: 100%;
             object-fit: cover;
-            background: #f9f9f9;
         }
 
-        .product-info {
-            padding: 10px;
-            flex-grow: 1;
+        .price-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(15, 17, 17, 0.85);
+            color: var(--gold);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 13px;
+            backdrop-filter: blur(5px);
         }
 
-        .store-name {
-            font-size: 11px;
-            color: #565959;
-            margin-bottom: 4px;
+        .product-content {
+            padding: 15px;
+            text-align: center;
         }
 
-        .product-name {
+        .store-tag {
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .product-title {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 12px;
             height: 40px;
             overflow: hidden;
             line-height: 1.4;
-            margin-bottom: 8px;
         }
 
-        .price-row {
-            display: flex;
-            align-items: baseline;
-            gap: 3px;
-            margin-bottom: 10px;
-        }
-
-        .currency { font-size: 12px; font-weight: 700; }
-        .amount { font-size: 18px; font-weight: 900; }
-
-        .buy-btn {
-            background: #ffd814;
-            border: 1px solid #fcd200;
-            border-radius: 20px;
+        .btn-add {
+            background: var(--black);
+            color: var(--gold);
+            border: 1px solid var(--gold);
             width: 100%;
-            padding: 8px;
+            padding: 10px;
+            border-radius: 15px;
             font-family: 'Cairo';
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(213,217,217,.5);
         }
 
-        /* Footer Cart Icon */
-        .cart-float {
+        /* Floating Cart */
+        .cart-trigger {
             position: fixed;
-            bottom: 20px;
+            bottom: 100px;
             left: 20px;
-            background: var(--amazon-gold);
-            width: 60px;
-            height: 60px;
+            background: var(--gold);
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
             z-index: 2000;
-            cursor: pointer;
+            font-size: 28px;
         }
 
-        .badge {
+        .cart-num {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: var(--red);
-            color: white;
-            font-size: 12px;
-            padding: 2px 6px;
+            top: 0;
+            right: 0;
+            background: var(--black);
+            color: var(--gold);
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            border: 2px solid var(--gold);
         }
 
-        /* Cart Modal */
-        .modal {
+        /* Cart Side Modal */
+        .cart-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             z-index: 3000;
+            backdrop-filter: blur(8px);
         }
 
-        .modal-content {
-            background: var(--white);
-            width: 90%;
+        .cart-inner {
+            background: white;
+            width: 85%;
             max-width: 400px;
-            margin: 50px auto;
-            border-radius: 10px;
-            padding: 20px;
+            margin: 40px auto;
+            border-radius: 30px;
+            padding: 30px;
+            position: relative;
         }
 
-        /* Bottom Nav */
-        .bottom-nav {
+        /* Footer Nav */
+        .nav-bar {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: var(--white);
             display: flex;
-            border-top: 1px solid #ddd;
-            z-index: 1000;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            z-index: 1001;
         }
 
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--amazon-blue);
-            text-decoration: none;
-        }
-
+        .nav-link { text-decoration: none; color: #aaa; font-size: 11px; font-weight: 700; text-align: center; }
+        .nav-link.active { color: var(--gold); }
+        .nav-link i { display: block; font-size: 22px; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="nav-top">
+<header class="header">
+    <div class="header-top">
         <a href="#" class="logo">VIRA MALL</a>
-        <a href="https://docs.google.com/forms/d/1j9qvaGJip8Il4gZTJtefwmkzclrqGlpLyihhXvd4jA8/viewform" target="_blank" class="merchant-pill">انضم كتاجر</a>
+        <a href="https://docs.google.com/forms/d/1j9qvaGJip8Il4gZTJtefwmkzclrqGlpLyihhXvd4jA8/viewform" target="_blank" class="join-merchant">انضم كتاجر</a>
     </div>
-    <div class="search-container">
-        <input type="text" placeholder="البحث في VIRA MALL..." oninput="search(this.value)">
-        <button class="search-btn">🔍</button>
+    <div class="search-wrapper">
+        <input type="text" placeholder="ابحثي عن التميز..." oninput="search(this.value)">
     </div>
+</header>
+
+<div class="cat-section" id="catBar"></div>
+<div class="grid" id="gridArea"></div>
+
+<div class="cart-trigger" onclick="toggleCart()">
+    🛒 <span class="cart-num" id="cartCount">0</span>
 </div>
 
-<div class="categories" id="catBar"></div>
-
-<div class="main-grid" id="gridArea"></div>
-
-<div class="cart-float" onclick="toggleCart()">
-    🛒
-    <span class="badge" id="cartCount">0</span>
-</div>
-
-<div id="cartModal" class="modal" onclick="toggleCart()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="margin-top:0">سلة التسوق</h2>
-        <div id="cartList"></div>
-        <hr>
-        <div style="display:flex; justify-content:space-between; font-weight:900">
+<div id="cartModal" class="cart-modal" onclick="toggleCart()">
+    <div class="cart-inner" onclick="event.stopPropagation()">
+        <h2 style="text-align:center; color:var(--gold); margin-top:0;">حقيبة المشتريات</h2>
+        <div id="cartList" style="max-height: 300px; overflow-y: auto;"></div>
+        <div style="display:flex; justify-content:space-between; margin:20px 0; font-weight:900; font-size:20px; border-top:2px solid var(--bg); padding-top:15px;">
             <span>الإجمالي:</span>
             <span id="totalPrice">0 SDG</span>
         </div>
-        <button class="buy-btn" style="margin-top:20px; background:#ffa41c; font-size:16px;" onclick="checkout()">إرسال الطلب (واتساب)</button>
+        <button class="btn-add" style="padding:15px; font-size:16px; background:var(--gold); color:var(--black);" onclick="checkout()">تأكيد عبر واتساب ✅</button>
+        <button onclick="toggleCart()" style="width:100%; background:none; border:none; color:#ccc; margin-top:10px; font-family:'Cairo';">إغلاق</button>
     </div>
 </div>
 
-<div class="bottom-nav">
-    <a href="#" class="nav-item" onclick="loadData()">🏠 الرئيسية</a>
-    <a href="#" class="nav-item" onclick="alert('توصيلنا سريع لجميع المناطق!')">🚚 التوصيل</a>
-    <a href="https://wa.me/249967584275" class="nav-item">💬 تواصل</a>
-</div>
+<nav class="nav-bar">
+    <a href="#" class="nav-link active" onclick="loadData()"><i>🏠</i>الرئيسية</a>
+    <a href="#" class="nav-link" onclick="window.open('https://wa.me/249967584275')"><i>🚚</i>التوصيل</a>
+    <a href="https://wa.me/249967584275" class="nav-link"><i>💬</i>تواصل</a>
+</nav>
 
 <script>
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSsqL_LzG-fE_20L9SjKk9Z5L_F2uM_2pZ3E_4m9uV9W_E/pub?output=csv&gid=917392071';
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
     let products = [];
     let cart = [];
 
@@ -302,48 +320,54 @@
             const res = await fetch(url + '&t=' + Date.now());
             const text = await res.text();
             const rows = text.split('\n').slice(1);
+            
             products = rows.map(r => {
                 const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 return {
-                    store: c[1]?.replace(/"/g,'').trim(),
+                    merchant: c[1]?.replace(/"/g,'').trim(),
                     cat: c[2]?.trim(),
                     name: c[3]?.replace(/"/g,'').trim(),
                     price: c[4]?.trim(),
                     img: c[5]?.replace(/"/g,'').trim()
                 };
             }).filter(p => p.name && p.img && p.img.startsWith('http'));
+            
             renderCats();
             renderProducts(products);
-        } catch (e) { alert("تأكدي من نشر الجدول كـ CSV"); }
+        } catch (e) { alert("تأكدي من نشر الجدول CSV"); }
     }
 
     function renderCats() {
         const cats = [...new Set(products.map(p => p.cat))];
-        let h = `<div class="cat-chip" onclick="renderProducts(products)">الكل</div>`;
-        cats.forEach(c => { if(c) h += `<div class="cat-chip" onclick="filterCat('${c}')">${c}</div>`; });
+        const icons = {'الرجال':'👔', 'الأطفال':'👶', 'العطور':'🌸', 'البخور':'💨'};
+        let h = `<div class="cat-card" onclick="renderProducts(products)"><div class="cat-circle">🌈</div><span>الكل</span></div>`;
+        cats.forEach(c => { if(c) h += `<div class="cat-card" onclick="filterCat('${c}')"><div class="cat-circle">${icons[c] || '📦'}</div><span>${c}</span></div>`; });
         document.getElementById('catBar').innerHTML = h;
     }
 
     function renderProducts(list) {
         document.getElementById('gridArea').innerHTML = list.map(p => `
-            <div class="product-card">
-                <img src="${p.img}" class="product-image" onerror="this.src='https://via.placeholder.com/200'">
-                <div class="product-info">
-                    <div class="store-name">${p.store}</div>
-                    <div class="product-name">${p.name}</div>
-                    <div class="price-row">
-                        <span class="currency">SDG</span>
-                        <span class="amount">${p.price}</span>
-                    </div>
-                    <button class="buy-btn" onclick="addToCart('${p.name}', '${p.price}', '${p.store}')">إضافة للسلة</button>
+            <div class="product-item">
+                <div class="image-container">
+                    <img src="${p.img}" loading="lazy" onerror="this.src='https://via.placeholder.com/300'">
+                    <div class="price-badge">${p.price} SDG</div>
+                </div>
+                <div class="product-content">
+                    <span class="store-tag">${p.merchant}</span>
+                    <div class="product-title">${p.name}</div>
+                    <button class="btn-add" onclick="addToCart('${p.name}', '${p.price}', '${p.merchant}')">إضافة للسلة 🛒</button>
                 </div>
             </div>`).join('');
     }
 
-    function addToCart(name, price, store) {
-        cart.push({name, price, store});
+    function addToCart(n, p, s) {
+        cart.push({name:n, price:p, store:s});
         document.getElementById('cartCount').innerText = cart.length;
-        alert('تمت الإضافة من ' + store);
+        const toast = document.createElement('div');
+        toast.style = "position:fixed; top:20px; right:20px; background:var(--gold); color:black; padding:10px 20px; border-radius:10px; z-index:9999; font-weight:bold;";
+        toast.innerText = "تمت الإضافة ✨";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
     }
 
     function toggleCart() {
@@ -353,10 +377,9 @@
             let total = 0;
             document.getElementById('cartList').innerHTML = cart.map((i, idx) => {
                 total += parseInt(i.price.replace(/\D/g,'')) || 0;
-                return `<div style="padding:10px 0; border-bottom:1px solid #eee">
-                            <b>${i.name}</b> <br> <small>${i.store}</small> - ${i.price} SDG
-                        </div>`;
-            }).join('');
+                return `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
+                        <span style="font-size:14px;">${i.name}</span><b>${i.price}</b></div>`;
+            }).join('') || '<p style="text-align:center">السلة فارغة</p>';
             document.getElementById('totalPrice').innerText = total + ' SDG';
         }
     }
@@ -364,12 +387,12 @@
     function checkout() {
         if(cart.length === 0) return;
         let msg = `طلب جديد VIRA MALL 👑:\n\n` + cart.map(i => `• ${i.name} [${i.store}]`).join('\n');
-        msg += `\n\n💰 الإجمالي: ${document.getElementById('totalPrice').innerText}`;
+        msg += `\n\n💰 الإجمالي: ${document.getElementById('totalPrice').innerText}\n📍 بانتظار التوصيل...`;
         window.open(`https://wa.me/249967584275?text=${encodeURIComponent(msg)}`);
     }
 
     function filterCat(c) { renderProducts(products.filter(p => p.cat === c)); }
-    function search(q) { renderProducts(products.filter(p => p.name.toLowerCase().includes(q.toLowerCase()) || p.store.toLowerCase().includes(q.toLowerCase()))); }
+    function search(q) { renderProducts(products.filter(p => p.name.toLowerCase().includes(q.toLowerCase()) || p.merchant.toLowerCase().includes(q.toLowerCase()))); }
 
     loadData();
 </script>
