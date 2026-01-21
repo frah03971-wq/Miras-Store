@@ -3,167 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL LUXURY</title>
+    <title>VIRA MALL | THE LEGEND</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        :root { --gold: #D4AF37; --black: #0f1111; --white: #ffffff; --bg: #f8f9fa; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding-bottom: 90px; color: var(--black); }
         
-        /* Premium Header */
-        .header { background: linear-gradient(135deg, #1a1a1a, #000); padding: 20px 15px; position: sticky; top: 0; z-index: 2000; border-bottom: 3px solid var(--gold); text-align: center; }
-        .logo { font-size: 32px; font-weight: 900; color: var(--gold); text-decoration: none; display: block; margin-bottom: 15px; letter-spacing: 2px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        .header-tools { display: flex; gap: 10px; align-items: center; }
-        .search-box { flex-grow: 1; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 8px 15px; border: 1px solid var(--gold); display: flex; }
-        .search-box input { background: none; border: none; color: white; width: 100%; font-family: 'Cairo'; outline: none; font-size: 14px; }
-        .join-btn { background: var(--gold); color: black; padding: 10px 18px; border-radius: 25px; font-weight: 900; font-size: 11px; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); cursor: pointer; }
+        :root { --gold: #D4AF37; --black: #0f1111; --white: #ffffff; --bg: #f4f4f4; }
+        
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding-bottom: 90px; overflow-x: hidden; }
+        
+        /* Animation */
+        @keyframes goldGlow { 0% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 20px var(--gold); } 100% { box-shadow: 0 0 5px var(--gold); } }
+
+        /* Header & Brand */
+        .header { background: linear-gradient(135deg, #1a1a1a, #000); padding: 25px 15px; text-align: center; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 2000; }
+        .logo { font-size: 35px; font-weight: 900; color: var(--gold); text-decoration: none; letter-spacing: 3px; display: block; }
+        .slogan { color: #eee; font-size: 13px; margin-top: 5px; font-style: italic; }
+
+        /* Action Buttons */
+        .tools-bar { display: flex; justify-content: center; gap: 10px; padding: 15px; background: #fff; border-bottom: 1px solid #ddd; }
+        .btn-action { background: var(--black); color: var(--gold); padding: 10px 15px; border-radius: 12px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1px solid var(--gold); transition: 0.3s; }
+        .btn-action:hover { background: var(--gold); color: black; }
+
+        /* Sections */
+        .section-header { padding: 15px; font-weight: 900; color: #000; border-right: 6px solid var(--gold); margin: 20px 15px 10px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
 
         /* Product Grid */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-        .card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.07); position: relative; border: 1px solid #eee; transition: 0.3s; }
-        .card:active { transform: scale(0.97); }
-        .card img { width: 100%; height: 220px; object-fit: cover; background: #f9f9f9; }
-        .price { position: absolute; top: 12px; left: 12px; background: rgba(15, 17, 17, 0.85); color: var(--gold); padding: 5px 12px; border-radius: 12px; font-weight: 900; font-size: 13px; backdrop-filter: blur(5px); }
-        .info { padding: 15px; text-align: center; }
-        .store-label { font-size: 10px; color: var(--gold); font-weight: 900; display: block; text-transform: uppercase; margin-bottom: 5px; }
-        .title { font-size: 14px; font-weight: 700; margin-bottom: 12px; height: 40px; overflow: hidden; line-height: 1.4; }
-        .btn-add { background: var(--black); color: var(--gold); border: 1px solid var(--gold); width: 100%; padding: 12px; border-radius: 15px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 15px; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08); position: relative; border: 1px solid #eee; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .price-chip { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.8); color: var(--gold); padding: 5px 10px; border-radius: 10px; font-weight: 900; font-size: 12px; }
+        .fav-btn { position: absolute; top: 12px; right: 12px; background: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
-        /* Subscription Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; backdrop-filter: blur(10px); }
-        .modal-content { background: white; width: 85%; max-width: 400px; margin: 60px auto; border-radius: 35px; padding: 35px; text-align: center; border: 3px solid var(--gold); animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .info { padding: 12px; text-align: center; }
+        .brand-name { font-size: 10px; color: var(--gold); font-weight: 800; text-transform: uppercase; }
+        .prod-title { font-size: 14px; font-weight: 700; margin: 5px 0 10px; height: 38px; overflow: hidden; }
+        .add-to-cart { background: var(--black); color: var(--gold); border: 1px solid var(--gold); width: 100%; padding: 10px; border-radius: 12px; font-weight: 800; cursor: pointer; }
+
+        /* Modals */
+        .modal { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; backdrop-filter: blur(5px); }
+        .modal-content { background: white; width: 90%; max-width: 450px; margin: 40px auto; border-radius: 25px; padding: 25px; max-height: 80vh; overflow-y: auto; position: relative; border: 2px solid var(--gold); }
         
-        /* Floating Elements */
-        .cart-float { position: fixed; bottom: 100px; right: 25px; background: var(--gold); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4); z-index: 1000; font-size: 30px; }
-        .footer-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 18px 0; border-top: 1px solid #eee; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-        .nav-link { text-decoration: none; color: #aaa; font-size: 11px; font-weight: 800; text-align: center; }
-        .nav-link.active { color: var(--gold); }
+        /* Floating Nav */
+        .nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; z-index: 2500; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+        .nav-item { text-align: center; color: #888; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; }
+        .nav-item.active { color: var(--gold); }
+        .cart-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; }
+
+        /* Legend Footer */
+        .legend-footer { text-align: center; padding: 30px 15px; background: #000; color: var(--gold); margin-top: 50px; }
+        .legend-text { font-size: 18px; font-weight: 900; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
 <header class="header">
     <a href="#" class="logo">VIRA MALL</a>
-    <div class="header-tools">
-        <div class="search-box">
-            <input type="text" placeholder="ابحثي عن التميز..." oninput="search(this.value)">
-        </div>
-        <div class="join-btn" onclick="showPayment()">انضم كتاجر 👑</div>
-    </div>
+    <div class="slogan">حيث تجتمع الفخامة لتنحني لجمالك ✨</div>
 </header>
 
-<div id="gridArea" class="grid"></div>
+<div class="tools-bar">
+    <div class="btn-action" onclick="showMerchantModal()">انضمي كتاجرة 👑</div>
+    <div class="btn-action" onclick="showModal('favModal')">المفضلة ❤️</div>
+</div>
 
-<div id="paymentModal" class="modal" onclick="closePayment()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="color:var(--gold); margin-top:0;">عضوية التاجر الملكية ✨</h2>
-        <p style="font-size: 15px;">رسوم الاشتراك الشهري: <b>30,000 SDG</b></p>
-        <div style="background:#f9f9f9; padding:20px; border-radius:20px; margin:20px 0; border:2px dashed var(--gold)">
-            <p style="margin:0 0 10px 0; color:#666;">رقم الحساب (بنكك):</p>
-            <h2 style="letter-spacing:3px; margin:0; color:black;">2280384</h2>
+<div class="section-header">✨ مجموعة VIRA الملكية</div>
+<div id="myGrid" class="grid"></div>
+
+<div class="section-header">🛍️ عالم التاجرات</div>
+<div id="merchantGrid" class="grid"></div>
+
+<nav class="nav">
+    <div class="nav-item active" onclick="location.reload()">🏠<br>الرئيسية</div>
+    <div class="nav-item" style="position:relative" onclick="showModal('cartModal')">🛒<br>السلة <span id="cartCounter" class="cart-count">0</span></div>
+    <a href="https://wa.me/249967584275" class="nav-item">💬<br>تواصل</a>
+</nav>
+
+<div class="legend-footer">
+    <div class="legend-text">VIRA MALL.. حب حياتك الأبدي 💖</div>
+</div>
+
+<div id="merchantModal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold)">ابدئي مشروعك معنا 👑</h2>
+        <p>الاشتراك الشهري: <b>30,000 SDG</b></p>
+        <div style="background:#f9f9f9; padding:15px; border-radius:15px; border:1px dashed var(--gold); margin:15px 0;">
+            حساب بنكك للتحويل:<br>
+            <b style="font-size:24px">2280384</b>
         </div>
-        <p style="font-size:12px; color:#888; line-height:1.6;">يرجى تحويل الرسوم وإرسال إشعار الدفع عبر الواتساب لتفعيل متجرك والبدء في عرض منتجاتك.</p>
-        <button class="btn-add" style="background:var(--gold); color:black; padding:15px; font-size:16px;" onclick="handleMerchantAction()">تأكيد وإرسال الإشعار ✅</button>
+        <p style="font-size:12px; color:#666;">حولي الرسوم، صوري الإشعار، واضغطي الزر بالأسفل لإرساله لفيرا وتفعيل متجرك فوراً.</p>
+        <button class="add-to-cart" style="background:var(--gold); color:#000;" onclick="handleMerchantAuth()">تأكيد وإرسال الإشعار ✅</button>
+        <button onclick="closeModal('merchantModal')" style="background:none; border:none; color:red; margin-top:10px;">إغلاق</button>
     </div>
 </div>
 
-<div class="cart-float" onclick="checkout()">
-    🛒 <span id="cartCount" style="position:absolute; top:-5px; right:-5px; background:black; color:var(--gold); font-size:12px; width:25px; height:25px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid var(--gold); font-weight:900;">0</span>
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <h3 style="border-bottom:2px solid var(--gold); padding-bottom:10px;">حقيبة التسوق 🛒</h3>
+        <div id="cartItems"></div>
+        <hr>
+        <div style="padding:10px 0;">
+            <label>اختر الولاية للتوصيل:</label>
+            <select id="deliveryCity" onchange="updateTotal()" style="width:100%; padding:8px; border-radius:10px; margin-top:5px;">
+                <option value="0">اختر الولاية...</option>
+                <option value="5000">الخرطوم (5000)</option>
+                <option value="7000">الولايات (7000)</option>
+            </select>
+        </div>
+        <h4 id="totalPrice">الإجمالي: 0 SDG</h4>
+        <button class="add-to-cart" onclick="sendOrder()">إتمام الطلب واتساب 📥</button>
+        <button onclick="closeModal('cartModal')" style="background:none; border:none; color:#666; margin-top:10px;">استكمال التسوق</button>
+    </div>
 </div>
 
-<nav class="footer-nav">
-    <a href="#" class="nav-link active" onclick="loadData()">🏠<br>الرئيسية</a>
-    <a href="https://wa.me/249967584275" class="nav-link">🚚<br>التوصيل</a>
-    <a href="https://wa.me/249967584275" class="nav-link">💬<br>تواصل</a>
-</nav>
-
 <script>
-    const MY_NUMBER = "249967584275"; // رقمك السحري
-    const mySheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSsqL_LzG-fE_20L9SjKk9Z5L_F2uM_2pZ3E_4m9uV9W_E/pub?output=csv&gid=917392071';
-    const merchantSheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-
-    let allProducts = [];
+    const MY_WA = "249967584275";
+    const MY_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSsqL_LzG-fE_20L9SjKk9Z5L_F2uM_2pZ3E_4m9uV9W_E/pub?output=csv&gid=917392071";
+    const MERCH_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv";
+    
     let cart = [];
+    let favorites = [];
 
     async function loadData() {
-        allProducts = [];
-        await fetchSheet(mySheet, "فيرا مول", false);
-        await fetchSheet(merchantSheet, "", true);
-        renderProducts(allProducts);
-    }
+        // Load My Brand
+        const res = await fetch(MY_SHEET + '&t=' + Date.now());
+        const text = await res.text();
+        const rows = text.split('\n').slice(1);
+        render(rows, 'myGrid', 'VIRA BRAND');
 
-    async function fetchSheet(url, defStore, checkExpiry) {
+        // Load Merchants
         try {
-            const res = await fetch(url + '&t=' + Date.now());
-            const text = await res.text();
-            const rows = text.split('\n').slice(1);
-            const now = new Date();
-
-            rows.forEach(r => {
-                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                if (!c[3]) return;
-
-                const timestamp = new Date(c[0]);
-                const diffDays = (now - timestamp) / (1000 * 60 * 60 * 24);
-
-                // المسح التلقائي بعد 30 يوم للتاجرات
-                if (checkExpiry && diffDays > 30) return;
-
-                allProducts.push({
-                    merchant: defStore || c[1]?.replace(/"/g,'').trim(),
-                    name: c[3]?.replace(/"/g,'').trim(),
-                    price: c[4]?.trim(),
-                    img: c[5]?.replace(/"/g,'').trim()
-                });
-            });
-        } catch(e) { console.log("Fetch Error"); }
+            const mRes = await fetch(MERCH_SHEET + '&t=' + Date.now());
+            const mText = await mRes.text();
+            const mRows = mText.split('\n').slice(1);
+            render(mRows, 'merchantGrid', '', true);
+        } catch(e) {}
     }
 
-    function renderProducts(list) {
-        const grid = document.getElementById('gridArea');
-        if(list.length === 0) {
-            grid.innerHTML = '<p style="grid-column:1/3; text-align:center; padding:100px 20px;">جاري تحميل الجمال... ✨</p>';
-            return;
-        }
-        grid.innerHTML = list.map(p => `
-            <div class="card">
-                <img src="${p.img}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=VIRA+MALL'">
-                <div class="price">${p.price} SDG</div>
-                <div class="info">
-                    <span class="store-label">${p.merchant}</span>
-                    <div class="title">${p.name}</div>
-                    <button class="btn-add" onclick="addToCart('${p.name}', '${p.merchant}')">أضيفي للسلة 🛒</button>
-                </div>
+    function render(rows, targetId, defBrand, isMerch = false) {
+        const grid = document.getElementById(targetId);
+        grid.innerHTML = rows.map(r => {
+            const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const name = isMerch ? c[3] : c[0];
+            const price = isMerch ? c[4] : c[1];
+            const img = isMerch ? c[5] : c[3];
+            const store = isMerch ? c[1] : defBrand;
+            const timestamp = isMerch ? new Date(c[0]) : null;
+
+            if(!name || !img) return '';
+            // Auto-Expiry for Merchants (30 Days)
+            if(isMerch && (new Date() - timestamp) / (1000*60*60*24) > 30) return '';
+
+            return `
+                <div class="card">
+                    <div class="fav-btn" onclick="toggleFav('${name.trim()}')">❤️</div>
+                    <img src="${img.trim()}" onerror="this.src='https://via.placeholder.com/300'">
+                    <div class="price-chip">${price} SDG</div>
+                    <div class="info">
+                        <span class="brand-name">${store}</span>
+                        <div class="prod-title">${name}</div>
+                        <button class="add-to-cart" onclick="addToCart('${name.trim()}', '${price.trim()}', '${store.trim()}')">أضيفي للسلة 🛒</button>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    function addToCart(n, p, s) {
+        cart.push({n, p, s});
+        document.getElementById('cartCounter').innerText = cart.length;
+        updateCartUI();
+        alert('أضيف لجمالك ✨');
+    }
+
+    function updateCartUI() {
+        const container = document.getElementById('cartItems');
+        container.innerHTML = cart.map((item, index) => `
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:13px;">
+                <span>${item.n} (${item.s})</span>
+                <b>${item.p} SDG <span onclick="removeFromCart(${index})" style="color:red; cursor:pointer;">❌</span></b>
             </div>`).join('');
+        updateTotal();
     }
 
-    function showPayment() { document.getElementById('paymentModal').style.display = 'block'; }
-    function closePayment() { document.getElementById('paymentModal').style.display = 'none'; }
-    
-    function handleMerchantAction() {
-        const msg = "مرحباً فيرا، أود الاشتراك كتاجرة في فيرا مول. قمت بتحويل الرسوم (30 ألف). إليك إشعار الدفع:";
-        window.open(`https://wa.me/${MY_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    function updateTotal() {
+        const delivery = parseInt(document.getElementById('deliveryCity').value) || 0;
+        const itemsTotal = cart.reduce((sum, item) => sum + parseInt(item.p.replace(/,/g,'')), 0);
+        document.getElementById('totalPrice').innerText = `الإجمالي: ${itemsTotal + delivery} SDG`;
+    }
+
+    function sendOrder() {
+        if(cart.length === 0) return alert('سلتك فارغة!');
+        const delivery = document.getElementById('deliveryCity').selectedOptions[0].text;
+        let msg = `طلب جديد من VIRA MALL 👑\n\n`;
+        msg += cart.map(i => `• ${i.n} [${i.s}] - ${i.p}`).join('\n');
+        msg += `\n\n📍 التوصيل: ${delivery}`;
+        window.open(`https://wa.me/${MY_WA}?text=${encodeURIComponent(msg)}`);
+    }
+
+    function handleMerchantAuth() {
+        window.open(`https://wa.me/${MY_WA}?text=فيرا يا حب حياتي، حولت الـ 30 ألف رسوم الاشتراك.. ده الإشعار وبنزل بضاعتي هسي! ✨`);
         setTimeout(() => {
             window.location.href = "https://docs.google.com/forms/d/1j9qvaGJip8Il4gZTJtefwmkzclrqGlpLyihhXvd4jA8/viewform";
         }, 3000);
     }
 
-    function addToCart(n, s) {
-        cart.push({n, s});
-        document.getElementById('cartCount').innerText = cart.length;
-        alert('أضيف لجمالك ✨');
-    }
-
-    function checkout() {
-        if(cart.length === 0) { alert('حقيبتك فارغة يا بيب!'); return; }
-        let msg = `طلب ملكي من VIRA MALL 👑:\n\n` + cart.map(i => `• ${i.n} [من: ${i.s}]`).join('\n');
-        window.open(`https://wa.me/${MY_NUMBER}?text=${encodeURIComponent(msg)}`);
-    }
-
-    function search(q) {
-        const filtered = allProducts.filter(p => p.name.toLowerCase().includes(q.toLowerCase()) || p.merchant.toLowerCase().includes(q.toLowerCase()));
-        renderProducts(filtered);
-    }
+    function removeFromCart(i) { cart.splice(i, 1); updateCartUI(); document.getElementById('cartCounter').innerText = cart.length; }
+    function showMerchantModal() { document.getElementById('merchantModal').style.display = 'block'; }
+    function showModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     loadData();
 </script>
