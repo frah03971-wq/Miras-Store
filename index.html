@@ -3,258 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA OS | GLOBAL LUXURY</title>
+    <title>VIRA | GHOST PROTOCOL</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;500;900&family=Cinzel:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=Cinzel+Decorative:wght@700&display=swap');
         
         :root {
-            --vira-gold: #D4AF37;
-            --vira-black: #050505;
-            --accent: #ffffff;
-            --glass: rgba(255, 255, 255, 0.05);
+            --gold: #D4AF37; --deep-black: #020202; --glass: rgba(255,255,255,0.03); --glow: 0 0 20px rgba(212,175,55,0.3);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--vira-black); color: var(--accent); font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--deep-black); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* الأنميشن العالمي */
-        @keyframes viraGlow { 0% { box-shadow: 0 0 5px var(--vira-gold); } 50% { box-shadow: 0 0 20px var(--vira-gold); } 100% { box-shadow: 0 0 5px var(--vira-gold); } }
+        /* Splash Screen - دخول الملوك */
+        #vira-init {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
+            z-index: 10000; display: flex; justify-content: center; align-items: center; transition: 1.5s cubic-bezier(1,0,0,1);
+        }
+        .v-anim { font-family: 'Cinzel Decorative', serif; font-size: 50px; color: var(--gold); letter-spacing: 15px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; filter: blur(0); } 50% { opacity: 0.3; filter: blur(5px); } }
+
+        /* الهيدر الزجاجي */
+        .v-header {
+            position: sticky; top: 0; z-index: 9000; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(30px); padding: 25px; text-align: center; border-bottom: 1px solid var(--glass);
+        }
+        .v-header h1 { font-family: 'Cinzel Decorative', serif; margin: 0; color: var(--gold); letter-spacing: 8px; font-size: 30px; text-shadow: var(--glow); }
+
+        /* شبكة المنتجات الأسطورية */
+        .v-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px; }
+        .v-card {
+            background: #080808; border-radius: 40px; overflow: hidden; border: 1px solid #111;
+            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative;
+        }
+        .v-card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: var(--glow); }
+        .v-img { width: 100%; height: 260px; object-fit: cover; transition: 0.8s; cursor: crosshair; }
+        .v-card:hover .v-img { transform: scale(1.1); filter: brightness(1.1); }
+
+        .v-badge { position: absolute; top: 20px; left: 20px; background: var(--gold); color: #000; padding: 5px 15px; border-radius: 12px; font-weight: 900; font-size: 12px; z-index: 10; }
+        .v-info { padding: 20px; text-align: center; }
+        .v-store { font-size: 9px; color: var(--gold); letter-spacing: 3px; font-weight: 900; opacity: 0.6; margin-bottom: 10px; display: block; }
+        .v-title { font-size: 14px; font-weight: 600; min-height: 40px; margin-bottom: 15px; }
+
+        /* الأزرار الملكية */
+        .v-btn {
+            background: linear-gradient(135deg, #111, #000); border: 1px solid var(--gold); color: var(--gold);
+            padding: 12px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; transition: 0.4s;
+        }
+        .v-btn:hover { background: var(--gold); color: #000; box-shadow: var(--glow); }
+
+        /* بوابة التاجر - السحر هنا */
+        .v-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9500; overflow-y: auto; padding: 40px 20px; }
+        .v-form-box { background: #080808; padding: 30px; border-radius: 40px; border: 1px solid #1a1a1a; max-width: 500px; margin: 0 auto; }
+        input, select { width: 100%; background: #111; border: 1px solid #222; padding: 18px; border-radius: 15px; color: #fff; margin-bottom: 15px; font-family: 'Cairo'; }
         
-        /* الهيدر المستقبلي */
-        header {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); position: relative;
-        }
-        .v-logo { font-family: 'Cinzel', serif; font-size: 80px; color: var(--vira-gold); letter-spacing: 15px; animation: viraGlow 3s infinite; text-shadow: 0 0 30px var(--vira-gold); }
-        .v-scroll { position: absolute; bottom: 30px; font-size: 12px; letter-spacing: 5px; opacity: 0.5; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        /* السلة */
+        .v-cart-ui { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-radius: 50px 50px 0 0; z-index: 9100; padding: 40px 25px; border-top: 2px solid var(--gold); box-shadow: 0 -20px 50px rgba(0,0,0,0.5); }
+        .cart-item { display: flex; justify-content: space-between; padding: 15px; background: #111; border-radius: 20px; margin-bottom: 10px; border-right: 3px solid var(--gold); }
 
-        /* محرك البحث الهكر */
-        .search-vault {
-            position: sticky; top: 0; z-index: 5000; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
-            padding: 20px; display: flex; gap: 10px; border-bottom: 1px solid var(--glass);
-        }
-        .search-vault input {
-            flex: 1; background: #111; border: 1px solid #333; padding: 15px 25px; border-radius: 50px;
-            color: #fff; font-family: 'Cairo'; transition: 0.4s;
-        }
-        .search-vault input:focus { border-color: var(--vira-gold); background: #000; }
-
-        /* الشبكة العالمية */
-        .master-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px; }
-        
-        .luxury-item {
-            background: #0d0d0d; border-radius: 35px; overflow: hidden; position: relative;
-            border: 1px solid #1a1a1a; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .luxury-item:hover { transform: scale(1.03); border-color: var(--vira-gold); z-index: 10; }
-        
-        .img-engine { width: 100%; height: 250px; position: relative; cursor: zoom-in; }
-        .img-engine img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .floating-price {
-            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px); color: var(--vira-gold); padding: 5px 15px;
-            border-radius: 50px; border: 1px solid var(--vira-gold); font-weight: 900; font-size: 12px;
-        }
-
-        .meta-content { padding: 20px; text-align: center; }
-        .merchant-id { font-size: 10px; color: var(--vira-gold); letter-spacing: 3px; font-weight: 900; opacity: 0.7; }
-        .item-title { font-size: 15px; font-weight: 500; margin: 10px 0; min-height: 45px; }
-
-        .btn-action {
-            background: linear-gradient(45deg, #000, #1a1a1a); color: var(--vira-gold);
-            border: 1px solid var(--vira-gold); width: 100%; padding: 12px; border-radius: 20px;
-            font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-        .btn-action:hover { background: var(--vira-gold); color: #000; box-shadow: 0 0 20px var(--vira-gold); }
-
-        /* مسرح العرض V-VISION */
-        #v-vision {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; flex-direction: column; align-items: center;
-        }
-        .vision-display { width: 100%; height: 80vh; position: relative; overflow: hidden; }
-        .vision-img { width: 100%; height: 100%; object-fit: contain; transition: 0.1s; }
-        .vision-controls { display: flex; gap: 30px; margin-top: 20px; }
-        .v-btn { background: var(--vira-gold); border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; }
-
-        /* السلة الهكر */
-        #v-cart {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 85vh;
-            background: #0a0a0a; border-radius: 50px 50px 0 0; z-index: 6000;
-            padding: 30px; border-top: 2px solid var(--vira-gold); overflow-y: auto;
-        }
-        .cart-group { background: #111; border-radius: 25px; padding: 20px; margin-bottom: 20px; border-right: 4px solid var(--vira-gold); }
-        .group-header { font-size: 12px; color: var(--vira-gold); margin-bottom: 15px; display: flex; justify-content: space-between; }
-
-        /* الناف بار */
+        /* ناف بار */
         .v-nav {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 85%; background: rgba(255,255,255,0.05); backdrop-filter: blur(25px);
-            border-radius: 100px; display: flex; justify-content: space-around; padding: 15px;
-            border: 1px solid var(--glass); z-index: 5500;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 80%;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(25px); border-radius: 100px;
+            display: flex; justify-content: space-around; padding: 18px; border: 1px solid var(--glass); z-index: 9200;
         }
-        .v-nav-item { font-size: 24px; color: #444; transition: 0.3s; cursor: pointer; position: relative; }
-        .v-nav-item.active { color: var(--vira-gold); text-shadow: 0 0 10px var(--vira-gold); }
-        .cart-count { position: absolute; top: -5px; right: -10px; background: red; color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; }
+        .nav-icon { font-size: 24px; cursor: pointer; transition: 0.3s; opacity: 0.4; }
+        .nav-icon.active { opacity: 1; color: var(--gold); transform: scale(1.3); }
     </style>
 </head>
 <body>
 
-<header id="landing">
-    <div class="v-logo">VIRA</div>
-    <div class="v-scroll">اسحبي للأعلى لاستكشاف الفخامة</div>
-</header>
+<div id="vira-init"><div class="v-anim">VIRA</div></div>
 
-<div class="search-vault">
-    <input type="text" id="engineSearch" placeholder="ابحثي في محرك فيرا العالمي..." oninput="neuralSearch()">
+<div id="merchantGate" class="v-modal">
+    <div class="v-form-box">
+        <h2 style="color:var(--gold); text-align:center;">بوابة انضمام التاجر 👑</h2>
+        <p style="text-align:center; font-size:12px; color:#777;">لتفعيل متجرك، يرجى تحويل رسوم التفعيل (30,000 SDG) لحساب بنكك أدناه:</p>
+        <div style="background:var(--gold); color:#000; padding:15px; border-radius:15px; text-align:center; font-weight:900; margin-bottom:20px;">
+            حساب بنكك: 1234567 <br> باسم: إدارة VIRA MALL
+        </div>
+        <input type="text" id="mName" placeholder="اسم المتجر">
+        <input type="text" id="mPhone" placeholder="رقم الواتساب">
+        <p style="font-size:12px; margin-bottom:5px;">ارفق صورة إشعار التحويل:</p>
+        <input type="file" id="mProof" accept="image/*">
+        <button class="v-btn" onclick="submitMerchant()">إرسال طلب التفعيل للهكر</button>
+        <button onclick="closeModal('merchantGate')" style="width:100%; background:none; border:none; color:red; margin-top:15px;">إغلاق</button>
+    </div>
 </div>
 
-<div id="v-vision">
-    <div class="vision-display" id="zoomBase" onmousemove="microZoom(event)" onmouseleave="microReset()">
-        <img id="v-img-stage" src="" class="vision-img">
-    </div>
-    <div class="vision-controls">
-        <button class="v-btn" onclick="closeVision()">إغلاق</button>
-    </div>
-</div>
+<header class="v-header"><h1>VIRA</h1></header>
 
-<div id="v-cart">
-    <h2 style="text-align:center; color:var(--vira-gold);">حقيبة المقتنيات الملكية</h2>
-    <div id="cart-engine-list"></div>
-    <div id="total-area" style="text-align:center; padding:30px;">
-        <h1 id="total-sdg">0 SDG</h1>
-        <p style="color:#666;">* رسوم التوصيل تحدد بشكل منفصل لكل متجر لضمان العدالة</p>
-        <button class="btn-action" style="padding:20px; font-size:18px;" onclick="deployOrder()">تأكيد الطلب عبر واتساب</button>
-    </div>
-    <button onclick="toggleCart(false)" style="width:100%; background:none; border:none; color:#555; margin-bottom:50px;">إغلاق السلة</button>
-</div>
+<div class="v-container" id="grid"></div>
 
-<div id="grid-host" class="master-grid"></div>
+<div id="cartUI" class="v-cart-ui">
+    <h2 style="color:var(--gold); text-align:center;">حقيبة المقتنيات</h2>
+    <div id="cartItems"></div>
+    <div style="text-align:center; padding:20px;">
+        <h1 id="totalPrice">0 SDG</h1>
+        <button class="v-btn" style="padding:20px;" onclick="checkout()">تأكيد الطلب واتساب</button>
+    </div>
+    <button onclick="closeModal('cartUI')" style="width:100%; background:none; border:none; color:#555;">رجوع</button>
+</div>
 
 <nav class="v-nav">
-    <div class="v-nav-item active" onclick="location.reload()">🏠</div>
-    <div class="v-nav-item" onclick="toggleCart(true)">🛒 <span id="v-count" class="cart-count">0</span></div>
-    <div class="v-nav-item" onclick="alert('VIRA AI Stylist - قريباً')">👗</div>
+    <div class="nav-icon active" onclick="location.reload()">🏠</div>
+    <div class="nav-icon" onclick="openModal('cartUI')">🛒</div>
+    <div class="nav-icon" onclick="openModal('merchantGate')">👑</div>
 </nav>
 
 <script>
-    const SHEETS_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let viraDatabase = []; let viraCart = [];
+    const S_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    let database = []; let cart = [];
 
-    // المحرك الذكي للبيانات (Data Neural Engine)
-    async function viraEngineInit() {
+    // إخفاء الـ Splash
+    setTimeout(() => { document.getElementById('vira-init').style.transform = 'translateY(-100%)'; }, 2000);
+
+    async function viraCore() {
         const [r1, r2] = await Promise.all([
-            fetch(`https://docs.google.com/spreadsheets/d/${SHEETS_ID}/export?format=csv&gid=0`),
-            fetch(`https://docs.google.com/spreadsheets/d/${SHEETS_ID}/export?format=csv&gid=1152504859`)
+            fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=0`),
+            fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=1152504859`)
         ]);
         const d1 = await r1.text(); const d2 = await r2.text();
         
-        const brain = (csv, isRoyal) => {
+        const parse = (csv, isV) => {
             const rows = csv.split('\n').map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-            const head = rows[0].map(h => h.replace(/"/g,'').trim());
+            const h = rows[0].map(x => x.replace(/"/g,'').trim());
             return rows.slice(1).map(c => {
-                const get = (key) => { const idx = head.findIndex(h => h.includes(key)); return idx!==-1?c[idx]?.replace(/"/g,'').trim():''; };
-                const rawImg = isRoyal ? c[3] : get('رابط الصورة');
-                return {
-                    id: Math.random().toString(36).substr(2, 9),
-                    store: isRoyal ? (c[2]||'VIRA') : (get('اسم المتجر')||'متجر شريك'),
-                    name: isRoyal ? c[0] : get('اسم المنتج'),
-                    price: isRoyal ? c[1] : get('السعر'),
-                    img: rawImg ? rawImg.split(';')[0] : 'https://via.placeholder.com/300',
-                    gallery: rawImg ? rawImg.split(';') : []
-                };
-            }).filter(p => p.name && p.img.includes('http'));
+                const f = (k) => { const i = h.findIndex(x => x.includes(k)); return i!==-1?c[i]?.replace(/"/g,'').trim():''; };
+                return isV ? { n: c[0], p: c[1], s: c[2]||'VIRA', img: c[3] } :
+                { s: f('اسم المتجر')||'متجر شريك', n: f('اسم المنتج'), p: f('السعر'), img: f('رابط الصورة') };
+            }).filter(p => p.n && p.img);
         };
-
-        viraDatabase = [...brain(d1, true), ...brain(d2, false)];
-        renderVira(viraDatabase);
+        database = [...parse(d1, true), ...parse(d2, false)];
+        render(database);
     }
 
-    function renderVira(data) {
-        document.getElementById('grid-host').innerHTML = data.map(p => `
-            <div class="luxury-item">
-                <div class="floating-price">${p.price}</div>
-                <div class="img-engine" onclick="openVision('${p.img}')">
-                    <img src="${p.img}" loading="lazy">
-                </div>
-                <div class="meta-content">
-                    <div class="merchant-id">${p.store}</div>
-                    <div class="item-title">${p.name}</div>
-                    <button class="btn-action" onclick="addToViraCart('${p.id}')">اقتناء الآن 🛒</button>
+    function render(data) {
+        document.getElementById('grid').innerHTML = data.map((p, i) => `
+            <div class="v-card">
+                <div class="v-badge">${p.p}</div>
+                <img src="${p.img.split(';')[0]}" class="v-img" loading="lazy">
+                <div class="v-info">
+                    <span class="v-store">${p.s}</span>
+                    <div class="v-title">${p.n}</div>
+                    <button class="v-btn" onclick="add('${i}')">اقتناء</button>
                 </div>
             </div>
         `).join('');
     }
 
-    // زووم ميكروسكوبي هكر
-    function microZoom(e) {
-        const img = document.getElementById('v-img-stage');
-        const box = document.getElementById('zoomBase').getBoundingClientRect();
-        const x = ((e.clientX - box.left) / box.width) * 100;
-        const y = ((e.clientY - box.top) / box.height) * 100;
-        img.style.transformOrigin = `${x}% ${y}%`;
-        img.style.transform = "scale(3)";
-    }
-    function microReset() { document.getElementById('v-img-stage').style.transform = "scale(1)"; }
-
-    function openVision(url) {
-        document.getElementById('v-img-stage').src = url;
-        document.getElementById('v-vision').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-    function closeVision() { document.getElementById('v-vision').style.display = 'none'; document.body.style.overflow = 'auto'; }
-
-    function addToViraCart(id) {
-        const item = viraDatabase.find(p => p.id === id);
-        viraCart.push(item);
-        document.getElementById('v-count').innerText = viraCart.length;
-        updateViraCartUI();
-        // تأثير اهتزاز خفيف للزر
-        navigator.vibrate ? navigator.vibrate(10) : null;
+    function add(idx) {
+        cart.push(database[idx]);
+        updateCart();
+        alert('تمت إضافة القطعة لمجموعتك ✨');
     }
 
-    function updateViraCartUI() {
-        // تجميع المنتجات حسب المتجر (Grouping Engine)
-        const groups = viraCart.reduce((acc, obj) => {
-            const key = obj.store;
-            if (!acc[key]) acc[key] = [];
-            acc[key].push(obj);
-            return acc;
-        }, {});
-
-        document.getElementById('cart-engine-list').innerHTML = Object.keys(groups).map(store => `
-            <div class="cart-group">
-                <div class="group-header"><span>🏢 متجر: ${store}</span> <span>${groups[store].length} قطع</span></div>
-                ${groups[store].map((item, idx) => `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
-                        <span>${item.name}</span>
-                        <span>${item.price}</span>
-                    </div>
-                `).join('')}
-                <div style="font-size:10px; color:#666; border-top:1px solid #222; padding-top:5px;">التوصيل لهذا المتجر يحدد لاحقاً</div>
+    function updateCart() {
+        document.getElementById('cartItems').innerHTML = cart.map((i, x) => `
+            <div class="cart-item">
+                <span>${i.n}</span>
+                <span onclick="cart.splice(${x},1);updateCart();" style="color:red;">×</span>
             </div>
         `).join('');
-
-        const total = viraCart.reduce((a,i) => a + parseInt(i.price.replace(/[^0-9]/g,'')||0), 0);
-        document.getElementById('total-sdg').innerText = `${total.toLocaleString()} SDG`;
+        const total = cart.reduce((a,i) => a + parseInt(i.p.replace(/[^0-9]/g,'')||0), 0);
+        document.getElementById('totalPrice').innerText = `${total.toLocaleString()} SDG`;
     }
 
-    function toggleCart(show) { document.getElementById('v-cart').style.display = show ? 'block' : 'none'; }
-
-    function deployOrder() {
-        if(!viraCart.length) return;
-        const msg = encodeURIComponent(`الطلب الملياري من VIRA MALL 👑\n\n${viraCart.map(i=>`• ${i.name} [${i.store}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('total-sdg').innerText}\n\n*يرجى التنسيق بخصوص رسوم التوصيل لكل متجر.*`);
+    function submitMerchant() {
+        const name = document.getElementById('mName').value;
+        const phone = document.getElementById('mPhone').value;
+        if(!name || !phone) return alert('املأي البيانات يا ملكة');
+        const msg = encodeURIComponent(`طلب انضمام تاجر جديد 👑\n\nاسم المتجر: ${name}\nالواتساب: ${phone}\n\n*مرفق صورة الإشعار (يرجى التأكد من المرفقات)*`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
     }
 
-    function neuralSearch() {
-        const q = document.getElementById('engineSearch').value.toLowerCase();
-        renderVira(viraDatabase.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
+    function checkout() {
+        if(!cart.length) return;
+        const msg = encodeURIComponent(`طلب مقتنيات VIRA 👑\n\n${cart.map(i=>`• ${i.n} [${i.s}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalPrice').innerText}`);
+        window.open(`https://wa.me/249967584275?text=${msg}`);
     }
 
-    viraEngineInit();
+    function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    viraCore();
 </script>
 </body>
 </html>
