@@ -3,150 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL EXHIBITION</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <title>VIRA MALL | THE FINAL SOLUTION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --v-gold: #D4AF37; --v-black: #000000; --v-dark: #0a0a0a; --v-accent: #1a1a1a; }
+        :root { --gold: #D4AF37; --black: #000; --card: #0a0a0a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; background: var(--v-black); color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; padding-bottom: 100px; }
+        body { margin: 0; background: var(--black); color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; padding-bottom: 120px; }
 
-        /* لودر فخامة البداية */
-        #v-loader { position: fixed; inset: 0; background: #000; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 1.5s cubic-bezier(0.7, 0, 0.3, 1); }
-        .v-shimmer { font-family: 'Cinzel Decorative'; font-size: 50px; color: var(--v-gold); letter-spacing: 15px; animation: glow 2s infinite; }
-        @keyframes glow { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 20px var(--v-gold)); } 50% { opacity: 0.2; } }
+        /* لودر البداية */
+        #gate { position: fixed; inset: 0; background: #000; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 1s ease; }
+        .gate-text { font-family: 'Cinzel Decorative'; font-size: 40px; color: var(--gold); letter-spacing: 8px; animation: flash 1.5s infinite; }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
-        header { position: sticky; top: 0; z-index: 10000; padding: 25px; background: rgba(0,0,0,0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(212,175,55,0.15); display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-family: 'Cinzel Decorative'; font-size: 26px; color: var(--v-gold); text-shadow: 0 0 10px rgba(212,175,55,0.3); }
+        header { position: sticky; top: 0; z-index: 10000; padding: 20px; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(212,175,55,0.2); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Cinzel Decorative'; font-size: 24px; color: var(--gold); }
 
-        .search-container { padding: 15px 20px; }
-        .v-search { width: 100%; padding: 18px; border-radius: 20px; border: 1px solid #222; background: #0f0f0f; color: #fff; font-family: 'Cairo'; text-align: center; font-size: 15px; transition: 0.3s; }
-        .v-search:focus { border-color: var(--v-gold); background: #151515; }
+        .search-wrap { padding: 15px; }
+        .v-search { width: 100%; padding: 18px; border-radius: 20px; border: 1px solid #222; background: #111; color: #fff; font-family: 'Cairo'; text-align: center; }
 
-        /* عناوين الأقسام */
-        .v-section-tag { padding: 40px 20px 15px; font-weight: 900; font-size: 24px; color: var(--v-gold); display: flex; align-items: center; gap: 15px; }
-        .v-section-tag::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, var(--v-gold), transparent); }
-        .v-section-tag span { font-size: 14px; color: #666; font-family: 'Cinzel Decorative'; margin-top: 5px; }
+        /* الأقسام */
+        .section-title { padding: 35px 20px 10px; font-weight: 900; font-size: 24px; color: var(--gold); display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, var(--gold), transparent); }
 
-        /* تصميم قسم العطارة (التراثي) */
-        #heritageGrid { background: linear-gradient(to bottom, #0a0a0a, #000); border-radius: 30px; margin: 10px; padding: 10px; border: 1px solid rgba(212,175,55,0.05); }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+        @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
 
-        /* شبكة المنتجات */
-        .main-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
-        @media (max-width: 480px) { .main-grid { grid-template-columns: 1fr; } }
+        /* الكرت الذكي */
+        .card { background: var(--card); border-radius: 30px; overflow: hidden; border: 1px solid #1a1a1a; position: relative; transition: 0.4s; }
+        .card:hover { border-color: var(--gold); }
 
-        /* كرت العرض العالمي */
-        .v-card { background: var(--v-dark); border-radius: 30px; overflow: hidden; border: 1px solid #1a1a1a; transition: 0.5s; position: relative; }
-        .v-card:hover { border-color: var(--v-gold); transform: translateY(-10px); }
+        .image-box { width: 100%; height: 380px; position: relative; overflow: hidden; background: #000; }
+        .slider { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .slider::-webkit-scrollbar { display: none; }
+        .slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; cursor: zoom-in; }
 
-        .visual-area { width: 100%; height: 400px; position: relative; overflow: hidden; }
-        .img-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-        .img-track::-webkit-scrollbar { display: none; }
-        .img-track img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; cursor: zoom-in; }
-
-        .v-price { position: absolute; top: 20px; left: 0; background: var(--v-gold); color: #000; padding: 8px 18px; border-radius: 0 15px 15px 0; font-weight: 900; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 10; }
+        .price-tag { position: absolute; top: 20px; left: 0; background: var(--gold); color: #000; padding: 7px 15px; border-radius: 0 12px 12px 0; font-weight: 900; font-size: 14px; z-index: 5; }
         
-        .nav-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--v-gold); width: 20px; border-radius: 10px; }
+        .dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 50%; }
+        .dot.active { background: var(--gold); width: 15px; border-radius: 10px; }
 
-        .info-area { padding: 25px; text-align: center; }
-        .store-tag { font-size: 9px; color: var(--v-gold); font-weight: 900; letter-spacing: 3px; display: block; margin-bottom: 10px; text-transform: uppercase; }
-        .item-name { font-size: 18px; font-weight: 700; color: #f0f0f0; height: 50px; overflow: hidden; margin-bottom: 20px; }
+        .card-info { padding: 20px; text-align: center; }
+        .store-name { font-size: 10px; color: var(--gold); font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+        .prod-name { font-size: 17px; font-weight: 700; height: 48px; overflow: hidden; margin-bottom: 15px; }
         
-        .v-add-btn { background: #fff; color: #000; border: none; width: 100%; padding: 18px; border-radius: 20px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; }
-        .v-add-btn:active { background: var(--v-gold); transform: scale(0.9); }
+        .buy-btn { background: #fff; color: #000; border: none; width: 100%; padding: 16px; border-radius: 15px; font-weight: 900; cursor: pointer; }
+        .buy-btn:active { transform: scale(0.95); background: var(--gold); }
 
-        /* مودال الطلبات */
-        #cart-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200000; padding: 30px; }
-        .cart-inner { max-width: 500px; margin: 0 auto; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #222; }
+        /* السلة والزووم */
+        #cart-ui { display: none; position: fixed; inset: 0; background: #000; z-index: 50000; padding: 40px 20px; }
+        #zoom-ui { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100000; justify-content: center; align-items: center; }
 
-        /* الناف بار السفلي */
-        nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 400px; background: rgba(255,255,255,0.05); backdrop-filter: blur(30px); border-radius: 100px; display: flex; justify-content: space-around; padding: 12px; border: 1px solid rgba(255,255,255,0.1); z-index: 50000; }
-        .n-btn { font-size: 24px; color: #555; cursor: pointer; position: relative; }
-        .n-btn.active { color: var(--v-gold); }
-        .n-badge { position: absolute; top: -5px; right: -10px; background: var(--v-gold); color: #000; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; }
+        nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 400px; background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border-radius: 100px; display: flex; justify-content: space-around; padding: 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 40000; }
+        .n-btn { font-size: 22px; color: #555; cursor: pointer; position: relative; }
+        .n-badge { position: absolute; top: -8px; right: -10px; background: var(--gold); color: #000; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; }
     </style>
 </head>
 <body>
 
-<div id="v-loader"><div class="v-shimmer">VIRA</div></div>
+<div id="gate"><div class="gate-text">VIRA</div></div>
 
 <header>
-    <div style="font-size:18px; color:var(--v-gold);">GLOBAL EXHIBITION</div>
-    <div class="brand">VIRA</div>
-    <div onclick="openBag()">🛒</div>
+    <div style="font-size:14px; color:var(--gold);">WORLD CLASS</div>
+    <div class="logo">VIRA</div>
+    <div onclick="toggleBag()">🛒</div>
 </header>
 
-<div class="search-container">
-    <input type="text" class="v-search" id="vSearch" placeholder="ماذا تبحثين عن الجمال اليوم؟" oninput="searchEngine()">
+<div class="search-wrap">
+    <input type="text" class="v-search" id="vSearch" placeholder="ابحثي عن منتج، متجر، أو عطارة..." oninput="search()">
 </div>
 
-<div class="v-section-tag">💎 VIRA <span>EXCLUSIVE</span></div>
-<div id="viraGrid" class="main-grid"></div>
+<div class="section-title">💎 VIRA <span>EXCLUSIVE</span></div>
+<div id="viraGrid" class="grid"></div>
 
-<div class="v-section-tag" style="color: #8c6a2c;">🏺 HERITAGE <span>العطارة السودانية</span></div>
-<div id="heritageGrid" class="main-grid"></div>
+<div class="section-title" style="color:#8c6a2c;">🏺 HERITAGE <span>العطارة السودانية</span></div>
+<div id="heritageGrid" class="grid"></div>
 
-<div class="v-section-tag">🛍️ PARTNER <span>STORES</span></div>
-<div id="partnerGrid" class="main-grid"></div>
+<div class="section-title">🛍️ ALL <span>STORES</span></div>
+<div id="partnerGrid" class="grid"></div>
 
-<div id="zoom-box" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:1000000; justify-content:center; align-items:center;" onclick="this.style.display='none'">
-    <img id="zoomImg" style="max-width:90%; max-height:80%; border:1px solid var(--v-gold);">
-</div>
+<div id="zoom-ui" onclick="this.style.display='none'"><img id="zImg" style="max-width:90%;"></div>
 
-<div id="cart-modal">
-    <div class="cart-inner">
-        <h1 style="color:var(--v-gold); text-align:center; font-family:'Cinzel Decorative';">YOUR SELECTIONS</h1>
-        <div id="cartBody"></div>
-        <div style="text-align:center; margin-top:50px;">
-            <p style="color:#444; letter-spacing:5px;">TOTAL AMOUNT</p>
-            <h1 id="totalPrice" style="font-size:50px; color:#fff; margin:10px 0;">0</h1>
-            <button class="v-add-btn" style="background:var(--v-gold); padding:20px;" onclick="checkout()">تأكيد الطلب الفخم ⚡</button>
-            <p onclick="openBag()" style="margin-top:25px; color:#666;">رجوع للتسوق</p>
-        </div>
+<div id="cart-ui">
+    <h1 style="color:var(--gold); text-align:center; font-family:'Cinzel Decorative'">THE BAG</h1>
+    <div id="cartItems"></div>
+    <div style="text-align:center; margin-top:50px;">
+        <h1 id="totalSdg" style="font-size:45px;">0</h1>
+        <button class="buy-btn" style="background:var(--gold); padding:20px;" onclick="checkout()">تأكيد الطلب عبر واتساب ✅</button>
+        <p onclick="toggleBag()" style="margin-top:20px; color:#444;">إغلاق</p>
     </div>
 </div>
 
 <nav>
     <div class="n-btn" onclick="location.reload()">🏠</div>
-    <div class="n-btn" onclick="openBag()">💼<span class="n-badge" id="bCount">0</span></div>
-    <div class="n-btn" onclick="alert('VIRA GLOBAL SYSTEM 2026')">⚙️</div>
+    <div class="n-btn" onclick="toggleBag()">💼<span class="n-badge" id="bCount">0</span></div>
+    <div class="n-btn" onclick="alert('VIRA SYSTEM ACTIVE')">👑</div>
 </nav>
 
 <script>
     const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let fullDB = [];
+    let database = [];
     let bag = [];
 
-    async function viraInit() {
+    async function loadSystem() {
         try {
             const [vR, pR] = await Promise.all([
                 fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
                 fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
             ]);
             
-            const parser = (csv, isV) => csv.split('\n').slice(1).map(r => {
-                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
-                // المعالجة الذكية للأعمدة
-                const name = isV ? c[0] : c[3];
-                const store = isV ? 'VIRA' : (c[1] || 'Vira Partner');
-                const price = isV ? c[1] : c[4];
-                const img = isV ? c[3] : c[5];
-                const desc = isV ? c[4] : c[6]; // الوصف في العمود G (6)
-                return { store, name, price, img, desc };
+            const parseCsv = (csv, isVira) => csv.split('\n').slice(1).map(row => {
+                const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
+                // الربط الدقيق جداً مع أعمدة قوقل فورم
+                // المتجر: B(1) | المنتج: D(3) | السعر: E(4) | الصور: F(5) | الوصف: G(6)
+                if(isVira) return { store: 'VIRA', name: c[0], price: c[1], img: c[3], desc: c[4] };
+                return { store: c[1] || 'متجر غير معروف', name: c[3] || '', price: c[4] || '0', img: c[5] || '', desc: c[6] || '' };
             }).filter(i => i.name && i.img);
 
-            fullDB = [...parser(await vR.text(), true), ...parser(await pR.text(), false).reverse()];
-            render(fullDB);
-            
-            setTimeout(() => { document.getElementById('v-loader').style.transform = 'translateY(-100%)'; }, 1500);
-        } catch (e) { console.error("Global System Offline"); }
+            database = [...parseCsv(await vR.text(), true), ...parseCsv(await pR.text(), false).reverse()];
+            render(database);
+            document.getElementById('gate').style.opacity = '0';
+            setTimeout(() => document.getElementById('gate').remove(), 1000);
+        } catch (e) { alert("عذراً، هنالك مشكلة في الاتصال بالبيانات"); }
     }
 
     function render(data) {
         let vH = '', pH = '', hH = '';
         data.forEach((p, idx) => {
-            const imgs = p.img.split(/[,\s\n\t]+/).filter(l => l.startsWith('http'));
-            const dotUI = imgs.length > 1 ? `<div class="nav-dots" id="dots-${idx}">${imgs.map((_,i
+            // معالجة روابط الصور (الحل المعجزة)
+            const cleanImgs = p.img.split(/[,\s\n\t]+/).filter(link => link.includes('http'));
+            const dots = cleanImgs.length > 1 ? `<div class="dots" id="dots-${idx}">${cleanImgs.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>` : '';
+
+            const cardHtml = `
+                <div class="card">
+                    <div class="price-tag">${p.price}</div>
+                    <div class="image-box">
+                        <div class="slider" onscroll="syncDots(this, ${idx})">
+                            ${cleanImgs.map(l => `<img src="${l}" onclick="zoom('${l}')">`).join('')}
+                        </div>
+                        ${dots}
+                    </div>
+                    <div class="card-info">
+                        <span class="store-name">${p.store}</span>
+                        <div class="prod-name">${p.name}</div>
+                        <button class="buy-btn" onclick="add('${p.name.replace(/'/g,"")}')">إضافة للحقيبة 🛒</button>
+                    </div>
+                </div>`;
+            
+            const isHeritage = p.name.includes('عطارة') || p.store.includes('عطارة') || p.desc.includes('عطارة');
+
+            if(p.store === 'VIRA') vH += cardHtml;
+            else if(isHeritage) hH += cardHtml;
+            else pH += cardHtml;
+        });
+        document.getElementById('viraGrid').innerHTML = vH;
+        document.getElementById('heritageGrid').innerHTML = hH;
+        document.getElementById('partnerGrid').innerHTML = pH;
+    }
+
+    function syncDots(el, idx) {
+        const i = Math.round(el.scrollLeft / el.offsetWidth);
+        const ds = document.querySelectorAll(`#dots-${idx} .dot`);
+        ds.forEach((d, n) => d.classList.toggle('active', n === Math.abs(i)));
+    }
+
+    function zoom(l) { document.getElementById('zImg').src = l; document.getElementById('zoom-ui').style.display = 'flex'; }
+
+    function search() {
+        const q = document.getElementById('vSearch').value.toLowerCase();
+        render(database.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
+    }
+
+    function add(n) {
+        bag.push(database.find(x => x.name.replace(/'/g,"") === n));
+        document.getElementById('bCount').innerText = bag.length;
+        event.target.innerText = 'تم الحفظ ✅';
+        setTimeout(() => event.target.innerText = 'إضافة للحقيبة 🛒', 1000);
+    }
+
+    function toggleBag() {
+        const ui = document.getElementById('cart-ui');
+        ui.style.display = (ui.style.display === 'block') ? 'none' : 'block';
+        if(ui.style.display === 'block') {
+            document.getElementById('cartItems').innerHTML = bag.map((i, idx) => `
+                <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #111;">
+                    <div><b>${i.name}</b><br><small style="color:var(--gold)">${i.store}</small></div>
+                    <div>${i.price} <span style="color:red; margin-left:15px" onclick="remove(${idx})">×</span></div>
+                </div>`).join('');
+            const total = bag.reduce((a, c) => a + (parseInt(c.price.toString().replace(/[^0-9]/g,'')) || 0), 0);
+            document.getElementById('totalSdg').innerText = total.toLocaleString() + ' SDG';
+        }
+    }
+
+    function remove(idx) { bag.splice(idx, 1); document.getElementById('bCount').innerText = bag.length; toggleBag(); toggleBag(); }
+
+    function checkout() {
+        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${bag.map(i => `• ${i.name} [المتجر: ${i.store}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalSdg').innerText}`);
+        window.open(`https://wa.me/249967584275?text=${msg}`);
+    }
+
+    loadSystem();
+</script>
+</body>
+</html>
