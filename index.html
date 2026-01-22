@@ -3,57 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL VERSION</title>
+    <title>VIRA MALL | OFFICIAL EMPIRE</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --amz-orange: #febd69; --amz-dark: #131921; --vira-gold: #D4AF37; --red: #e41e31; }
+        :root { --amz-orange: #febd69; --amz-dark: #131921; --vira-gold: #D4AF37; --red: #e41e31; --bankak-green: #2d8c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background: #eaeded; color: #111; font-family: 'Cairo', sans-serif; padding-bottom: 120px; }
 
-        /* Loader */
         #loader { position: fixed; inset: 0; background: var(--amz-dark); z-index: 999999; display: flex; justify-content: center; align-items: center; }
         .v-logo { font-family: 'Cinzel Decorative'; font-size: 45px; color: var(--vira-gold); letter-spacing: 5px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.9); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        header { position: sticky; top: 0; z-index: 10000; padding: 12px 15px; background: var(--amz-dark); box-shadow: 0 4px 12px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-family: 'Cinzel Decorative'; font-size: 26px; color: #fff; font-weight: 900; }
+        header { position: sticky; top: 0; z-index: 10000; padding: 12px 15px; background: var(--amz-dark); display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-family: 'Cinzel Decorative'; font-size: 26px; color: #fff; text-decoration: none; }
         .brand span { color: var(--amz-orange); }
 
         .container { padding: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         @media (max-width: 500px) { .container { grid-template-columns: 1fr; } }
 
-        /* Product Card */
-        .card { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; position: relative; display: flex; flex-direction: column; transition: 0.3s; }
-        .card:active { transform: scale(0.98); }
-        .swiper { width: 100%; height: 320px; background: #fff; }
+        .card { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; position: relative; display: flex; flex-direction: column; }
+        .swiper { width: 100%; height: 320px; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
+        .price-tag { position: absolute; top: 12px; left: 0; background: #B12704; color: #fff; padding: 5px 12px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 100; }
         
-        .price-tag { position: absolute; top: 12px; left: 0; background: #B12704; color: #fff; padding: 5px 12px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 100; font-size: 15px; }
-        
-        /* Wishlist Heart */
-        .heart-btn { position: absolute; top: 12px; right: 12px; z-index: 100; background: rgba(255,255,255,0.8); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; color: #ccc; }
+        .heart-btn { position: absolute; top: 12px; right: 12px; z-index: 100; background: rgba(255,255,255,0.8); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; cursor: pointer; }
         .heart-btn.active { color: var(--red); }
 
-        .details { padding: 12px; flex: 1; }
-        .store-n { color: #007185; font-size: 11px; font-weight: bold; }
-        .prod-n { font-size: 14px; font-weight: 700; margin: 5px 0; height: 38px; overflow: hidden; }
-        
+        .details { padding: 12px; }
         .action-btn { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 13px; }
-        .action-btn:active { background: #f7ca00; }
 
-        /* Overlays */
         .overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; padding: 25px; overflow-y: auto; }
-        .close-ov { font-size: 32px; cursor: pointer; float: left; padding: 10px; }
-        
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .delivery-note { background: #fff9e6; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; color: #856404; font-size: 13px; margin: 15px 0; text-align: center; font-weight: bold; }
+        .close-ov { font-size: 32px; cursor: pointer; float: left; }
 
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--amz-dark); display: flex; justify-content: space-around; padding: 15px; z-index: 5000; border-top: 1px solid #444; }
-        .nav-link { font-size: 11px; text-align: center; color: #ccc; cursor: pointer; }
-        .badge { background: var(--amz-orange); color: #000; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; position: absolute; top: -5px; right: -10px; }
+        /* الاحترافية في عرض بنكك */
+        .bankak-card { background: linear-gradient(135deg, #1e5631 0%, #2d8c3c 100%); color: white; border-radius: 20px; padding: 25px; margin: 20px 0; position: relative; box-shadow: 0 10px 20px rgba(45,140,60,0.3); overflow: hidden; }
+        .bankak-card::before { content: 'BANKAK'; position: absolute; top: -10px; right: -10px; font-size: 60px; opacity: 0.1; font-weight: 900; transform: rotate(-10deg); }
+        .bankak-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .account-num { font-size: 24px; letter-spacing: 2px; font-weight: 900; margin: 15px 0; display: block; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; }
+        .copy-btn { background: var(--amz-orange); color: #000; border: none; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: bold; cursor: pointer; }
+
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--amz-dark); display: flex; justify-content: space-around; padding: 15px; z-index: 5000; }
+        .nav-link { font-size: 11px; text-align: center; color: #ccc; cursor: pointer; position: relative; }
     </style>
 </head>
 <body>
@@ -61,33 +54,54 @@
 <div id="loader"><div class="v-logo">VIRA</div></div>
 
 <header>
-    <div class="brand">V<span>IRA</span></div>
-    <div style="color: #fff; font-size: 11px;">2280384 :بنكك</div>
+    <div class="brand">V<span>IRA</span> MALL</div>
+    <div style="background:var(--bankak-green); padding:5px 12px; border-radius:50px; color:#fff; font-size:10px; font-weight:bold;" onclick="openO('joinPage')">انضمي كتاجرة ✨</div>
 </header>
 
 <div id="grid" class="container"></div>
 
-<div id="wishPage" class="overlay">
+<div id="joinPage" class="overlay">
     <span class="close-ov" onclick="closeO()">✕</span>
-    <h2 style="margin-top:60px;">قائمة أمنياتك ❤️</h2>
-    <div id="wishItems"></div>
+    <h2 style="margin-top:60px; text-align:center;">بوابة الشركاء والمتاجر ✨</h2>
+    <p style="text-align:center; color:#666;">ابدئي رحلتك التجارية في إمبراطورية فيرا</p>
+    
+    <div class="bankak-card">
+        <div class="bankak-header">
+            <span>بيانات الاشتراك الرسمي</span>
+            <img src="https://img.icons8.com/color/48/bank-card-backside.png" width="30">
+        </div>
+        <small>الاسم المسجل:</small>
+        <div style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">إيثار شرف الدين</div>
+        <small>رقم الحساب:</small>
+        <div class="account-num" id="accNum">2280384</div>
+        <button class="copy-btn" onclick="copyAcc()">نسخ رقم الحساب 📋</button>
+    </div>
+
+    <div style="padding: 10px; background: #fff9e6; border: 1px solid #ffeeba; border-radius: 10px; font-size: 13px; line-height: 1.6;">
+        <b>خطوات التفعيل:</b><br>
+        1. حول رسوم الاشتراك عبر تطبيق بنكك.<br>
+        2. التقط صورة لإشعار التحويل.<br>
+        3. اضغطي على الزر أدناه لإرسال الإثبات وتفعيل متجرك فوراً.
+    </div>
+
+    <button class="action-btn" style="background:var(--bankak-green); color:white; height:60px; margin-top:20px;" onclick="window.open('https://wa.me/249967584275?text=مرحباً%20إيثار،%20تم%20التحويل%20أرغب%20في%20تفعيل%20متجري')">إرسال إثبات التحويل (واتساب) ✅</button>
 </div>
 
 <div id="cartPage" class="overlay">
     <span class="close-ov" onclick="closeO()">✕</span>
-    <h2 style="margin-top:60px;">حقيبة التسوق 🛍️</h2>
-    <div class="delivery-note">⚠️ تنبيه: رسوم التوصيل يتم تحديدها حسب كل متجر</div>
+    <h2 style="margin-top:60px;">سلة التسوق 🛍️</h2>
+    <div style="background:#fef9e7; padding:10px; font-size:12px; border-radius:5px; text-align:center;">التوصيل يتم تحديده وتنسيقه حسب كل متجر</div>
     <div id="cartItems"></div>
-    <div style="margin-top:20px; padding:20px; border-top:2px solid #eee;">
-        <h3 style="display:flex; justify-content:space-between;"><span>الإجمالي:</span> <span id="totalVal">0</span> SDG</h3>
-        <button class="action-btn" style="background:var(--amz-orange); height:55px;" onclick="checkout()">إرسال الطلب واتساب ⚡</button>
+    <div style="margin-top:20px; border-top:1px solid #eee; padding-top:15px;">
+        <h3 style="display:flex; justify-content:space-between;">الإجمالي: <span id="totalVal">0</span> SDG</h3>
+        <button class="action-btn" style="background:var(--amz-orange)" onclick="checkout()">تأكيد الطلب واتساب ⚡</button>
     </div>
 </div>
 
 <nav>
     <div class="nav-link" onclick="location.reload()">🏠<br>الرئيسية</div>
-    <div class="nav-link" style="position:relative;" onclick="openO('wishPage')">❤️<br>المفضلة</div>
-    <div class="nav-link" style="position:relative;" onclick="openO('cartPage')">🛒<br>السلة <span id="cBadge" class="badge">0</span></div>
+    <div class="nav-link" onclick="openO('cartPage')">🛒<br>السلة <span id="cBadge" style="background:var(--amz-orange); color:#000; border-radius:50%; padding:2px 6px; font-size:10px; position:absolute; top:-5px; right:5px;">0</span></div>
+    <div class="nav-link" onclick="openO('joinPage')">🤝<br>انضمي لنا</div>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -95,7 +109,7 @@
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
     let db = [], cart = [], wish = [];
 
-    async function loadData() {
+    async function init() {
         try {
             const r = await fetch(SHEET_URL);
             const t = await r.text();
@@ -114,69 +128,41 @@
         grid.innerHTML = data.map((p, i) => `
             <div class="card">
                 <div class="price-tag">${p.price}</div>
-                <div class="heart-btn ${wish.some(w=>w.id===p.id)?'active':''}" onclick="toggleWish(${p.id})">❤</div>
                 <div class="swiper swiper-${i}">
                     <div class="swiper-wrapper">${p.imgs.map(img => `<div class="swiper-slide"><img src="${img}"></div>`).join('')}</div>
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="details">
-                    <span class="store-n">${p.store}</span>
-                    <div class="prod-n">${p.name}</div>
+                    <span style="color:#007185; font-size:11px; font-weight:bold;">${p.store}</span>
+                    <div style="font-size:14px; font-weight:bold; height:38px; overflow:hidden;">${p.name}</div>
                     <button class="action-btn" onclick="addC(${p.id})">إضافة للسلة 🛒</button>
                 </div>
             </div>`).join('');
         data.forEach((_, i) => new Swiper(`.swiper-${i}`, { pagination: {el: '.swiper-pagination'} }));
     }
 
-    function addC(id) {
-        cart.push(db.find(p => p.id === id));
-        document.getElementById('cBadge').innerText = cart.length;
-        alert('تمت الإضافة للسلة ✨');
-    }
-
-    function toggleWish(id) {
-        const idx = wish.findIndex(w => w.id === id);
-        if(idx > -1) wish.splice(idx, 1); else wish.push(db.find(p => p.id === id));
-        render(db); // تحديث القلوب
-    }
-
-    function openO(id) { 
-        document.getElementById(id).style.display = 'block'; 
-        if(id==='cartPage') updateC(); 
-        if(id==='wishPage') updateW();
-    }
+    function addC(id) { cart.push(db.find(p => p.id === id)); document.getElementById('cBadge').innerText = cart.length; alert('أضيف للسلة ✨'); }
+    function openO(id) { document.getElementById(id).style.display = 'block'; if(id==='cartPage') updateC(); }
     function closeO() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
-
+    
     function updateC() {
         const cont = document.getElementById('cartItems');
-        if(cart.length === 0) { cont.innerHTML = '<p style="text-align:center;">السلة فارغة</p>'; return; }
-        cont.innerHTML = cart.map((item, idx) => `
-            <div class="cart-item">
-                <div><b>${item.name}</b><br><small>${item.store}</small></div>
-                <div>${item.price} <span style="color:red; margin-right:10px;" onclick="removeC(${idx})">🗑️</span></div>
-            </div>`).join('');
+        cont.innerHTML = cart.map((item, idx) => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;"><span>${item.name}</span><b>${item.price}</b></div>`).join('');
         const total = cart.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g,'')) || 0), 0);
         document.getElementById('totalVal').innerText = total.toLocaleString();
     }
 
-    function removeC(idx) { cart.splice(idx,1); updateC(); document.getElementById('cBadge').innerText = cart.length; }
-
-    function updateW() {
-        const cont = document.getElementById('wishItems');
-        if(wish.length === 0) { cont.innerHTML = '<p style="text-align:center;">لا يوجد منتجات في المفضلة</p>'; return; }
-        cont.innerHTML = wish.map(item => `
-            <div class="cart-item">
-                <div><b>${item.name}</b><br><small>${item.store}</small></div>
-                <button class="action-btn" style="width:auto; padding:5px 15px;" onclick="addC(${item.id})">نقل للسلة</button>
-            </div>`).join('');
+    function copyAcc() {
+        navigator.clipboard.writeText("2280384");
+        alert("تم نسخ رقم الحساب بنجاح! ✅");
     }
 
     function checkout() {
-        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i => `• ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalVal').innerText} SDG\n⚠️ التوصيل يتم تحديده مع كل متجر.`);
+        const msg = encodeURIComponent(`طلب جديد 👑\n\n${cart.map(i => `- ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalVal').innerText} SDG`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
     }
 
-    loadData();
+    init();
 </script>
 </body>
 </html>
