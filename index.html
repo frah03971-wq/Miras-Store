@@ -3,124 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | THE EMPIRE</title>
+    <title>VIRA MALL | GLOBAL VERSION</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --amz-orange: #febd69; --amz-dark: #131921; --vira-gold: #D4AF37; }
+        :root { --amz-orange: #febd69; --amz-dark: #131921; --vira-gold: #D4AF37; --red: #e41e31; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; background: #eaeded; color: #111; font-family: 'Cairo', sans-serif; padding-bottom: 100px; }
+        body { margin: 0; background: #eaeded; color: #111; font-family: 'Cairo', sans-serif; padding-bottom: 120px; }
+
+        /* Loader */
         #loader { position: fixed; inset: 0; background: var(--amz-dark); z-index: 999999; display: flex; justify-content: center; align-items: center; }
-        .v-logo { font-family: 'Cinzel Decorative'; font-size: 50px; color: var(--vira-gold); animation: pulse 1.5s infinite; letter-spacing: 8px; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        header { position: sticky; top: 0; z-index: 10000; padding: 10px 15px; background: var(--amz-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .brand { font-family: 'Cinzel Decorative'; font-size: 28px; color: #fff; text-decoration: none; font-weight: 900; }
+        .v-logo { font-family: 'Cinzel Decorative'; font-size: 45px; color: var(--vira-gold); letter-spacing: 5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.9); } }
+
+        header { position: sticky; top: 0; z-index: 10000; padding: 12px 15px; background: var(--amz-dark); box-shadow: 0 4px 12px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-family: 'Cinzel Decorative'; font-size: 26px; color: #fff; font-weight: 900; }
         .brand span { color: var(--amz-orange); }
-        .join-btn { background: #f7ca00; border: 1px solid #a88734; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .search-bar { background: #fff; border-radius: 4px; display: flex; overflow: hidden; height: 45px; }
-        .search-bar input { flex: 1; border: none; padding: 0 15px; font-family: 'Cairo'; outline: none; }
-        .search-bar button { background: var(--amz-orange); border: none; padding: 0 15px; }
-        .container { padding: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        .container { padding: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         @media (max-width: 500px) { .container { grid-template-columns: 1fr; } }
-        .card { background: #fff; border-radius: 4px; overflow: hidden; border: 1px solid #ddd; position: relative; display: flex; flex-direction: column; }
-        .swiper { width: 100%; height: 350px; }
+
+        /* Product Card */
+        .card { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; position: relative; display: flex; flex-direction: column; transition: 0.3s; }
+        .card:active { transform: scale(0.98); }
+        .swiper { width: 100%; height: 320px; background: #fff; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
-        .price-badge { position: absolute; top: 10px; left: 0; background: #B12704; color: #fff; padding: 4px 10px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 100; }
+        
+        .price-tag { position: absolute; top: 12px; left: 0; background: #B12704; color: #fff; padding: 5px 12px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 100; font-size: 15px; }
+        
+        /* Wishlist Heart */
+        .heart-btn { position: absolute; top: 12px; right: 12px; z-index: 100; background: rgba(255,255,255,0.8); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; color: #ccc; }
+        .heart-btn.active { color: var(--red); }
+
         .details { padding: 12px; flex: 1; }
-        .store-tag { color: #007185; font-size: 11px; font-weight: 700; }
-        .add-btn { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .full-overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; padding: 20px; overflow-y: auto; }
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--amz-dark); display: flex; justify-content: space-around; padding: 12px; z-index: 5000; }
+        .store-n { color: #007185; font-size: 11px; font-weight: bold; }
+        .prod-n { font-size: 14px; font-weight: 700; margin: 5px 0; height: 38px; overflow: hidden; }
+        
+        .action-btn { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 13px; }
+        .action-btn:active { background: #f7ca00; }
+
+        /* Overlays */
+        .overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; padding: 25px; overflow-y: auto; }
+        .close-ov { font-size: 32px; cursor: pointer; float: left; padding: 10px; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .delivery-note { background: #fff9e6; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; color: #856404; font-size: 13px; margin: 15px 0; text-align: center; font-weight: bold; }
+
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--amz-dark); display: flex; justify-content: space-around; padding: 15px; z-index: 5000; border-top: 1px solid #444; }
         .nav-link { font-size: 11px; text-align: center; color: #ccc; cursor: pointer; }
+        .badge { background: var(--amz-orange); color: #000; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; position: absolute; top: -5px; right: -10px; }
     </style>
 </head>
 <body>
+
 <div id="loader"><div class="v-logo">VIRA</div></div>
+
 <header>
-    <div class="header-top">
-        <a href="#" class="brand">V<span>IRA</span></a>
-        <button class="join-btn" onclick="openP('joinP')">انضمي كتاجرة ✨</button>
-    </div>
-    <div class="search-bar"><input type="text" id="vS" placeholder="البحث في فيرا مول..." oninput="search()"><button>🔍</button></div>
+    <div class="brand">V<span>IRA</span></div>
+    <div style="color: #fff; font-size: 11px;">2280384 :بنكك</div>
 </header>
+
 <div id="grid" class="container"></div>
-<div id="joinP" class="full-overlay">
-    <span onclick="closeP()" style="font-size:30px; cursor:pointer;">✕</span>
-    <h2 style="text-align:center;">انضمي لأسرة VIRA ✨</h2>
-    <div style="background:#f7f7f7; border:2px dashed #007185; border-radius:15px; padding:25px; text-align:center; margin-top:30px;">
-        <p>رسوم الاشتراك عبر بنكك:</p>
-        <h1 style="color:#B12704;">2280384</h1>
-        <p>باسم: <b>إيثار - VIRA MALL</b></p>
-        <button class="add-btn" style="background:var(--amz-orange)" onclick="window.open('https://wa.me/249967584275?text=ارغب%20في%20الانضمام%20كتاجرة')">تأكيد التحويل ✅</button>
+
+<div id="wishPage" class="overlay">
+    <span class="close-ov" onclick="closeO()">✕</span>
+    <h2 style="margin-top:60px;">قائمة أمنياتك ❤️</h2>
+    <div id="wishItems"></div>
+</div>
+
+<div id="cartPage" class="overlay">
+    <span class="close-ov" onclick="closeO()">✕</span>
+    <h2 style="margin-top:60px;">حقيبة التسوق 🛍️</h2>
+    <div class="delivery-note">⚠️ تنبيه: رسوم التوصيل يتم تحديدها حسب كل متجر</div>
+    <div id="cartItems"></div>
+    <div style="margin-top:20px; padding:20px; border-top:2px solid #eee;">
+        <h3 style="display:flex; justify-content:space-between;"><span>الإجمالي:</span> <span id="totalVal">0</span> SDG</h3>
+        <button class="action-btn" style="background:var(--amz-orange); height:55px;" onclick="checkout()">إرسال الطلب واتساب ⚡</button>
     </div>
 </div>
-<div id="cartP" class="full-overlay">
-    <span onclick="closeP()" style="font-size:30px; cursor:pointer;">✕</span>
-    <h2 style="text-align:center;">سلتك 🛒</h2>
-    <div id="cartC"></div>
-    <div style="margin-top:20px; border-top:1px solid #ddd; padding:10px;">
-        <h3>الإجمالي: <span id="cartT">0</span> SDG</h3>
-        <button class="add-btn" style="background:var(--amz-orange)" onclick="sendW()">تأكيد الطلب ⚡</button>
-    </div>
-</div>
+
 <nav>
     <div class="nav-link" onclick="location.reload()">🏠<br>الرئيسية</div>
-    <div class="nav-link" onclick="openP('cartP')">🛒<br>السلة (<span id="count">0</span>)</div>
-    <div class="nav-link" onclick="openP('joinP')">👑<br>تاجرة</div>
+    <div class="nav-link" style="position:relative;" onclick="openO('wishPage')">❤️<br>المفضلة</div>
+    <div class="nav-link" style="position:relative;" onclick="openO('cartPage')">🛒<br>السلة <span id="cBadge" class="badge">0</span></div>
 </nav>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const S_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let db = [], bag = [];
-    async function init() {
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    let db = [], cart = [], wish = [];
+
+    async function loadData() {
         try {
-            const r = await fetch(S_URL);
+            const r = await fetch(SHEET_URL);
             const t = await r.text();
             const rows = t.split(/\r?\n/).slice(1);
             db = rows.map((row, i) => {
                 const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
-                return { id: i, store: c[1] || 'VIRA', name: c[3] || '', price: c[4] || '0', imgs: c[5] ? c[5].split(/[,\s\n\t]+/).filter(img => img.includes('http')) : [] };
+                return { id: i, store: c[1] || 'VIRA', name: c[3] || '', price: c[4] || '0', imgs: c[5] ? c[5].split(/[,\s]+/).filter(l => l.includes('http')) : [] };
             }).filter(p => p.name.length > 0);
             render(db);
             document.getElementById('loader').style.display = 'none';
         } catch (e) { console.error(e); }
     }
+
     function render(data) {
         const grid = document.getElementById('grid');
         grid.innerHTML = data.map((p, i) => `
             <div class="card">
-                <div class="price-badge">${p.price}</div>
+                <div class="price-tag">${p.price}</div>
+                <div class="heart-btn ${wish.some(w=>w.id===p.id)?'active':''}" onclick="toggleWish(${p.id})">❤</div>
                 <div class="swiper swiper-${i}">
-                    <div class="swiper-wrapper">${p.imgs.map(img => `<div class="swiper-slide"><div class="swiper-zoom-container"><img src="${img}"></div></div>`).join('')}</div>
+                    <div class="swiper-wrapper">${p.imgs.map(img => `<div class="swiper-slide"><img src="${img}"></div>`).join('')}</div>
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="details">
-                    <span class="store-tag">${p.store}</span>
-                    <div style="font-size:14px; font-weight:bold; margin:5px 0; height:35px; overflow:hidden;">${p.name}</div>
-                    <button class="add-btn" onclick="add(${p.id})">إضافة للسلة 🛒</button>
+                    <span class="store-n">${p.store}</span>
+                    <div class="prod-n">${p.name}</div>
+                    <button class="action-btn" onclick="addC(${p.id})">إضافة للسلة 🛒</button>
                 </div>
             </div>`).join('');
-        data.forEach((_, i) => new Swiper(`.swiper-${i}`, { pagination: {el: '.swiper-pagination'}, zoom: true }));
+        data.forEach((_, i) => new Swiper(`.swiper-${i}`, { pagination: {el: '.swiper-pagination'} }));
     }
-    function add(id) { bag.push(db.find(p => p.id === id)); document.getElementById('count').innerText = bag.length; alert('تمت الإضافة! ✨'); }
-    function openP(id) { document.getElementById(id).style.display = 'block'; if(id === 'cartP') renderB(); }
-    function closeP() { document.querySelectorAll('.full-overlay').forEach(p => p.style.display = 'none'); }
-    function renderB() {
-        const c = document.getElementById('cartC');
-        c.innerHTML = bag.map((item, idx) => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;"><span>${item.name}</span><b>${item.price}</b></div>`).join('');
-        const total = bag.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g,'')) || 0), 0);
-        document.getElementById('cartT').innerText = total.toLocaleString();
+
+    function addC(id) {
+        cart.push(db.find(p => p.id === id));
+        document.getElementById('cBadge').innerText = cart.length;
+        alert('تمت الإضافة للسلة ✨');
     }
-    function search() {
-        const q = document.getElementById('vS').value.toLowerCase();
-        render(db.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
+
+    function toggleWish(id) {
+        const idx = wish.findIndex(w => w.id === id);
+        if(idx > -1) wish.splice(idx, 1); else wish.push(db.find(p => p.id === id));
+        render(db); // تحديث القلوب
     }
-    function sendW() {
-        const msg = encodeURIComponent(`طلب جديد 👑\n\n${bag.map(i => `- ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('cartT').innerText} SDG`);
+
+    function openO(id) { 
+        document.getElementById(id).style.display = 'block'; 
+        if(id==='cartPage') updateC(); 
+        if(id==='wishPage') updateW();
+    }
+    function closeO() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
+
+    function updateC() {
+        const cont = document.getElementById('cartItems');
+        if(cart.length === 0) { cont.innerHTML = '<p style="text-align:center;">السلة فارغة</p>'; return; }
+        cont.innerHTML = cart.map((item, idx) => `
+            <div class="cart-item">
+                <div><b>${item.name}</b><br><small>${item.store}</small></div>
+                <div>${item.price} <span style="color:red; margin-right:10px;" onclick="removeC(${idx})">🗑️</span></div>
+            </div>`).join('');
+        const total = cart.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g,'')) || 0), 0);
+        document.getElementById('totalVal').innerText = total.toLocaleString();
+    }
+
+    function removeC(idx) { cart.splice(idx,1); updateC(); document.getElementById('cBadge').innerText = cart.length; }
+
+    function updateW() {
+        const cont = document.getElementById('wishItems');
+        if(wish.length === 0) { cont.innerHTML = '<p style="text-align:center;">لا يوجد منتجات في المفضلة</p>'; return; }
+        cont.innerHTML = wish.map(item => `
+            <div class="cart-item">
+                <div><b>${item.name}</b><br><small>${item.store}</small></div>
+                <button class="action-btn" style="width:auto; padding:5px 15px;" onclick="addC(${item.id})">نقل للسلة</button>
+            </div>`).join('');
+    }
+
+    function checkout() {
+        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i => `• ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalVal').innerText} SDG\n⚠️ التوصيل يتم تحديده مع كل متجر.`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
     }
-    init();
+
+    loadData();
 </script>
 </body>
 </html>
