@@ -3,191 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | EMPIRE BUILDER</title>
-    
+    <title>VIRA MALL | THE EMPIRE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
-    
     <style>
-        :root { --amz-orange: #ff9900; --vira-gold: #D4AF37; --dark: #131921; }
+        :root { --amz-orange: #febd69; --amz-dark: #131921; --vira-gold: #D4AF37; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; background: #f3f3f3; color: #111; font-family: 'Cairo', sans-serif; overflow-x: hidden; padding-bottom: 100px; }
-
-        /* Loader */
-        #loader { position: fixed; inset: 0; background: var(--dark); z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 0.5s; }
+        body { margin: 0; background: #eaeded; color: #111; font-family: 'Cairo', sans-serif; padding-bottom: 100px; }
+        #loader { position: fixed; inset: 0; background: var(--amz-dark); z-index: 999999; display: flex; justify-content: center; align-items: center; }
         .v-logo { font-family: 'Cinzel Decorative'; font-size: 50px; color: var(--vira-gold); animation: pulse 1.5s infinite; letter-spacing: 8px; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        /* Header */
-        header { position: sticky; top: 0; z-index: 10000; padding: 15px 20px; background: var(--dark); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        header { position: sticky; top: 0; z-index: 10000; padding: 10px 15px; background: var(--amz-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .brand { font-family: 'Cinzel Decorative'; font-size: 30px; color: #fff; text-decoration: none; }
+        .brand { font-family: 'Cinzel Decorative'; font-size: 28px; color: #fff; text-decoration: none; font-weight: 900; }
         .brand span { color: var(--amz-orange); }
-        
-        .join-btn { background: linear-gradient(to bottom, #f7dfa5, #f0c14b); border: 1px solid #a88734; padding: 8px 15px; border-radius: 5px; font-size: 13px; font-weight: bold; cursor: pointer; color: #111; }
-
-        .search-bar { background: #fff; border-radius: 6px; display: flex; overflow: hidden; }
-        .search-bar input { flex: 1; border: none; padding: 12px; font-family: 'Cairo'; outline: none; }
-        .search-bar button { background: var(--amz-orange); border: none; padding: 0 15px; cursor: pointer; }
-
-        /* Grid */
-        .container { padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
-
-        /* Product Card */
-        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #ddd; position: relative; }
-        .swiper { width: 100%; height: 380px; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
-        .price { position: absolute; top: 15px; left: 0; background: #B12704; color: #fff; padding: 4px 12px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 10; }
-
-        .details { padding: 12px; }
-        .store { color: #007185; font-size: 11px; font-weight: bold; }
-        .title { font-size: 15px; font-weight: 500; margin: 5px 0; height: 40px; overflow: hidden; }
-        
-        .buy-btn { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
-        /* Popups */
-        .overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; padding: 25px; overflow-y: auto; }
-        .close { font-size: 35px; color: #666; cursor: pointer; float: right; }
-        
-        .bankak-info { background: #f0f2f2; border: 1px solid #ddd; border-radius: 10px; padding: 20px; text-align: center; margin-top: 20px; }
-
-        nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #ddd; z-index: 5000; }
-        .nav-item { font-size: 12px; text-align: center; color: #111; cursor: pointer; }
+        .join-btn { background: #f7ca00; border: 1px solid #a88734; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .search-bar { background: #fff; border-radius: 4px; display: flex; overflow: hidden; height: 45px; }
+        .search-bar input { flex: 1; border: none; padding: 0 15px; font-family: 'Cairo'; outline: none; }
+        .search-bar button { background: var(--amz-orange); border: none; padding: 0 15px; }
+        .container { padding: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (max-width: 500px) { .container { grid-template-columns: 1fr; } }
+        .card { background: #fff; border-radius: 4px; overflow: hidden; border: 1px solid #ddd; position: relative; display: flex; flex-direction: column; }
+        .swiper { width: 100%; height: 350px; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
+        .price-badge { position: absolute; top: 10px; left: 0; background: #B12704; color: #fff; padding: 4px 10px; border-radius: 0 15px 15px 0; font-weight: bold; z-index: 100; }
+        .details { padding: 12px; flex: 1; }
+        .store-tag { color: #007185; font-size: 11px; font-weight: 700; }
+        .add-btn { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .full-overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; padding: 20px; overflow-y: auto; }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--amz-dark); display: flex; justify-content: space-around; padding: 12px; z-index: 5000; }
+        .nav-link { font-size: 11px; text-align: center; color: #ccc; cursor: pointer; }
     </style>
 </head>
 <body>
-
 <div id="loader"><div class="v-logo">VIRA</div></div>
-
 <header>
     <div class="header-top">
         <a href="#" class="brand">V<span>IRA</span></a>
-        <button class="join-btn" onclick="toggleOverlay('joinPage')">انضمي كتاجرة ✨</button>
+        <button class="join-btn" onclick="openP('joinP')">انضمي كتاجرة ✨</button>
     </div>
-    <div class="search-bar">
-        <input type="text" id="searchInp" placeholder="ابحثي عن منتجات أو متاجر..." oninput="doSearch()">
-        <button>🔍</button>
-    </div>
+    <div class="search-bar"><input type="text" id="vS" placeholder="البحث في فيرا مول..." oninput="search()"><button>🔍</button></div>
 </header>
-
 <div id="grid" class="container"></div>
-
-<div id="joinPage" class="overlay">
-    <span class="close" onclick="toggleOverlay('joinPage')">×</span>
-    <h2 style="margin-top:50px;">ابدئي تجارتك مع VIRA 👑</h2>
-    <p>اعرضي منتجاتك في أكبر مول إلكتروني سوداني واصلي لآلاف الزبائن.</p>
-    <div class="bankak-info">
-        <p>رسوم الاشتراك تُحول عبر تطبيق بنكك:</p>
-        <h1 style="color:#007185;">2280384</h1>
-        <p>باسم: <b>إيثار - إدارة VIRA</b></p>
-        <button class="buy-btn" style="background:var(--amz-orange)" onclick="window.open('https://wa.me/249967584275?text=ارغب%20في%20الانضمام%20كتاجرة%20في%20فيرا%20مول')">تأكيد التحويل وإرسال البيانات ✅</button>
+<div id="joinP" class="full-overlay">
+    <span onclick="closeP()" style="font-size:30px; cursor:pointer;">✕</span>
+    <h2 style="text-align:center;">انضمي لأسرة VIRA ✨</h2>
+    <div style="background:#f7f7f7; border:2px dashed #007185; border-radius:15px; padding:25px; text-align:center; margin-top:30px;">
+        <p>رسوم الاشتراك عبر بنكك:</p>
+        <h1 style="color:#B12704;">2280384</h1>
+        <p>باسم: <b>إيثار - VIRA MALL</b></p>
+        <button class="add-btn" style="background:var(--amz-orange)" onclick="window.open('https://wa.me/249967584275?text=ارغب%20في%20الانضمام%20كتاجرة')">تأكيد التحويل ✅</button>
     </div>
 </div>
-
-<div id="cartPage" class="overlay">
-    <span class="close" onclick="toggleOverlay('cartPage')">×</span>
-    <h2 style="margin-top:50px; text-align:center;">حقيبة التسوق 🛍️</h2>
-    <div id="cartItems"></div>
-    <div style="border-top:2px solid #eee; margin-top:20px; padding:20px;">
-        <h3>الإجمالي: <span id="total">0</span> SDG</h3>
-        <button class="buy-btn" style="background:var(--amz-orange); padding:15px;" onclick="sendOrder()">إرسال الطلب (واتساب) ⚡</button>
+<div id="cartP" class="full-overlay">
+    <span onclick="closeP()" style="font-size:30px; cursor:pointer;">✕</span>
+    <h2 style="text-align:center;">سلتك 🛒</h2>
+    <div id="cartC"></div>
+    <div style="margin-top:20px; border-top:1px solid #ddd; padding:10px;">
+        <h3>الإجمالي: <span id="cartT">0</span> SDG</h3>
+        <button class="add-btn" style="background:var(--amz-orange)" onclick="sendW()">تأكيد الطلب ⚡</button>
     </div>
 </div>
-
 <nav>
-    <div class="nav-item" onclick="location.reload()">🏠<br>الرئيسية</div>
-    <div class="nav-item" onclick="toggleOverlay('cartPage')">🛒<br>السلة <span id="count" style="color:var(--amz-orange); font-weight:bold;">0</span></div>
-    <div class="nav-item" onclick="toggleOverlay('joinPage')">🤝<br>انضمي لنا</div>
+    <div class="nav-link" onclick="location.reload()">🏠<br>الرئيسية</div>
+    <div class="nav-link" onclick="openP('cartP')">🛒<br>السلة (<span id="count">0</span>)</div>
+    <div class="nav-link" onclick="openP('joinP')">👑<br>تاجرة</div>
 </nav>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-    let products = [];
-    let cart = [];
-
+    const S_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    let db = [], bag = [];
     async function init() {
         try {
-            const res = await fetch(URL);
-            const data = await res.text();
-            const rows = data.split('\n').slice(1);
-            
-            products = rows.map((r, i) => {
-                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
-                return {
-                    id: i,
-                    store: c[1] || 'Vira',
-                    name: c[3] || '',
-                    price: c[4] || '0',
-                    imgs: c[5] ? c[5].split(/[,\s\n\t]+/).filter(l => l.includes('http')) : []
-                };
-            }).filter(p => p.name !== "");
-
-            render(products);
+            const r = await fetch(S_URL);
+            const t = await r.text();
+            const rows = t.split(/\r?\n/).slice(1);
+            db = rows.map((row, i) => {
+                const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
+                return { id: i, store: c[1] || 'VIRA', name: c[3] || '', price: c[4] || '0', imgs: c[5] ? c[5].split(/[,\s\n\t]+/).filter(img => img.includes('http')) : [] };
+            }).filter(p => p.name.length > 0);
+            render(db);
             document.getElementById('loader').style.display = 'none';
-        } catch (e) { alert("تأكدي من نشر الشيت للويب بصيغة CSV"); }
+        } catch (e) { console.error(e); }
     }
-
-    function render(arr) {
+    function render(data) {
         const grid = document.getElementById('grid');
-        grid.innerHTML = arr.map((p, i) => `
+        grid.innerHTML = data.map((p, i) => `
             <div class="card">
-                <div class="price">${p.price}</div>
+                <div class="price-badge">${p.price}</div>
                 <div class="swiper swiper-${i}">
-                    <div class="swiper-wrapper">
-                        ${p.imgs.map(img => `<div class="swiper-slide"><div class="swiper-zoom-container"><img src="${img}"></div></div>`).join('')}
-                    </div>
+                    <div class="swiper-wrapper">${p.imgs.map(img => `<div class="swiper-slide"><div class="swiper-zoom-container"><img src="${img}"></div></div>`).join('')}</div>
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="details">
-                    <span class="store">${p.store}</span>
-                    <div class="title">${p.name}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id})">إضافة للسلة 🛒</button>
+                    <span class="store-tag">${p.store}</span>
+                    <div style="font-size:14px; font-weight:bold; margin:5px 0; height:35px; overflow:hidden;">${p.name}</div>
+                    <button class="add-btn" onclick="add(${p.id})">إضافة للسلة 🛒</button>
                 </div>
-            </div>
-        `).join('');
-
-        arr.forEach((p, i) => new Swiper(`.swiper-${i}`, { pagination: {el: '.swiper-pagination'}, zoom: true }));
+            </div>`).join('');
+        data.forEach((_, i) => new Swiper(`.swiper-${i}`, { pagination: {el: '.swiper-pagination'}, zoom: true }));
     }
-
-    function addToCart(id) {
-        cart.push(products.find(p => p.id === id));
-        document.getElementById('count').innerText = cart.length;
-        alert('تمت الإضافة للسلة ✨');
+    function add(id) { bag.push(db.find(p => p.id === id)); document.getElementById('count').innerText = bag.length; alert('تمت الإضافة! ✨'); }
+    function openP(id) { document.getElementById(id).style.display = 'block'; if(id === 'cartP') renderB(); }
+    function closeP() { document.querySelectorAll('.full-overlay').forEach(p => p.style.display = 'none'); }
+    function renderB() {
+        const c = document.getElementById('cartC');
+        c.innerHTML = bag.map((item, idx) => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;"><span>${item.name}</span><b>${item.price}</b></div>`).join('');
+        const total = bag.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g,'')) || 0), 0);
+        document.getElementById('cartT').innerText = total.toLocaleString();
     }
-
-    function toggleOverlay(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-        if(id === 'cartPage') updateCart();
+    function search() {
+        const q = document.getElementById('vS').value.toLowerCase();
+        render(db.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
     }
-
-    function updateCart() {
-        const div = document.getElementById('cartItems');
-        if(cart.length === 0) { div.innerHTML = '<p style="text-align:center;">السلة فارغة</p>'; return; }
-        div.innerHTML = cart.map((item, idx) => `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
-                <span>${item.name}</span>
-                <b>${item.price} <small style="color:red" onclick="removeItem(${idx})">حذف</small></b>
-            </div>
-        `).join('');
-        const total = cart.reduce((acc, c) => acc + (parseInt(c.price.replace(/[^0-9]/g,'')) || 0), 0);
-        document.getElementById('total').innerText = total.toLocaleString();
-    }
-
-    function removeItem(idx) { cart.splice(idx, 1); updateCart(); document.getElementById('count').innerText = cart.length; }
-
-    function doSearch() {
-        const q = document.getElementById('searchInp').value.toLowerCase();
-        render(products.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
-    }
-
-    function sendOrder() {
-        const msg = encodeURIComponent(`طلب من فيرا مول 👑\n\n${cart.map(i => `- ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('total').innerText} SDG`);
+    function sendW() {
+        const msg = encodeURIComponent(`طلب جديد 👑\n\n${bag.map(i => `- ${i.name} (${i.store})`).join('\n')}\n\nالإجمالي: ${document.getElementById('cartT').innerText} SDG`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
     }
-
     init();
 </script>
 </body>
