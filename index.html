@@ -3,205 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | THE SUPREME EDITION</title>
-    
+    <title>VIRA MALL | النسخة المصححة</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
-    
     <style>
-        :root { --gold: #D4AF37; --black: #000; --card: #0d0d0d; --green: #2ecc71; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        :root { --gold: #D4AF37; --black: #000; --card: #0d0d0d; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--black); color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; padding-bottom: 100px; }
         
-        body { margin: 0; background: var(--black); color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; padding-bottom: 120px; }
+        /* شاشة التحميل الذكية - تختفي تلقائياً لو اتأخرت */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 999999; display: flex; justify-content: center; align-items: center; }
+        .loader-text { font-family: 'Cinzel Decorative'; font-size: 40px; color: var(--gold); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* لودر البداية الفخم */
-        #main-loader { position: fixed; inset: 0; background: #000; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 1s cubic-bezier(0.7, 0, 0.3, 1); }
-        .v-logo { font-family: 'Cinzel Decorative'; font-size: 50px; color: var(--gold); letter-spacing: 12px; animation: glow 2s infinite; }
-        @keyframes glow { 0%, 100% { opacity: 1; text-shadow: 0 0 30px var(--gold); } 50% { opacity: 0.2; } }
+        header { position: sticky; top: 0; z-index: 10000; padding: 20px; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(212,175,55,0.2); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Cinzel Decorative'; font-size: 24px; color: var(--gold); }
 
-        /* الهيدر */
-        header { position: sticky; top: 0; z-index: 10000; padding: 25px; background: rgba(0,0,0,0.95); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(212,175,55,0.2); display: flex; justify-content: space-between; align-items: center; }
-        .h-brand { font-family: 'Cinzel Decorative'; font-size: 28px; color: var(--gold); cursor: pointer; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+        @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
 
-        /* بوابة بنكك */
-        #bankak-portal { display: none; position: fixed; inset: 0; background: #000; z-index: 800000; padding: 40px 25px; overflow-y: auto; }
-        .bankak-box { background: #111; border: 2px solid var(--green); border-radius: 35px; padding: 30px; text-align: center; margin-top: 20px; box-shadow: 0 0 30px rgba(46, 204, 113, 0.1); }
-        
-        /* البحث */
-        .search-container { padding: 20px; }
-        .v-input { width: 100%; padding: 20px; border-radius: 25px; border: 1px solid #222; background: #111; color: #fff; text-align: center; font-family: 'Cairo'; font-size: 16px; transition: 0.3s; }
-        .v-input:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(212,175,55,0.1); }
-
-        /* الأقسام */
-        .section-tag { padding: 45px 25px 15px; font-weight: 900; font-size: 26px; color: var(--gold); display: flex; align-items: center; gap: 15px; }
-        .section-tag::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, var(--gold), transparent); }
-
-        .m-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; padding: 18px; }
-        @media (max-width: 500px) { .m-grid { grid-template-columns: 1fr; } }
-
-        /* كرت المنتج السوبر */
-        .v-card { background: var(--card); border-radius: 40px; overflow: hidden; border: 1px solid #1a1a1a; position: relative; transition: 0.4s; }
-        .v-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        
-        /* السلايدر (السحب) */
-        .swiper { width: 100%; height: 420px; background: #000; }
+        .card { background: var(--card); border-radius: 25px; overflow: hidden; border: 1px solid #1a1a1a; position: relative; }
+        .swiper { width: 100%; height: 380px; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-        .price-chip { position: absolute; top: 25px; left: 0; background: var(--gold); color: #000; padding: 8px 22px; border-radius: 0 20px 20px 0; font-weight: 900; z-index: 10; font-size: 15px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); }
-
-        .p-details { padding: 25px; text-align: center; }
-        .s-name { font-size: 10px; color: var(--gold); font-weight: 900; letter-spacing: 3px; display: block; margin-bottom: 10px; text-transform: uppercase; }
-        .p-name { font-size: 19px; font-weight: 700; height: 55px; overflow: hidden; margin-bottom: 20px; line-height: 1.4; }
         
-        .v-btn { background: #fff; color: #000; border: none; width: 100%; padding: 18px; border-radius: 20px; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 15px; }
-        .v-btn:active { background: var(--gold); transform: scale(0.9); }
-
-        /* السلة */
-        #cart-view { display: none; position: fixed; inset: 0; background: #000; z-index: 500000; padding: 40px 25px; overflow-y: auto; }
-        .cart-row { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #1a1a1a; align-items: center; }
-
-        /* الناف بار السفلي */
-        nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 88%; max-width: 420px; background: rgba(255,255,255,0.06); backdrop-filter: blur(30px); border-radius: 100px; display: flex; justify-content: space-around; padding: 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 400000; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .n-link { font-size: 26px; color: #444; position: relative; cursor: pointer; }
-        .n-link.active { color: var(--gold); }
-        .count-badge { position: absolute; top: -8px; right: -12px; background: var(--gold); color: #000; font-size: 10px; width: 20px; height: 20px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; border: 2px solid #000; }
+        .price-tag { position: absolute; top: 15px; left: 0; background: var(--gold); color: #000; padding: 5px 15px; border-radius: 0 10px 10px 0; font-weight: 900; z-index: 10; }
+        .info { padding: 15px; text-align: center; }
+        .store { color: var(--gold); font-size: 11px; font-weight: 900; display: block; margin-bottom: 5px; }
         
-        .swiper-pagination-bullet-active { background: var(--gold) !important; width: 20px !important; border-radius: 10px !important; }
+        .btn { background: #fff; color: #000; border: none; width: 100%; padding: 15px; border-radius: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+        
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border-radius: 50px; display: flex; justify-content: space-around; padding: 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 40000; }
     </style>
 </head>
 <body>
 
-<div id="main-loader"><div class="v-logo">VIRA</div></div>
+<div id="loader"><div class="loader-text">VIRA</div></div>
 
 <header>
-    <div style="font-size:12px; color:var(--gold); font-weight:900;" onclick="toggleBankak()">انضمي كتاجرة ✨</div>
-    <div class="h-brand" onclick="location.reload()">VIRA</div>
-    <div onclick="toggleCart()" style="font-size:24px;">🛒</div>
+    <div></div>
+    <div class="logo">VIRA</div>
+    <div style="font-size:20px;">🛒</div>
 </header>
 
-<div class="search-container">
-    <input type="text" class="v-input" id="mainSearch" placeholder="ابحثي عن منتج، متجر، أو عطارة..." oninput="search()">
-</div>
-
-<div class="section-tag">⚜️ VIRA <span>EXCLUSIVE</span></div>
-<div id="viraGrid" class="m-grid"></div>
-
-<div class="section-tag" style="color:#8c6a2c;">🏺 HERITAGE <span>عطارة سودانية</span></div>
-<div id="heritageGrid" class="m-grid"></div>
-
-<div class="section-tag">🛍️ PARTNERS <span>المتاجر</span></div>
-<div id="partnerGrid" class="m-grid"></div>
-
-<div id="bankak-portal">
-    <h1 style="text-align:center; color:var(--gold); font-family:'Cinzel Decorative'; font-size:35px;">VIRA BUSINESS</h1>
-    <p style="text-align:center; color:#666;">ابدئي رحلة النجاح واعرضي منتجاتك في أرقى مول سوداني</p>
-    
-    <div class="bankak-box">
-        <img src="https://virl.bc.ca/wp-content/uploads/2019/01/Bankak-Logo.png" style="width:70px; filter: grayscale(1) brightness(2);" alt="">
-        <h2 style="color:var(--green); margin:10px 0;">الاشتراك عبر بنكك</h2>
-        <p style="color:#888;">رقم الحساب:</p>
-        <h2 style="letter-spacing:2px; color:#fff;">249967584275</h2>
-        <p style="color:#888;">باسم: <b>إيثار (VIRA ADMIN)</b></p>
-        <hr style="border:0; border-top:1px solid #222; margin:25px 0;">
-        <button class="v-btn" style="background:var(--green); color:#fff;" onclick="confirmJoin()">تأكيد التحويل وإرسال الإشعار ✅</button>
-    </div>
-    <p onclick="toggleBankak()" style="text-align:center; margin-top:40px; color:#444; text-decoration:underline;">الرجوع للمول</p>
-</div>
-
-<div id="cart-view">
-    <h1 style="color:var(--gold); text-align:center; font-family:'Cinzel Decorative'; font-size:40px;">THE BAG</h1>
-    <div id="cartList"></div>
-    <div style="text-align:center; margin-top:60px;">
-        <p style="color:#444; letter-spacing:5px;">TOTAL</p>
-        <h1 id="totalSdg" style="font-size:55px; margin:10px 0;">0</h1>
-        <button class="v-btn" style="background:var(--gold); padding:22px; font-size:18px;" onclick="sendOrder()">تأكيد الطلب (واتساب) ⚡</button>
-        <p onclick="toggleCart()" style="margin-top:30px; color:#555;">إغلاق</p>
-    </div>
-</div>
+<div id="main-grid" class="grid"></div>
 
 <nav>
-    <div class="n-link" onclick="location.reload()">🏠</div>
-    <div class="n-link" onclick="toggleBankak()">🤝</div>
-    <div class="n-link" onclick="toggleCart()">💼<span class="count-badge" id="cartCount">0</span></div>
+    <div onclick="location.reload()">🏠</div>
+    <div onclick="alert('قريباً: اشتراك بنكك')">💳</div>
+    <div onclick="alert('حقيبة التسوق')">💼</div>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <script>
+    // معرف الجدول الخاص بك
     const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let database = [];
-    let bag = [];
+    // معرف ورقة "ردود النموذج 1"
+    const GID = '1152504859'; 
 
-    async function loadEmpire() {
+    async function loadData() {
         try {
-            const [respV, respP] = await Promise.all([
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
-            ]);
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+            const response = await fetch(url);
+            const data = await response.text();
             
-            const parseCsv = (csv, isV) => csv.split('\n').slice(1).map(row => {
-                const c = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
-                // الأعمدة: B(1) متجر | D(3) منتج | E(4) سعر | F(5) صور | G(6) وصف
-                if(isV) return { store: 'VIRA', name: c[0], price: c[1], img: c[3], desc: c[4] };
-                return { store: c[1] || 'Vira Partner', name: c[3] || '', price: c[4] || '0', img: c[5] || '', desc: c[6] || '' };
-            }).filter(i => i.name && i.img);
-
-            database = [...parseCsv(await respV.text(), true), ...parseCsv(await respP.text(), false).reverse()];
-            render(database);
+            // تقسيم الأسطر
+            const rows = data.split('\n').slice(1);
+            const container = document.getElementById('main-grid');
             
-            setTimeout(() => { 
-                document.getElementById('main-loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('main-loader').remove(), 1000);
-            }, 1500);
-        } catch (e) { alert("تأكدي من الإنترنت يا قلبي"); }
-    }
+            if (rows.length === 0 || rows[0].trim() === "") {
+                container.innerHTML = "<p style='text-align:center; padding:50px;'>في انتظار إضافة أول منتج...</p>";
+                document.getElementById('loader').style.display = 'none';
+                return;
+            }
 
-    function render(data) {
-        let vH = '', pH = '', hH = '';
-        data.forEach((p, idx) => {
-            // معالجة الروابط (تنظيف المسافات والفواصل واللخبطة)
-            const cleanImgs = p.img.split(/[,\s\n\t]+/).filter(l => l.includes('http'));
-            
-            const cardHtml = `
-                <div class="v-card">
-                    <div class="price-chip">${p.price}</div>
-                    <div class="swiper swiper-${idx}">
-                        <div class="swiper-wrapper">
-                            ${cleanImgs.map(l => `
-                                <div class="swiper-slide">
-                                    <div class="swiper-zoom-container">
-                                        <img src="${l}" loading="lazy">
-                                    </div>
-                                </div>`).join('')}
-                        </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                    <div class="p-details">
-                        <span class="s-name">${p.store}</span>
-                        <div class="p-name">${p.name}</div>
-                        <button class="v-btn" onclick="addToBag('${p.name.replace(/'/g,"")}')">طلب المنتج 🛒</button>
-                    </div>
-                </div>`;
-            
-            const isHeritage = p.name.includes('عطارة') || p.store.includes('عطارة') || p.desc.includes('عطارة');
-            if(p.store === 'VIRA') vH += cardHtml;
-            else if(isHeritage) hH += cardHtml;
-            else pH += cardHtml;
-        });
-
-        document.getElementById('viraGrid').innerHTML = vH;
-        document.getElementById('heritageGrid').innerHTML = hH;
-        document.getElementById('partnerGrid').innerHTML = pH;
-
-        // تشغيل محرك السحب والتكبير
-        data.forEach((_, i) => {
-            new Swiper(`.swiper-${i}`, {
-                pagination: { el: ".swiper-pagination", clickable: true },
-                zoom: { maxRatio: 3 },
-                grabCursor: true
+            rows.forEach((row, index) => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/"/g,'').trim());
+                
+                // بناءً على صورتك: العمود B(1) متجر، D(3) منتج، E(4) سعر، F(5) صور
+                const store = cols[1] || "متجر فيرا";
+                const name = cols[3] || "منتج جديد";
+                const price = cols[4] || "اتصل للسعر";
+                const imgStr = cols[5] || "";
+                
+                if (name && imgStr) {
+                    const imgs = imgStr.split(/[,\s\n\t]+/).filter(l => l.startsWith('http'));
+                    
+                    const card = `
+                        <div class="card">
+                            <div class="price-tag">${price}</div>
+                            <div class="swiper swiper-${index}">
+                                <div class="swiper-wrapper">
+                                    ${imgs.map(i => `<div class="swiper-slide"><img src="${i}" onerror="this.src='https://placehold.co/400x600?text=VIRA'"></div>`).join('')}
+                                </div>
+                            </div>
+                            <div class="info">
+                                <span class="store">${store}</span>
+                                <div style="font-weight:bold; height:40px; overflow:hidden;">${name}</div>
+                                <button class="btn" onclick="alert('سيتم فتح الواتساب للطلب')">اطلب الآن</button>
+                            </div>
+                        </div>`;
+                    container.innerHTML += card;
+                }
             });
-        });
+
+            // تفعيل السحب
+            rows.forEach((_, i) => {
+                new Swiper(`.swiper-${i}`, { grabCursor: true });
+            });
+
+            document.getElementById('loader').style.display = 'none';
+
+        } catch (error) {
+            console.error(error);
+            // لو حصل خطأ، نخفي اللودر ونعرض رسالة
+            document.getElementById('loader').innerHTML = "<div style='color:var(--gold); text-align:center; padding:20px;'>تأكدي من نشر الجدول للويب (CSV)</div>";
+        }
     }
 
-    function search() {
-        const q = document.getElementById('mainSearch').value.toLowerCase();
-        render(database.filter(p => p.name.toLowerCase().includes(q) ||
+    // تشغيل التحميل
+    loadData();
+</script>
+</body>
+</html>
