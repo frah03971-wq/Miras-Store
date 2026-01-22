@@ -3,353 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | FORM EDITION 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+    <title>VIRA OMEGA | THE TERMINATOR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --gold: #D4AF37;
-            --black: #0a0a0a;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.97);
+            --gold: #e4b04a;
+            --gold-dark: #8c6a2c;
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --text-main: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            margin: 0;
-            background-color: #f8f8f8;
-            color: var(--black);
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-            padding-bottom: 100px;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { 
+            margin: 0; background: var(--bg); color: var(--text-main); 
+            font-family: 'Cairo', sans-serif; overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
         }
 
-        /* --- Loader الملكي --- */
-        #v-loader {
-            position: fixed;
-            inset: 0;
-            background: var(--black);
-            z-index: 999999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: 1s ease-in-out;
+        /* --- Entrance Destruction --- */
+        #gate {
+            position: fixed; inset: 0; background: #000; z-index: 999999;
+            display: flex; justify-content: center; align-items: center;
+            transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
         }
-        .shimmer-text {
-            font-family: 'Cinzel', serif;
-            font-size: 50px;
-            color: var(--gold);
-            letter-spacing: 15px;
-            animation: pulse 2s infinite;
+        .gate-logo {
+            font-family: 'Cinzel Decorative'; font-size: 50px; color: var(--gold);
+            letter-spacing: 10px; text-shadow: 0 0 30px var(--gold-dark);
+            animation: zoom-out 2s forwards;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.05); } }
+        @keyframes zoom-out { 0% { transform: scale(5); opacity: 0; filter: blur(20px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
 
-        /* --- Header & Search --- */
+        /* --- Cyber Header --- */
         header {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 10000; padding: 25px;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(30px);
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(228,176,74,0.1);
         }
-        .logo { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 900; color: var(--black); }
-        .logo span { color: var(--gold); }
+        .brand { font-family: 'Syncopate'; font-size: 24px; letter-spacing: 5px; color: var(--gold); }
 
-        .search-container { padding: 15px; background: #fff; }
-        .search-bar {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 20px;
-            border: 1px solid #f0f0f0;
-            background: #f9f9f9;
-            font-family: 'Cairo';
-            outline: none;
-            transition: 0.3s;
+        /* --- Search Engine --- */
+        .search-container { padding: 20px; }
+        .omega-search {
+            width: 100%; background: #111; border: 1px solid #222;
+            padding: 20px; border-radius: 15px; color: #fff; font-family: 'Cairo';
+            font-size: 16px; transition: 0.5s; text-align: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
-        .search-bar:focus { border-color: var(--gold); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .omega-search:focus { border-color: var(--gold); box-shadow: 0 0 30px rgba(228,176,74,0.1); }
 
-        /* --- Grid System --- */
-        .v-tag {
-            padding: 30px 20px 10px;
-            font-weight: 900;
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .v-tag::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, var(--gold), transparent); }
-        
-        .main-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 15px;
-        }
-        @media (max-width: 450px) { .main-grid { grid-template-columns: 1fr; } }
+        /* --- Product Section --- */
+        .v-header { padding: 40px 25px 10px; font-weight: 900; font-size: 26px; color: var(--gold); display: flex; align-items: center; gap: 15px; }
+        .v-header span { font-family: 'Cinzel Decorative'; opacity: 0.5; }
 
-        /* --- Product Card --- */
-        .product-card {
-            background: var(--white);
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: 0.3s ease;
-        }
-        .product-card:hover { transform: translateY(-5px); }
+        .omega-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px; }
+        @media (max-width: 500px) { .omega-grid { grid-template-columns: 1fr; } }
 
-        /* Slider Engine */
-        .slider-wrapper {
-            width: 100%;
-            height: 350px;
-            position: relative;
-            overflow: hidden;
-            background: #f0f0f0;
+        /* --- The Omega Card --- */
+        .o-card {
+            background: var(--card-bg); border-radius: 20px; overflow: hidden;
+            position: relative; border: 1px solid #1a1a1a;
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .slides-inner {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-        }
-        .slides-inner::-webkit-scrollbar { display: none; }
-        .slides-inner img {
-            min-width: 100%;
-            height: 100%;
-            object-fit: cover;
-            scroll-snap-align: start;
-            cursor: zoom-in;
-        }
-        
-        .slider-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 5px;
-            z-index: 5;
-        }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--gold); width: 15px; border-radius: 10px; }
+        .o-card:hover { transform: scale(1.03); border-color: var(--gold); }
 
-        .price-tag {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0,0,0,0.8);
-            color: var(--gold);
-            padding: 7px 15px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 12px;
-            z-index: 10;
-            backdrop-filter: blur(5px);
-            border: 1px solid var(--gold);
+        .visuals { width: 100%; height: 420px; position: relative; overflow: hidden; }
+        .scroll-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .scroll-track::-webkit-scrollbar { display: none; }
+        .scroll-track img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+
+        .price-badge {
+            position: absolute; bottom: 20px; right: 0; background: var(--gold);
+            color: #000; padding: 8px 20px; font-weight: 900; font-size: 14px;
+            clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
         }
 
-        .card-info { padding: 20px; text-align: center; }
-        .store-badge { font-size: 10px; color: var(--gold); font-weight: 900; background: rgba(212,175,55,0.1); padding: 4px 10px; border-radius: 7px; margin-bottom: 10px; display: inline-block; }
-        .prod-name { font-size: 17px; font-weight: 700; margin-bottom: 15px; color: #111; line-height: 1.4; height: 48px; overflow: hidden; }
-        .shipping-note { font-size: 10px; color: #999; display: block; margin-bottom: 15px; border-top: 1px solid #f9f9f9; padding-top: 10px; }
-        
-        .buy-button {
-            background: var(--black);
-            color: var(--gold);
-            border: none;
-            width: 100%;
-            padding: 16px;
-            border-radius: 20px;
-            font-weight: 900;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
+        .dots-group { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+        .o-dot { width: 5px; height: 5px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.3s; }
+        .o-dot.active { background: var(--gold); width: 20px; border-radius: 10px; }
+
+        .o-content { padding: 25px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .o-store { font-size: 10px; letter-spacing: 3px; color: var(--gold-dark); text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .o-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #fff; height: 50px; overflow: hidden; }
+
+        .o-btn {
+            background: none; border: 1px solid var(--gold); color: var(--gold);
+            width: 100%; padding: 15px; border-radius: 10px; font-weight: 900;
+            cursor: pointer; transition: 0.4s; position: relative; overflow: hidden;
         }
-        .buy-button:active { transform: scale(0.95); }
+        .o-btn:active { background: var(--gold); color: #000; }
 
         /* --- Zoom Overlay --- */
-        #zoom-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.98);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
+        #omega-zoom {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 1000000; justify-content: center; align-items: center;
         }
-        #zoom-img { max-width: 95%; max-height: 85%; object-fit: contain; }
-        .close-zoom { position: absolute; top: 30px; right: 30px; color: #fff; font-size: 40px; }
+        #omega-zoom img { max-width: 95%; max-height: 80%; border: 1px solid var(--gold); }
 
-        /* --- Footer Nav --- */
+        /* --- Floating Navigation --- */
         nav {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 100px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px;
-            border: 1px solid #eee;
-            z-index: 5000;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 450px; background: rgba(10,10,10,0.8);
+            backdrop-filter: blur(20px); border-radius: 20px; display: flex;
+            justify-content: space-around; padding: 15px; border: 1px solid #222;
+            z-index: 50000;
         }
-        .nav-item { font-size: 22px; color: #bbb; cursor: pointer; position: relative; }
-        .nav-center {
-            background: var(--black);
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: -65px;
-            border: 6px solid #fff;
-            color: var(--gold);
-            font-family: 'Cinzel';
-            font-size: 35px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .badge { position: absolute; top: -5px; right: -10px; background: #ff4757; color: #fff; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #fff; }
+        .nav-icon { font-size: 22px; color: #444; transition: 0.3s; cursor: pointer; position: relative; }
+        .nav-icon.active { color: var(--gold); }
+        .cart-tag { position: absolute; top: -10px; right: -10px; background: var(--gold); color: #000; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; }
 
-        /* --- Cart Modal --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 6000; }
-        .modal-content { background: #fff; width: 92%; max-width: 450px; margin: 60px auto; border-radius: 40px; padding: 30px; max-height: 80vh; overflow-y: auto; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f8f8f8; }
+        /* --- Full Cart --- */
+        #cart { display: none; position: fixed; inset: 0; background: #000; z-index: 200000; padding: 40px 20px; }
+        .cart-ui { max-width: 500px; margin: 0 auto; }
+        .cart-item { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #111; }
     </style>
 </head>
 <body>
 
-<div id="v-loader">
-    <div class="shimmer-text">VIRA</div>
-</div>
+<div id="gate"><div class="gate-logo">VIRA</div></div>
 
 <header>
-    <div style="font-size:22px;">👑</div>
-    <div class="logo">VIRA<span>MALL</span></div>
-    <div style="font-size:24px;" onclick="openCart()">🛒</div>
+    <div style="font-size:20px;">🛡️</div>
+    <div class="brand">VIRA OMEGA</div>
+    <div onclick="toggleCart()">🛒</div>
 </header>
 
 <div class="search-container">
-    <input type="text" class="search-bar" id="searchInput" placeholder="ابحثي عن منتج أو متجر..." oninput="filterMall()">
+    <input type="text" class="omega-search" id="oSearch" placeholder="ابحثي في ترسانة المنتجات..." oninput="omegaFilter()">
 </div>
 
-<div class="v-tag">✨ <span>VIRA</span> SELECTIONS</div>
-<div id="viraGrid" class="main-grid"></div>
+<div class="v-header"><span>01</span> VIRA PRIVÉ</div>
+<div id="viraGrid" class="omega-grid"></div>
 
-<div class="v-tag">🛍️ <span>STORE</span> PARTNERS</div>
-<div id="partnerGrid" class="main-grid"></div>
+<div class="v-header"><span>02</span> ALLIANCE STORES</div>
+<div id="partnerGrid" class="omega-grid"></div>
 
-<div id="zoom-overlay" onclick="this.style.display='none'">
-    <span class="close-zoom">×</span>
-    <img id="zoom-img">
-</div>
+<div id="omega-zoom" onclick="this.style.display='none'"><img id="zImg"></div>
 
-<div id="cartModal" class="modal" onclick="this.style.display='none'">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="text-align:center; font-weight:900;">حقيبة التسوق 🛍️</h2>
-        <div id="cartBody"></div>
-        <div style="text-align:center; margin-top:25px;">
-            <h1 id="cartTotal" style="font-size:40px; color:var(--gold); margin:0;">0</h1>
-            <button class="buy-button" style="margin-top:20px; padding:20px;" onclick="sendToWhatsApp()">تأكيد الطلب (واتساب)</button>
+<div id="cart">
+    <div class="cart-ui">
+        <h1 style="font-family:'Cinzel Decorative'; color:var(--gold); text-align:center;">THE BAG</h1>
+        <div id="cartList"></div>
+        <div style="text-align:center; margin-top:50px;">
+            <p style="color:#444; letter-spacing:5px;">TOTAL AMOUNT</p>
+            <h1 id="totalPrice" style="font-size:50px; color:#fff;">0</h1>
+            <button class="o-btn" style="background:var(--gold); color:#000; padding:20px;" onclick="checkout()">تأكيد العملية (واتساب) ⚡</button>
+            <p onclick="toggleCart()" style="margin-top:20px; color:#666;">إغلاق الحقيبة</p>
         </div>
     </div>
 </div>
 
 <nav>
-    <div class="nav-item" onclick="location.reload()">🏠</div>
-    <div class="nav-item" onclick="openCart()">💼<span class="badge" id="bCount">0</span></div>
-    <div class="nav-center">V</div>
-    <div class="nav-item" onclick="alert('حساب الإدارة - إيثار: 2280384')">👑</div>
+    <div class="nav-icon" onclick="location.reload()">🏠</div>
+    <div class="nav-icon active" onclick="toggleCart()">💼<span class="cart-tag" id="cartCount">0</span></div>
+    <div class="nav-icon" onclick="alert('VIRA OMEGA SYSTEM: 249967584275')">⚙️</div>
 </nav>
 
 <script>
-    const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let fullData = [];
-    let cart = [];
+    const S_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    let database = [];
+    let bag = [];
 
-    async function initVira() {
+    async function loadOmega() {
         try {
-            // جلب البيانات من شيت الردود (gid=1152504859) وشيت الإدارة (gid=0)
-            const [respV, respP] = await Promise.all([
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
+            const [vR, pR] = await Promise.all([
+                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=0`),
+                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=1152504859`)
             ]);
-
-            const textV = await respV.text();
-            const textP = await respP.text();
-
-            // معالجة بيانات الإدارة (شيت 1)
-            const dataV = textV.split('\n').slice(1).map(row => {
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                return { store: 'VIRA', name: cols[0], price: cols[1], img: cols[3]?.replace(/"/g,'').trim(), desc: cols[4] };
+            
+            const parse = (txt, isV) => txt.split('\n').slice(1).map(r => {
+                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(x => x?.replace(/"/g,'').trim());
+                return isV ? { store: 'VIRA', name: c[0], price: c[1], img: c[3] } 
+                           : { store: c[1], name: c[3], price: c[4], img: c[5] };
             }).filter(i => i.name && i.img);
 
-            // معالجة بيانات الفورم (شيت الردود) - الترتيب الدقيق للأعمدة
-            const dataP = textP.split('\n').slice(1).map(row => {
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c?.replace(/"/g,'').trim());
-                // B(1): المتجر | D(3): المنتج | E(4): السعر | F(5): الصور | G(6): الوصف
-                return {
-                    store: cols[1] || 'متجر شريك',
-                    name: cols[3] || '',
-                    price: cols[4] || '0',
-                    img: cols[5] || '',
-                    desc: cols[6] || ''
-                };
-            }).filter(i => i.name && i.img).reverse();
-
-            fullData = [...dataV, ...dataP];
-            renderMall(fullData);
+            database = [...parse(await vR.text(), true), ...parse(await pR.text(), false).reverse()];
+            render(database);
             
-            // إخفاء اللودر
-            setTimeout(() => {
-                document.getElementById('v-loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('v-loader').remove(), 1000);
-            }, 1500);
-
-        } catch (e) { console.error("Data Error", e); }
+            setTimeout(() => { document.getElementById('gate').style.opacity = '0'; setTimeout(()=>document.getElementById('gate').remove(), 1200); }, 1500);
+        } catch (e) { console.error("Omega Offline"); }
     }
 
-    function renderMall(list) {
+    function render(data) {
         let hV = '', hP = '';
-        list.forEach((p, pIdx) => {
-            // معالجة الروابط المتعددة (الصور)
-            const images = p.img.split(/[,\s\n]+/).filter(link => link.startsWith('http'));
-            const dots = images.length > 1 ? `<div class="slider-dots" id="dots-${pIdx}">${images.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>` : '';
+        data.forEach((p, idx) => {
+            const imgs = p.img.split(/[,\s\n]+/).filter(l => l.includes('http'));
+            const dots = imgs.length > 1 ? `<div class="dots-group" id="dots-${idx}">${imgs.map((_,i)=>`<div class="o-dot ${i===0?'active':''}"></div>`).join('')}</div>` : '';
 
-            const card = `
-                <div class="product-card">
-                    <div class="price-tag">${p.price}</div>
-                    <div class="slider-wrapper">
-                        <div class="slides-inner" onscroll="syncDots(this, ${pIdx})">
-                            ${images.map(img => `<img src="${img}" onclick="zoom('${img}')" onerror="this.src='https://placehold.jp/30/0a0a0a/d4af37/400x600.png?text=VIRA+MALL'">`).join('')}
+            const ui = `
+                <div class="o-card">
+                    <div class="visuals">
+                        <div class="scroll-track" onscroll="syncDots(this, ${idx})">
+                            ${imgs.map(l => `<img src="${l}" onclick="zoom('${l}')" loading="lazy">`).join('')}
                         </div>
+                        <div class="price-badge">${p.price}</div>
                         ${dots}
                     </div>
-                    <div class="card-info">
-                        <span class="store-badge">${p.store}</span>
-                        <div class="prod-name">${p.name}</div>
-                        <span class="shipping-note">🚚 التوصيل يتم عبر المتجر</span>
-                        <button class="buy-button" onclick="addToCart('${p.name.replace(/'/g,"")}')">إضافة للسلة 🛒</button>
+                    <div class="o-content">
+                        <span class="o-store">${p.store}</span>
+                        <div class="o-title">${p.name}</div>
+                        <button class="o-btn" onclick="addToBag('${p.name.replace(/'/g,"")}')">ADD TO DESTINY</button>
                     </div>
                 </div>`;
-            if(p.store === 'VIRA') hV += card; else hP += card;
+            if(p.store === 'VIRA') hV += ui; else hP += ui;
         });
         document.getElementById('viraGrid').innerHTML = hV;
         document.getElementById('partnerGrid').innerHTML = hP;
@@ -357,54 +215,50 @@
 
     function syncDots(el, idx) {
         const i = Math.round(el.scrollLeft / el.offsetWidth);
-        const dots = document.querySelectorAll(`#dots-${idx} .dot`);
+        const dots = document.querySelectorAll(`#dots-${idx} .o-dot`);
         dots.forEach((d, n) => d.classList.toggle('active', n === Math.abs(i)));
     }
 
-    function zoom(url) {
-        document.getElementById('zoom-img').src = url;
-        document.getElementById('zoom-overlay').style.display = 'flex';
+    function zoom(l) { document.getElementById('zImg').src = l; document.getElementById('omega-zoom').style.display = 'flex'; }
+
+    function omegaFilter() {
+        const q = document.getElementById('oSearch').value.toLowerCase();
+        render(database.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q)));
     }
 
-    function filterMall() {
-        const q = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = fullData.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q));
-        renderMall(filtered);
+    function addToBag(n) {
+        bag.push(database.find(x => x.name.replace(/'/g,"") === n));
+        document.getElementById('cartCount').innerText = bag.length;
+        const btn = event.target; btn.innerText = 'SECURED ✓';
+        setTimeout(() => btn.innerText = 'ADD TO DESTINY', 1000);
     }
 
-    function addToCart(name) {
-        const item = fullData.find(x => x.name.replace(/'/g,"") === name);
-        cart.push(item);
-        document.getElementById('bCount').innerText = cart.length;
-        alert('أضيف لجمالك ✨');
+    function toggleCart() {
+        const c = document.getElementById('cart');
+        c.style.display = (c.style.display === 'block') ? 'none' : 'block';
+        if(c.style.display === 'block') {
+            document.getElementById('cartList').innerHTML = bag.map((i, idx) => `
+                <div class="cart-item">
+                    <div><b>${i.name}</b><br><small style="color:var(--gold)">${i.store}</small></div>
+                    <div>${i.price} <span style="color:red; margin-left:10px" onclick="removeFromBag(${idx})">×</span></div>
+                </div>`).join('');
+            const total = bag.reduce((a, c) => a + (parseInt(c.price.toString().replace(/[^0-9]/g,'')) || 0), 0);
+            document.getElementById('totalPrice').innerText = total.toLocaleString() + ' SDG';
+        }
     }
 
-    function openCart() {
-        if(cart.length === 0) return alert('الحقيبة فارغة');
-        const body = document.getElementById('cartBody');
-        body.innerHTML = cart.map((item, idx) => `
-            <div class="cart-item">
-                <div><b>${item.name}</b><br><small>${item.store}</small></div>
-                <div>${item.price} <span style="color:red; margin-right:10px;" onclick="removeFromCart(${idx})">×</span></div>
-            </div>`).join('');
-        
-        const total = cart.reduce((acc, curr) => acc + (parseInt(curr.price.toString().replace(/[^0-9]/g,'')) || 0), 0);
-        document.getElementById('cartTotal').innerText = total.toLocaleString() + ' SDG';
-        document.getElementById('cartModal').style.display = 'block';
+    function removeFromBag(idx) {
+        bag.splice(idx, 1);
+        document.getElementById('cartCount').innerText = bag.length;
+        toggleCart(); toggleCart();
     }
 
-    function removeFromCart(idx) {
-        cart.splice(idx, 1);
-        document.getElementById('bCount').innerText = cart.length;
-        if(cart.length > 0) openCart(); else document.getElementById('cartModal').style.display = 'none';
+    function checkout() {
+        const msg = encodeURIComponent(`OMEGA ORDER ⚡\n\n${bag.map(i => `• ${i.name} [${i.store}]`).join('\n')}\n\nTOTAL: ${document.getElementById('totalPrice').innerText}`);
+        window.open(`https://wa.me/249967584275?text=${msg}`);
     }
 
-    function sendToWhatsApp() {
-        const text = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i => `• ${i.name} [متجر: ${i.store}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('cartTotal').innerText}`);
-        window.open(`https://wa.me/249967584275?text=${text}`);
-    }
-
-    initVira();
+    loadOmega();
 </script>
 </body>
 </html>
