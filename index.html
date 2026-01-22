@@ -3,162 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | OFFICIAL</title>
+    <title>VIRA MALL | THE SUPREME EDITION</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel:wght@700;900&display=swap');
-        :root { --v-gold: #D4AF37; --v-black: #050505; --v-white: #ffffff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { background: #fff; color: var(--v-black); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; }
-
-        #v-gate { position: fixed; inset: 0; background: var(--v-black); z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 0.8s; }
-        .v-shimmer { font-family: 'Cinzel', serif; font-size: 40px; color: var(--v-gold); letter-spacing: 10px; animation: glow 2s infinite; }
-        @keyframes glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        header { background: #fff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10000; border-bottom: 1px solid #eee; }
-        .h-logo { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; letter-spacing: 3px; }
-
-        .v-banner { background: #000; color: var(--v-gold); padding: 10px; text-align: center; font-size: 12px; font-weight: 700; }
-
-        .v-tag { padding: 30px 20px 10px; font-weight: 900; font-size: 20px; display: flex; align-items: center; gap: 10px; color: #000; }
-        .v-tag::after { content: ''; flex: 1; height: 1px; background: #eee; }
-
-        .v-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
-        .v-card { background: #fff; border-radius: 25px; overflow: hidden; position: relative; border: 1px solid #f5f5f5; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Cinzel:wght@700;900&display=swap');
+        :root { --gold: #D4AF37; --black: #080808; --white: #ffffff; --glass: rgba(255,255,255,0.9); }
         
-        .img-box { width: 100%; height: 220px; background: #fafafa; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #fdfdfd; color: var(--black); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; }
+
+        /* Elegant Loader */
+        #loader { position: fixed; inset: 0; background: var(--black); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s; }
+        .v-logo-big { font-family: 'Cinzel', serif; font-size: 55px; color: var(--gold); letter-spacing: 15px; animation: pulse 2s infinite; }
+        .v-loading-text { color: var(--gold); font-size: 10px; margin-top: 10px; letter-spacing: 3px; opacity: 0.7; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(1.05); } }
+
+        /* Premium Header */
+        header { background: var(--glass); backdrop-filter: blur(20px); padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10000; border-bottom: 1px solid #eee; }
+        .h-logo { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 900; letter-spacing: 4px; color: var(--black); }
+        .h-icons { display: flex; gap: 15px; font-size: 20px; }
+
+        /* Dynamic Search */
+        #search-box { display: none; padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
+        #search-box input { width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid #eee; background: #f9f9f9; font-family: 'Cairo'; outline: none; border-color: var(--gold); }
+
+        /* Sections & Grids */
+        .section-tag { padding: 40px 20px 10px; font-weight: 900; font-size: 24px; display: flex; align-items: center; gap: 15px; }
+        .section-tag::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(to left, var(--gold), transparent); }
+
+        .v-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
         
-        .v-price-tag { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.8); color: var(--v-gold); padding: 4px 10px; border-radius: 8px; font-weight: 900; font-size: 11px; z-index: 5; }
-        .v-fav { position: absolute; top: 12px; right: 12px; background: #fff; color: #ff4757; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 14px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+        /* The Professional Card */
+        .v-card { background: var(--white); border-radius: 35px; overflow: hidden; position: relative; border: 1px solid #f0f0f0; box-shadow: 0 15px 40px rgba(0,0,0,0.03); transition: 0.4s; }
+        .v-card:hover { transform: translateY(-8px); border-color: var(--gold); }
+        
+        .img-engine { width: 100%; height: 260px; overflow: hidden; background: #fafafa; }
+        .img-engine img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .v-card:hover .img-engine img { transform: scale(1.1); }
 
-        .v-info { padding: 15px; text-align: center; }
-        .v-store-n { font-size: 10px; color: var(--v-gold); font-weight: 900; display: block; margin-bottom: 4px; }
-        .v-prod-n { font-size: 13px; font-weight: 700; margin-bottom: 5px; color: #222; }
-        .v-prod-desc { font-size: 11px; color: #777; margin-bottom: 12px; height: 32px; overflow: hidden; line-height: 1.4; }
-        .v-add-btn { background: #000; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 15px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .v-price-float { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.85); color: var(--gold); padding: 5px 15px; border-radius: 12px; font-weight: 900; font-size: 11px; z-index: 10; border: 1px solid var(--gold); }
+        .v-wish-btn { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); color: #ff4757; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10; cursor: pointer; }
 
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 50px; display: flex; justify-content: space-around; padding: 12px; border: 1px solid #eee; z-index: 20000; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .n-btn { font-size: 20px; color: #bbb; position: relative; }
-        .n-btn.active { color: var(--v-gold); }
-        .n-badge { position: absolute; -5px; right: -8px; background: #ff4757; color: #fff; font-size: 9px; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
-        .n-main { background: #000; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-top: -45px; border: 5px solid #fff; color: var(--v-gold); font-family: 'Cinzel'; font-size: 28px; }
+        .v-content { padding: 20px; text-align: center; }
+        .v-store-tag { font-size: 9px; color: var(--gold); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .v-name { font-size: 15px; font-weight: 700; height: 42px; overflow: hidden; margin-bottom: 5px; color: #111; }
+        .v-desc { font-size: 11px; color: #777; height: 32px; overflow: hidden; margin-bottom: 15px; line-height: 1.4; }
+        .v-add-cart { background: var(--black); color: var(--gold); border: none; width: 100%; padding: 16px; border-radius: 20px; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 13px; }
+        .v-add-cart:active { transform: scale(0.95); background: var(--gold); color: #000; }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50000; backdrop-filter: blur(10px); }
-        .m-box { background: #fff; width: 90%; max-width: 400px; margin: 100px auto; border-radius: 30px; padding: 25px; text-align: center; }
+        /* Professional Modals */
+        .v-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; backdrop-filter: blur(15px); }
+        .v-modal-inner { background: #fff; width: 92%; max-width: 500px; margin: 60px auto; border-radius: 45px; padding: 35px; position: relative; max-height: 80vh; overflow-y: auto; }
+        
+        .bank-card { background: linear-gradient(135deg, #0d47a1, #1e88e5); color: #fff; padding: 30px; border-radius: 35px; text-align: center; margin-bottom: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .bank-card b { font-size: 38px; display: block; margin: 10px 0; letter-spacing: 4px; font-family: 'Cinzel'; }
+
+        /* Floating Nav */
+        nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; background: var(--glass); backdrop-filter: blur(25px); border-radius: 100px; display: flex; justify-content: space-around; align-items: center; padding: 15px; border: 1px solid #eee; z-index: 20000; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .n-tool { font-size: 24px; cursor: pointer; color: #ccc; position: relative; }
+        .n-tool.active { color: var(--gold); }
+        .n-badge { position: absolute; top: -8px; right: -10px; background: #ff4757; color: #fff; font-size: 10px; width: 20px; height: 20px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; border: 2px solid #fff; }
+        .n-main { background: var(--black); width: 75px; height: 75px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-top: -70px; border: 6px solid #fff; color: var(--gold); font-family: 'Cinzel'; font-size: 38px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        #zoom-layer { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; justify-content: center; align-items: center; }
+        #zoom-layer img { max-width: 100%; max-height: 85vh; object-fit: contain; }
     </style>
 </head>
 <body>
 
-<div id="v-gate"><div class="v-shimmer">VIRA</div></div>
+<div id="loader">
+    <div class="v-logo-big">VIRA</div>
+    <div class="v-loading-text">REDEFINING LUXURY...</div>
+</div>
 
 <header>
-    <div style="font-size:20px;">🔍</div>
+    <div onclick="toggleSearch()" class="h-icons">🔍</div>
     <div class="h-logo">VIRA MALL</div>
-    <div onclick="openM('cartM')" style="font-size:20px;">🛒</div>
+    <div onclick="openM('cartM')" class="h-icons">🛒</div>
 </header>
 
-<div class="v-banner">🚚 التوصيل متوفر لكل الولايات</div>
+<div id="search-box"><input type="text" id="v-search" placeholder="ابحثي عن قطعتك الفريدة..." onkeyup="filterProducts()"></div>
 
-<div class="v-tag">✨ مجموعة VIRA الملكية</div>
+<div id="zoom-layer" onclick="this.style.display='none'"><img id="z-img"></div>
+
+<div class="section-tag">👑 VIRA PRIVÉ</div>
 <div id="viraGrid" class="v-grid"></div>
 
-<div class="v-tag">🛍️ عالم التاجرات</div>
+<div class="section-tag">🌍 GLOBAL PARTNERS</div>
 <div id="otherGrid" class="v-grid"></div>
 
-<div id="cartM" class="modal"><div class="m-box">
-    <h3>حقيبة التسوق 🛍️</h3>
-    <div id="cartList" style="text-align:right; margin:20px 0;"></div>
-    <h2 id="totalP">0 SDG</h2>
-    <button class="v-add-btn" style="background:var(--v-gold);" onclick="checkout()">طلب عبر واتساب</button>
-    <button onclick="closeM('cartM')" style="margin-top:15px; border:none; background:none; color:#999;">إغلاق</button>
+<div id="cartM" class="v-modal"><div class="v-modal-inner">
+    <h2 style="text-align:center; font-weight:900;">حقيبة المقتنيات 🛍️</h2>
+    <div id="cartItems" style="margin: 25px 0;"></div>
+    <div style="text-align:center; border-top:1px solid #eee; padding-top:25px;">
+        <h1 id="totalPrice" style="font-size:45px; margin:0;">0</h1>
+        <p style="color:var(--gold); font-weight:900; margin-bottom:20px;">SDG</p>
+        <button class="v-add-cart" style="padding:22px; font-size:16px;" onclick="checkout()">تأكيد الطلب عبر واتساب</button>
+        <button onclick="closeM('cartM')" style="margin-top:15px; background:none; border:none; color:red; font-weight:bold; width:100%;">استكمال التسوق</button>
+    </div>
+</div></div>
+
+<div id="joinM" class="v-modal"><div class="v-modal-inner">
+    <h3 style="text-align:center; color:var(--gold); font-weight:900;">بوابة انضمام الشركاء 👑</h3>
+    <div class="bank-card">
+        <span style="opacity:0.9; font-size:14px;">إيثار شرف الدين</span>
+        <b>2280384</b>
+        <span style="font-size:11px; background:rgba(255,255,255,0.2); padding:3px 15px; border-radius:50px;">بنكك - إدارة المول</span>
+    </div>
+    <input type="text" id="stName" placeholder="اسم متجرك التجاري" style="width:100%; padding:20px; border-radius:20px; border:1px solid #eee; margin-bottom:15px; font-family:'Cairo';">
+    <button class="v-add-cart" onclick="sendJoin()">إرسال طلب التفعيل</button>
+    <button onclick="closeM('joinM')" style="margin-top:15px; background:none; border:none; color:#999; width:100%;">إغلاق</button>
 </div></div>
 
 <nav>
-    <div class="n-btn" onclick="location.reload()">🏠</div>
-    <div class="n-btn" onclick="openM('cartM')">🛒<span class="n-badge" id="cCount">0</span></div>
-    <div class="n-main">V</div>
-    <div class="n-btn">❤️</div>
-    <div class="n-btn">👑</div>
+    <div class="n-tool" onclick="location.reload()">🏠</div>
+    <div class="n-tool" onclick="openM('cartM')">💼<span class="n-badge" id="c-count">0</span></div>
+    <div class="n-main" onclick="window.scrollTo({top:0, behavior:'smooth'})">V</div>
+    <div class="n-tool">❤️</div>
+    <div class="n-tool" onclick="openM('joinM')">👑</div>
 </nav>
 
 <script>
-    const S_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
     let db = []; let cart = [];
 
     window.onload = () => { 
-        setTimeout(() => { document.getElementById('v-gate').style.opacity = '0'; setTimeout(()=>document.getElementById('v-gate').remove(), 800); }, 1500);
-        loadData();
+        setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(()=>document.getElementById('loader').remove(), 1000); }, 2000); 
+        fetchData();
     };
 
-    async function loadData() {
+    async function fetchData() {
         try {
             const [r1, r2] = await Promise.all([
-                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=0`),
-                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=1152504859`)
+                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
+                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
             ]);
             const d1 = await r1.text(); const d2 = await r2.text();
             
-            const parse = (csv, isV) => {
+            const parse = (csv, isVira) => {
                 const rows = csv.split('\n').map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
                 return rows.slice(1).map(row => {
                     return {
-                        id: Math.random(),
-                        name: isV ? row[0] : row[1], // اسم المنتج
-                        price: isV ? row[1] : row[2], // السعر
-                        store: isV ? (row[2]||'VIRA') : (row[0] || 'متجر شريك'), // اسم المتجر
-                        img: isV ? row[3]?.split(/[;, ]/)[0] : row[5], // رابط الصورة
-                        desc: isV ? (row[4]||'') : (row[6] || '') // الوصف
+                        id: Math.random().toString(36).substr(2, 9),
+                        name: isVira ? row[0] : row[1], // اسم المنتج
+                        price: isVira ? row[1] : row[2], // السعر
+                        store: isVira ? (row[2]||'VIRA') : (row[0] || 'متجر شريك'), // اسم المتجر
+                        img: isVira ? row[3]?.split(/[;, ]/)[0] : row[5], // رابط الصورة (العمود F)
+                        desc: isVira ? (row[4]||'') : (row[6] || '') // الوصف (العمود G)
                     };
-                }).filter(p => p.name && p.img);
+                }).filter(p => p.name && p.img && p.img.startsWith('http'));
             };
 
             db = [...parse(d1, true), ...parse(d2, false)];
-            render();
-        } catch (e) { console.log("Error loading stores"); }
+            render(db);
+        } catch (e) { console.error("Sync Error"); }
     }
 
-    function render() {
+    function render(data) {
         let vH = '', oH = '';
-        db.forEach(p => {
-            const card = `<div class="v-card">
-                <div class="v-price-tag">${p.price} SDG</div>
-                <div class="v-fav">❤</div>
-                <div class="img-box"><img src="${p.img}" loading="lazy"></div>
-                <div class="v-info">
-                    <span class="v-store-n">${p.store}</span>
-                    <div class="v-prod-n">${p.name}</div>
-                    <div class="v-prod-desc">${p.desc}</div>
-                    <button class="v-add-btn" onclick="add('${p.id}')">إضافة للسلة 🛒</button>
+        data.forEach(p => {
+            const card = `<div class="v-card" data-s="${p.name.toLowerCase()} ${p.store.toLowerCase()}">
+                <div class="v-price-float">${p.price} SDG</div>
+                <div class="v-wish-btn">❤</div>
+                <div class="img-engine"><img src="${p.img}" onclick="zoom('${p.img}')" loading="lazy"></div>
+                <div class="v-content">
+                    <span class="v-store-tag">${p.store}</span>
+                    <div class="v-name">${p.name}</div>
+                    <div class="v-desc">${p.desc}</div>
+                    <button class="v-add-cart" onclick="addToCart('${p.id}')">إضافة للحقيبة 🛒</button>
                 </div>
             </div>`;
-            if(p.store.toLowerCase().includes('vira')) vH += card;
+            if(p.store.toLowerCase().includes('vira') || p.store.includes('فيرا')) vH += card;
             else oH += card;
         });
         document.getElementById('viraGrid').innerHTML = vH;
-        document.getElementById('otherGrid').innerHTML = oH || '<p style="text-align:center; grid-column:1/3; color:#999; padding:20px;">جاري تحديث عالم التاجرات...</p>';
+        document.getElementById('otherGrid').innerHTML = oH || '<p style="text-align:center; grid-column:1/3; color:#999; padding:20px;">جاري مزامنة المتاجر الشريكة...</p>';
     }
 
-    function add(id) {
-        const p = db.find(x => x.id == id);
-        cart.push(p);
-        document.getElementById('cCount').innerText = cart.length;
-        alert('تمت الإضافة ✨');
+    function filterProducts() {
+        const val = document.getElementById('v-search').value.toLowerCase();
+        document.querySelectorAll('.v-card').forEach(c => c.style.display = c.dataset.s.includes(val) ? 'block' : 'none');
+    }
+
+    function addToCart(id) { 
+        const p = db.find(x => x.id === id); 
+        cart.push(p); 
+        document.getElementById('c-count').innerText = cart.length; 
+        alert('أُضيفت لجمالك ✨'); 
     }
 
     function openM(id) {
         if(id === 'cartM') {
-            document.getElementById('cartList').innerHTML = cart.map(i => `<div>• ${i.name} - ${i.price} SDG</div>`).join('');
+            document.getElementById('cartItems').innerHTML = cart.map((i,idx) => `
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:14px; border-bottom:1px solid #f5f5f5; padding-bottom:10px;">
+                    <span><b>${i.name}</b><br><small style="color:var(--gold)">${i.store}</small></span>
+                    <b>${i.price} <span onclick="cart.splice(${idx},1);openM('cartM');document.getElementById('c-count').innerText=cart.length;" style="color:red; margin-right:10px;">❌</span></b>
+                </div>`).join('');
             const total = cart.reduce((a, b) => a + (parseInt(b.price.toString().replace(/[^0-9]/g,'')) || 0), 0);
-            document.getElementById('totalP').innerText = total + " SDG";
+            document.getElementById('totalPrice').innerText = total.toLocaleString();
         }
         document.getElementById(id).style.display = 'block';
     }
 
     function closeM(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleSearch() { const s = document.getElementById('search-box'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
+    function zoom(u) { document.getElementById('z-img').src = u; document.getElementById('zoom-layer').style.display = 'flex'; }
 
     function checkout() {
-        const msg = encodeURIComponent(`طلب جديد من VIRA MALL:\n${cart.map(i=>`- ${i.name} (${i.store})`).join('\n')}`);
+        if(!cart.length) return;
+        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i=>`• ${i.name} [متجر: ${i.store}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalPrice').innerText} SDG`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
+    }
+
+    function sendJoin() {
+        const n = document.getElementById('stName').value;
+        if(!n) return alert('اسم المتجر؟');
+        window.open(`https://wa.me/249967584275?text=${encodeURIComponent('طلب تفعيل متجر: '+n+'\nبإسم إيثار شرف الدين (2280384)')}`);
     }
 </script>
 </body>
