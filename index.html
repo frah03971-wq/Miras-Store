@@ -3,58 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL HUB</title>
+    <title>VIRA MALL | OFFICIAL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel:wght@700;900&display=swap');
         :root { --v-gold: #D4AF37; --v-black: #050505; --v-white: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { background: #fafafa; color: var(--v-black); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
+        body { background: #fff; color: var(--v-black); font-family: 'Cairo', sans-serif; margin: 0; padding-bottom: 120px; }
 
-        /* Loader */
         #v-gate { position: fixed; inset: 0; background: var(--v-black); z-index: 999999; display: flex; justify-content: center; align-items: center; transition: 0.8s; }
-        .v-shimmer { font-family: 'Cinzel', serif; font-size: 45px; color: var(--v-gold); letter-spacing: 12px; animation: glow 2s infinite; }
+        .v-shimmer { font-family: 'Cinzel', serif; font-size: 40px; color: var(--v-gold); letter-spacing: 10px; animation: glow 2s infinite; }
         @keyframes glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* Header & Dynamic Search */
-        header { background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10000; border-bottom: 1px solid #eee; }
+        header { background: #fff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10000; border-bottom: 1px solid #eee; }
         .h-logo { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; letter-spacing: 3px; }
-        #s-area { display: none; padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
-        #s-area input { width: 100%; padding: 15px; border-radius: 50px; border: 1px solid #eee; background: #f9f9f9; font-family: 'Cairo'; font-size: 14px; }
 
-        /* Professional Grid */
-        .v-tag { padding: 35px 20px 10px; font-weight: 900; font-size: 22px; display: flex; align-items: center; gap: 10px; }
-        .v-tag::after { content: ''; flex: 1; height: 1.5px; background: var(--v-gold); opacity: 0.3; }
-        .v-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+        .v-banner { background: #000; color: var(--v-gold); padding: 10px; text-align: center; font-size: 12px; font-weight: 700; }
 
-        /* The Card Architecture */
-        .v-card { background: #fff; border-radius: 35px; overflow: hidden; position: relative; border: 1px solid #f0f0f0; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: 0.3s; }
-        .img-stack { width: 100%; height: 260px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; background: #f0f0f0; }
-        .img-stack img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; cursor: zoom-in; }
+        .v-tag { padding: 30px 20px 10px; font-weight: 900; font-size: 20px; display: flex; align-items: center; gap: 10px; color: #000; }
+        .v-tag::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        .v-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+        .v-card { background: #fff; border-radius: 25px; overflow: hidden; position: relative; border: 1px solid #f5f5f5; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         
-        .v-badge-p { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.85); color: var(--v-gold); padding: 5px 12px; border-radius: 12px; font-weight: 900; font-size: 11px; z-index: 5; border: 1px solid var(--v-gold); }
-        .v-heart { position: absolute; top: 15px; right: 15px; background: #fff; color: #ff4757; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 5; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; font-size: 16px; }
-        .v-heart.active { background: #ff4757; color: #fff; }
+        .img-box { width: 100%; height: 220px; background: #fafafa; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .v-price-tag { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.8); color: var(--v-gold); padding: 4px 10px; border-radius: 8px; font-weight: 900; font-size: 11px; z-index: 5; }
+        .v-fav { position: absolute; top: 12px; right: 12px; background: #fff; color: #ff4757; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 14px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
 
-        .v-meta { padding: 18px; text-align: center; }
-        .v-store-n { font-size: 9px; color: var(--v-gold); font-weight: 900; letter-spacing: 2px; margin-bottom: 5px; display: block; }
-        .v-prod-n { font-size: 14px; font-weight: 700; height: 40px; overflow: hidden; margin-bottom: 12px; line-height: 1.4; }
-        .v-add-btn { background: #000; color: var(--v-gold); border: none; width: 100%; padding: 15px; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 12px; }
+        .v-info { padding: 15px; text-align: center; }
+        .v-store-n { font-size: 10px; color: var(--v-gold); font-weight: 900; display: block; margin-bottom: 4px; }
+        .v-prod-n { font-size: 13px; font-weight: 700; margin-bottom: 5px; color: #222; }
+        .v-prod-desc { font-size: 11px; color: #777; margin-bottom: 12px; height: 32px; overflow: hidden; line-height: 1.4; }
+        .v-add-btn { background: #000; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 15px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* Professional Modals */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 50000; backdrop-filter: blur(15px); }
-        .modal-inner { background: #fff; width: 92%; max-width: 480px; margin: 50px auto; border-radius: 40px; padding: 30px; position: relative; max-height: 80vh; overflow-y: auto; }
-        .bank-ui { background: linear-gradient(135deg, #0d47a1, #1e88e5); color: #fff; padding: 30px; border-radius: 35px; text-align: center; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(13,71,161,0.2); }
-        .bank-ui b { font-size: 36px; display: block; margin: 8px 0; letter-spacing: 3px; font-family: 'Cinzel'; }
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 50px; display: flex; justify-content: space-around; padding: 12px; border: 1px solid #eee; z-index: 20000; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .n-btn { font-size: 20px; color: #bbb; position: relative; }
+        .n-btn.active { color: var(--v-gold); }
+        .n-badge { position: absolute; -5px; right: -8px; background: #ff4757; color: #fff; font-size: 9px; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        .n-main { background: #000; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-top: -45px; border: 5px solid #fff; color: var(--v-gold); font-family: 'Cinzel'; font-size: 28px; }
 
-        /* Floating Nav */
-        nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 88%; background: rgba(255,255,255,0.92); backdrop-filter: blur(25px); border-radius: 100px; display: flex; justify-content: space-around; align-items: center; padding: 15px; border: 1px solid #eee; z-index: 20000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .nav-tool { font-size: 24px; cursor: pointer; color: #bbb; position: relative; }
-        .nav-tool.active { color: var(--v-gold); }
-        .badge-dot { position: absolute; top: -5px; right: -8px; background: red; color: #fff; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; }
-        .nav-main { background: #000; width: 75px; height: 75px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-top: -65px; border: 6px solid #fff; color: var(--v-gold); font-family: 'Cinzel'; font-size: 38px; }
-
-        #theater-view { display: none; position: fixed; inset: 0; background: #fff; z-index: 1000000; justify-content: center; align-items: center; }
-        #theater-view img { max-width: 100%; max-height: 85vh; object-fit: contain; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50000; backdrop-filter: blur(10px); }
+        .m-box { background: #fff; width: 90%; max-width: 400px; margin: 100px auto; border-radius: 30px; padding: 25px; text-align: center; }
     </style>
 </head>
 <body>
@@ -62,178 +52,114 @@
 <div id="v-gate"><div class="v-shimmer">VIRA</div></div>
 
 <header>
-    <div onclick="toggleS()" style="font-size:22px;">🔍</div>
+    <div style="font-size:20px;">🔍</div>
     <div class="h-logo">VIRA MALL</div>
-    <div onclick="openM('cartM')" style="font-size:22px;">🛒</div>
+    <div onclick="openM('cartM')" style="font-size:20px;">🛒</div>
 </header>
 
-<div id="s-area"><input type="text" id="s-input" placeholder="ابحثي عن التميز..." onkeyup="runSearch()"></div>
+<div class="v-banner">🚚 التوصيل متوفر لكل الولايات</div>
 
-<div id="theater-view" onclick="this.style.display='none'"><img id="zoom-img"></div>
-
-<div class="v-tag">👑 VIRA EXCLUSIVE</div>
+<div class="v-tag">✨ مجموعة VIRA الملكية</div>
 <div id="viraGrid" class="v-grid"></div>
 
-<div class="v-tag">🌍 PARTNER STORES</div>
+<div class="v-tag">🛍️ عالم التاجرات</div>
 <div id="otherGrid" class="v-grid"></div>
 
-<div id="cartM" class="modal"><div class="modal-inner">
-    <h2 style="text-align:center; font-weight:900;">حقيبة التسوق 🛍️</h2>
-    <div id="cartItems"></div>
-    <div style="text-align:center; border-top:1px solid #eee; margin-top:25px; padding-top:20px;">
-        <h1 id="totalAmount" style="font-size:45px; margin:0;">0</h1>
-        <p style="color:var(--v-gold); font-weight:900;">SDG</p>
-        <button class="v-add-btn" style="padding:22px; font-size:16px;" onclick="checkout()">تأكيد الطلب (واتساب)</button>
-        <button onclick="closeM('cartM')" style="margin-top:15px; background:none; border:none; color:red; font-weight:bold; width:100%;">رجوع</button>
-    </div>
-</div></div>
-
-<div id="wishM" class="modal"><div class="modal-inner">
-    <h2 style="text-align:center; font-weight:900;">المفضلة ❤️</h2>
-    <div id="wishItems"></div>
-    <button onclick="closeM('wishM')" style="margin-top:25px; background:#000; color:var(--v-gold); border:none; width:100%; padding:15px; border-radius:20px; font-weight:bold;">إغلاق</button>
-</div></div>
-
-<div id="joinM" class="modal"><div class="modal-inner">
-    <h3 style="text-align:center; color:var(--v-gold); font-weight:900;">تفعيل متجر جديد 👑</h3>
-    <div class="bank-ui">
-        <span style="opacity:0.9; font-size:14px;">إيثار شرف الدين</span>
-        <b>2280384</b>
-        <span style="font-size:11px; background:rgba(255,255,255,0.2); padding:2px 12px; border-radius:50px;">بنكك - الإدارة الرسمية</span>
-    </div>
-    <input type="text" id="storeName" placeholder="اسم المتجر التجاري" style="width:100%; padding:18px; border-radius:20px; border:1px solid #eee; margin-bottom:15px; font-family:'Cairo';">
-    <button class="v-add-btn" onclick="sendJoin()">إرسال طلب الانضمام</button>
-    <button onclick="closeM('joinM')" style="margin-top:15px; background:none; border:none; color:#999; width:100%;">إغلاق</button>
+<div id="cartM" class="modal"><div class="m-box">
+    <h3>حقيبة التسوق 🛍️</h3>
+    <div id="cartList" style="text-align:right; margin:20px 0;"></div>
+    <h2 id="totalP">0 SDG</h2>
+    <button class="v-add-btn" style="background:var(--v-gold);" onclick="checkout()">طلب عبر واتساب</button>
+    <button onclick="closeM('cartM')" style="margin-top:15px; border:none; background:none; color:#999;">إغلاق</button>
 </div></div>
 
 <nav>
-    <div class="nav-tool" onclick="location.reload()">🏠</div>
-    <div class="nav-tool" onclick="openM('cartM')">💼<span class="badge-dot" id="cartCount">0</span></div>
-    <div class="nav-main" onclick="window.scrollTo({top:0, behavior:'smooth'})">V</div>
-    <div class="nav-tool" onclick="openM('wishM')">❤️<span class="badge-dot" id="wishCount">0</span></div>
-    <div class="nav-tool" onclick="openM('joinM')">👑</div>
+    <div class="n-btn" onclick="location.reload()">🏠</div>
+    <div class="n-btn" onclick="openM('cartM')">🛒<span class="n-badge" id="cCount">0</span></div>
+    <div class="n-main">V</div>
+    <div class="n-btn">❤️</div>
+    <div class="n-btn">👑</div>
 </nav>
 
 <script>
-    const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let masterData = []; let cart = []; let wishes = JSON.parse(localStorage.getItem('vira_wishes')) || [];
+    const S_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    let db = []; let cart = [];
 
     window.onload = () => { 
-        setTimeout(() => { document.getElementById('v-gate').style.opacity = '0'; setTimeout(()=>document.getElementById('v-gate').remove(), 800); }, 2000); 
-        fetchCore(); refreshUI();
+        setTimeout(() => { document.getElementById('v-gate').style.opacity = '0'; setTimeout(()=>document.getElementById('v-gate').remove(), 800); }, 1500);
+        loadData();
     };
 
-    async function fetchCore() {
+    async function loadData() {
         try {
-            const [res1, res2] = await Promise.all([
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
-                fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
+            const [r1, r2] = await Promise.all([
+                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=0`),
+                fetch(`https://docs.google.com/spreadsheets/d/${S_ID}/export?format=csv&gid=1152504859`)
             ]);
-            const d1 = await res1.text(); const d2 = await res2.text();
+            const d1 = await r1.text(); const d2 = await r2.text();
             
-            // AI Parser: Intelligent mapping for any column structure
-            const aiParser = (csv, isVira) => {
+            const parse = (csv, isV) => {
                 const rows = csv.split('\n').map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-                const headers = rows[0].map(h => h.replace(/"/g,'').trim().toLowerCase());
-                
                 return rows.slice(1).map(row => {
-                    const findValue = (keywords) => {
-                        const idx = headers.findIndex(h => keywords.some(k => h.includes(k)));
-                        return idx !== -1 ? row[idx]?.replace(/"/g,'').trim() : '';
-                    };
-
-                    // Smart Detection Logic
-                    let imgs = isVira ? row[3] : findValue(['صورة', 'رابط', 'img', 'image', 'picture']);
-                    let name = isVira ? row[0] : findValue(['منتج', 'الاسم', 'product', 'item', 'تسمية']);
-                    let price = isVira ? row[1] : findValue(['سعر', 'قيمة', 'price', 'cost']);
-                    let store = isVira ? (row[2]||'VIRA') : (findValue(['متجر', 'store', 'shop']) || 'متجر شريك');
-
                     return {
-                        uid: Math.random().toString(36).substr(2, 9),
-                        name: name,
-                        price: price,
-                        store: store,
-                        imgs: imgs ? imgs.split(/[;, ]/).filter(s => s.trim().startsWith('http')).map(s => s.trim()) : []
+                        id: Math.random(),
+                        name: isV ? row[0] : row[1], // اسم المنتج
+                        price: isV ? row[1] : row[2], // السعر
+                        store: isV ? (row[2]||'VIRA') : (row[0] || 'متجر شريك'), // اسم المتجر
+                        img: isV ? row[3]?.split(/[;, ]/)[0] : row[5], // رابط الصورة
+                        desc: isV ? (row[4]||'') : (row[6] || '') // الوصف
                     };
-                }).filter(p => p.name && p.imgs.length > 0);
+                }).filter(p => p.name && p.img);
             };
 
-            masterData = [...aiParser(d1, true), ...aiParser(d2, false)];
-            renderGrid(masterData);
-        } catch (e) { console.error("Critical Load Failure"); }
+            db = [...parse(d1, true), ...parse(d2, false)];
+            render();
+        } catch (e) { console.log("Error loading stores"); }
     }
 
-    function renderGrid(data) {
+    function render() {
         let vH = '', oH = '';
-        data.forEach(p => {
-            const isFav = wishes.some(x => x.name === p.name);
-            const card = `<div class="v-card" data-search="${p.name.toLowerCase()} ${p.store.toLowerCase()}">
-                <div class="v-badge-p">${p.price}</div>
-                <div class="v-heart ${isFav?'active':''}" onclick="toggleWish('${p.uid}')">❤</div>
-                <div class="img-stack">${p.imgs.map(i => `<img src="${i}" onclick="zoom('${i}')">`).join('')}</div>
-                <div class="v-meta">
+        db.forEach(p => {
+            const card = `<div class="v-card">
+                <div class="v-price-tag">${p.price} SDG</div>
+                <div class="v-fav">❤</div>
+                <div class="img-box"><img src="${p.img}" loading="lazy"></div>
+                <div class="v-info">
                     <span class="v-store-n">${p.store}</span>
                     <div class="v-prod-n">${p.name}</div>
-                    <button class="v-add-btn" onclick="addToCart('${p.uid}')">إضافة للسلة 🛒</button>
+                    <div class="v-prod-desc">${p.desc}</div>
+                    <button class="v-add-btn" onclick="add('${p.id}')">إضافة للسلة 🛒</button>
                 </div>
             </div>`;
-            if(p.store.toLowerCase().includes('vira') || p.store.includes('فيرا')) vH += card;
+            if(p.store.toLowerCase().includes('vira')) vH += card;
             else oH += card;
         });
-        document.getElementById('viraGrid').innerHTML = vH || '<p style="text-align:center;width:100%;">جاري تحديث فيرا...</p>';
-        document.getElementById('otherGrid').innerHTML = oH || '<p style="text-align:center;width:100%;">جاري تحديث المتاجر الشريكة...</p>';
+        document.getElementById('viraGrid').innerHTML = vH;
+        document.getElementById('otherGrid').innerHTML = oH || '<p style="text-align:center; grid-column:1/3; color:#999; padding:20px;">جاري تحديث عالم التاجرات...</p>';
     }
 
-    function runSearch() {
-        const q = document.getElementById('s-input').value.toLowerCase();
-        document.querySelectorAll('.v-card').forEach(c => c.style.display = c.dataset.search.includes(q) ? 'block' : 'none');
+    function add(id) {
+        const p = db.find(x => x.id == id);
+        cart.push(p);
+        document.getElementById('cCount').innerText = cart.length;
+        alert('تمت الإضافة ✨');
     }
 
-    function toggleWish(uid) {
-        const p = masterData.find(x => x.uid === uid);
-        const idx = wishes.findIndex(x => x.name === p.name);
-        if(idx === -1) wishes.push(p); else wishes.splice(idx, 1);
-        localStorage.setItem('vira_wishes', JSON.stringify(wishes));
-        refreshUI(); renderGrid(masterData);
+    function openM(id) {
+        if(id === 'cartM') {
+            document.getElementById('cartList').innerHTML = cart.map(i => `<div>• ${i.name} - ${i.price} SDG</div>`).join('');
+            const total = cart.reduce((a, b) => a + (parseInt(b.price.toString().replace(/[^0-9]/g,'')) || 0), 0);
+            document.getElementById('totalP').innerText = total + " SDG";
+        }
+        document.getElementById(id).style.display = 'block';
     }
 
-    function updateWishList() {
-        document.getElementById('wishItems').innerHTML = wishes.length ? wishes.map(i => `
-            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; background:#f9f9f9; padding:12px; border-radius:25px;">
-                <img src="${i.imgs[0]}" style="width:65px; height:65px; border-radius:15px; object-fit:cover;">
-                <div style="flex:1;"><div style="font-weight:700; font-size:14px;">${i.name}</div><div style="color:var(--v-gold); font-size:12px;">${i.price}</div></div>
-                <div onclick="toggleWish('${masterData.find(x=>x.name===i.name).uid}')" style="color:red; cursor:pointer;">🗑️</div>
-            </div>`).join('') : '<p style="text-align:center; color:#999; padding:20px;">المفضلة فارغة</p>';
-    }
-
-    function addToCart(uid) { const p = masterData.find(x => x.uid === uid); cart.push(p); refreshUI(); updateCartList(); alert('أُضيفت لجمالك ✨'); }
-    function updateCartList() {
-        document.getElementById('cartItems').innerHTML = cart.map((i,idx) => `<div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px; border-bottom:1px dotted #ddd; padding-bottom:8px;"><span>${i.name}</span><b>${i.price} <small onclick="cart.splice(${idx},1);updateCartList();refreshUI();" style="color:red; margin-right:10px;">❌</small></b></div>`).join('');
-        const total = cart.reduce((a,i) => a + (parseInt(i.price.replace(/[^0-9]/g,''))||0), 0);
-        document.getElementById('totalAmount').innerText = total.toLocaleString();
-    }
-
-    function refreshUI() {
-        document.getElementById('cartCount').innerText = cart.length;
-        document.getElementById('wishCount').innerText = wishes.length;
-    }
+    function closeM(id) { document.getElementById(id).style.display = 'none'; }
 
     function checkout() {
-        if(!cart.length) return;
-        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i=>`• ${i.name} [${i.store}]`).join('\n')}\n\nالإجمالي: ${document.getElementById('totalAmount').innerText} SDG`);
+        const msg = encodeURIComponent(`طلب جديد من VIRA MALL:\n${cart.map(i=>`- ${i.name} (${i.store})`).join('\n')}`);
         window.open(`https://wa.me/249967584275?text=${msg}`);
     }
-
-    function sendJoin() {
-        const n = document.getElementById('storeName').value;
-        if(!n) return alert('يرجى إدخال اسم المتجر');
-        window.open(`https://wa.me/249967584275?text=${encodeURIComponent('طلب تفعيل متجر: '+n+'\nبإسم إيثار شرف الدين (2280384)')}`);
-    }
-
-    function toggleS() { const s = document.getElementById('s-area'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
-    function openM(id) { if(id==='wishM') updateWishList(); document.getElementById(id).style.display = 'block'; }
-    function closeM(id) { document.getElementById(id).style.display = 'none'; }
-    function zoom(u) { document.getElementById('zoom-img').src=u; document.getElementById('theater-view').style.display='flex'; }
 </script>
 </body>
 </html>
