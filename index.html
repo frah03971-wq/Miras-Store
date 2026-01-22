@@ -3,201 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | GLOBAL</title>
+    <title>VIRA MALL | THE ULTIMATE SYSTEM</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        :root { --gold: #D4AF37; --black: #000; --bg: #ffffff; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; color: var(--black); overflow-x: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
         
-        .header { background: var(--black); padding: 25px; text-align: center; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 2000; }
-        .logo { font-size: 30px; font-weight: 900; color: var(--gold); text-decoration: none; letter-spacing: 2px; }
+        :root {
+            --gold: #D4AF37;
+            --black: #050505;
+            --white: #ffffff;
+            --soft-bg: #fdfdfd;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { font-family: 'Cairo', sans-serif; background: var(--soft-bg); margin: 0; color: var(--black); overflow-x: hidden; }
+
+        /* الهيدر الأسطوري */
+        .ultra-header {
+            background: var(--black);
+            padding: 25px 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            position: sticky; top: 0; z-index: 5000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .ultra-header .logo {
+            font-size: 32px; font-weight: 900; color: var(--gold);
+            text-decoration: none; letter-spacing: 6px;
+            text-shadow: 0 0 15px rgba(212,175,55,0.4);
+        }
+
+        /* شريط البحث الذكي */
+        .smart-bar {
+            background: var(--white);
+            padding: 15px;
+            display: flex; gap: 10px;
+            position: sticky; top: 88px; z-index: 4000;
+            border-bottom: 1px solid #f0f0f0;
+            backdrop-filter: blur(10px);
+        }
+        .search-container { flex: 1; position: relative; }
+        .search-container input {
+            width: 100%; padding: 14px 45px 14px 20px;
+            border-radius: 50px; border: 1.5px solid #eee;
+            font-family: 'Cairo'; font-size: 14px; transition: 0.3s;
+        }
+        .search-container input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.1); }
+        .btn-premium {
+            background: var(--gold); color: var(--black); border: none;
+            padding: 0 20px; border-radius: 50px; font-weight: 800;
+            font-size: 11px; cursor: pointer; text-transform: uppercase;
+        }
+
+        /* التصنيفات والشبكة */
+        .section-header {
+            padding: 25px 20px 10px; font-weight: 900; font-size: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-header::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        .ultra-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 18px; padding: 18px;
+        }
+        .luxury-card {
+            background: var(--white); border-radius: 30px; overflow: hidden;
+            border: 1px solid #f2f2f2; position: relative;
+            display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: cardEntrance 0.6s ease forwards;
+        }
+        @keyframes cardEntrance { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .luxury-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.06); }
         
-        .top-tools { display: flex; gap: 10px; padding: 15px; background: #fff; position: sticky; top: 88px; z-index: 1000; border-bottom: 1px solid #eee; }
-        .search-input { flex-grow: 1; padding: 12px; border: 2px solid #f0f0f0; border-radius: 15px; font-family: 'Cairo'; outline: none; }
-        .btn-merchant { background: var(--gold); color: #000; border: none; padding: 0 15px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer; white-space: nowrap; }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        .card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid #eee; display: flex; flex-direction: column; transition: 0.3s; }
-        .card img { width: 100%; height: 180px; object-fit: cover; cursor: pointer; transition: 0.5s; }
-        .card img:hover { transform: scale(1.05); }
+        .image-box { position: relative; width: 100%; height: 210px; overflow: hidden; }
+        .image-box img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: 0.5s; }
+        .image-box:hover img { transform: scale(1.1); }
         
-        .fav-heart { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; cursor: pointer; z-index: 10; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .fav-heart.active { color: #e74c3c; transform: scale(1.1); }
+        .price-chip {
+            position: absolute; bottom: 12px; left: 12px;
+            background: rgba(0,0,0,0.75); color: var(--gold);
+            padding: 5px 15px; border-radius: 15px;
+            font-weight: 800; font-size: 12px; backdrop-filter: blur(8px);
+            border: 1px solid var(--gold); z-index: 10;
+        }
+        .heart-action {
+            position: absolute; top: 12px; right: 12px;
+            background: white; width: 38px; height: 38px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #ddd; cursor: pointer; z-index: 10; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .heart-action.active { color: #e74c3c; transform: scale(1.2); }
 
-        .price-chip { position: absolute; top: 10px; left: 10px; background: var(--black); color: var(--gold); padding: 5px 10px; border-radius: 10px; font-weight: 800; font-size: 11px; border: 1px solid var(--gold); z-index: 5; }
-        .info { padding: 12px; text-align: center; }
-        .title { font-size: 13px; font-weight: 700; height: 38px; overflow: hidden; margin-bottom: 10px; color: #222; }
-        .btn-add { background: var(--black); color: var(--gold); border: 1px solid var(--gold); width: 100%; padding: 10px; border-radius: 12px; font-weight: 800; cursor: pointer; }
+        .luxury-card-content { padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; }
+        .merchant-tag { font-size: 10px; font-weight: 800; color: var(--gold); margin-bottom: 6px; }
+        .product-name { font-size: 14px; font-weight: 700; color: #222; height: 40px; overflow: hidden; margin-bottom: 8px; }
+        .product-snippet { font-size: 11px; color: #888; margin-bottom: 15px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        
+        .btn-luxury-cart {
+            background: var(--black); color: var(--gold); border: 1px solid var(--gold);
+            padding: 12px; border-radius: 18px; font-weight: 800;
+            font-size: 12px; cursor: pointer; transition: 0.3s; margin-top: auto;
+        }
+        .btn-luxury-cart:active { transform: scale(0.9); background: var(--gold); color: var(--black); }
 
-        .vira-footer { background: var(--black); margin: 20px 15px; border-radius: 25px; padding: 30px 15px; text-align: center; border: 2px solid var(--gold); }
-        .vira-footer h2 { color: var(--gold); margin: 0 0 10px; font-size: 20px; }
-        .btn-view-vira { background: var(--gold); color: #000; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 900; cursor: pointer; }
+        /* فيرا اكسبلورر */
+        .vira-royal-banner {
+            background: var(--black); margin: 40px 18px; border-radius: 35px;
+            padding: 50px 20px; text-align: center; border: 2px solid var(--gold);
+            position: relative; overflow: hidden;
+        }
+        .vira-royal-banner h2 { color: var(--gold); font-size: 40px; font-weight: 900; margin: 0; letter-spacing: 10px; }
+        .btn-royal-view {
+            background: var(--gold); color: var(--black); border: none;
+            padding: 16px 50px; border-radius: 50px; font-weight: 900;
+            margin-top: 25px; cursor: pointer; box-shadow: 0 10px 25px rgba(212,175,55,0.3);
+        }
 
-        /* المسرح السينمائي المحسن */
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
-        .lb-container { position: relative; width: 90%; max-height: 70vh; display: flex; justify-content: center; align-items: center; }
-        .lb-img { max-width: 100%; max-height: 100%; border-radius: 15px; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(212,175,55,0.3); }
-        .lb-nav { position: absolute; color: var(--gold); font-size: 50px; background: rgba(0,0,0,0.3); border: none; cursor: pointer; padding: 10px; top: 50%; transform: translateY(-50%); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
-        .prev { right: -10px; } .next { left: -10px; }
-        .lb-close { background: var(--gold); color: #000; border: none; padding: 10px 40px; border-radius: 50px; margin-top: 30px; font-weight: 900; cursor: pointer; font-family: 'Cairo'; }
+        /* المسرح السينمائي (VIRA-Vision) */
+        .vira-vision {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--glass); z-index: 9999; flex-direction: column;
+            justify-content: center; align-items: center; backdrop-filter: blur(25px);
+        }
+        .vision-container {
+            position: relative; width: 95%; height: 65vh;
+            background: #fff; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.15);
+        }
+        .vision-img {
+            width: 100%; height: 100%; object-fit: contain;
+            transition: transform 0.1s ease; cursor: zoom-in;
+        }
+        .vision-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: white; border: none; width: 55px; height: 55px;
+            border-radius: 50%; font-size: 24px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer; z-index: 100;
+        }
+        .vision-prev { right: 15px; } .vision-next { left: 15px; }
+        .vision-close {
+            margin-top: 35px; background: var(--black); color: var(--gold);
+            border: none; padding: 15px 70px; border-radius: 50px;
+            font-weight: 900; cursor: pointer; font-family: 'Cairo';
+        }
 
-        .modal { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; backdrop-filter: blur(5px); }
-        .modal-content { background: white; width: 85%; max-width: 400px; margin: 50px auto; border-radius: 30px; padding: 25px; text-align: center; border: 3px solid var(--gold); max-height: 80vh; overflow-y: auto; }
-        .total-box { background: var(--black); color: var(--gold); padding: 15px; border-radius: 15px; margin-top: 15px; }
+        /* السلة الملكية */
+        .cart-modal { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 6000; backdrop-filter: blur(8px); }
+        .cart-inner { background: white; width: 92%; max-width: 450px; margin: 40px auto; border-radius: 40px; padding: 30px; border-top: 8px solid var(--gold); position: relative; }
+        .cart-scroll { max-height: 350px; overflow-y: auto; padding-right: 5px; }
+        .cart-row {
+            padding: 15px 0; border-bottom: 1px solid #f5f5f5;
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .row-top { display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; }
+        .delivery-by { font-size: 11px; color: #999; }
+        .total-summary {
+            background: #fafafa; padding: 25px; border-radius: 25px;
+            margin: 25px 0; border: 1px dashed var(--gold); text-align: center;
+        }
 
-        .navbar { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; z-index: 2500; }
-        .nav-item { text-align: center; color: #999; font-size: 11px; font-weight: 700; cursor: pointer; position: relative; }
-        .badge { background: #ff4757; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: 5px; }
+        /* القائمة السفلية */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%;
+            background: var(--white); display: flex; justify-content: space-around;
+            padding: 15px 0; border-top: 1px solid #f0f0f0; z-index: 4500;
+        }
+        .nav-btn { text-align: center; color: #bbb; font-size: 11px; font-weight: 700; flex: 1; position: relative; }
+        .nav-btn.active { color: var(--gold); }
+        .count-badge {
+            background: #ff4757; color: white; border-radius: 50%;
+            padding: 3px 8px; font-size: 10px; position: absolute;
+            top: -10px; right: 25%; border: 2.5px solid white;
+        }
     </style>
 </head>
 <body>
 
-<div id="lightbox" class="lightbox">
-    <div class="lb-container">
-        <button class="lb-nav prev" onclick="changeImg(-1)">❯</button>
-        <img id="lbImg" src="" class="lb-img">
-        <button class="lb-nav next" onclick="changeImg(1)">❮</button>
+<div id="visionStage" class="vira-vision">
+    <div class="vision-container" id="zoomBase" onmousemove="viraZoom(event)" onmouseleave="viraZoomOut()">
+        <button class="vision-nav vision-prev" onclick="navGallery(-1)">❯</button>
+        <img id="stageImg" src="" class="vision-img">
+        <button class="vision-nav vision-next" onclick="navGallery(1)">❮</button>
     </div>
-    <button class="lb-close" onclick="closeLB()">إغلاق</button>
+    <div style="margin-top:15px; font-size:12px; color:#777;">🔍 مرري إصبعك للتكبير والتدقيق في التفاصيل</div>
+    <button class="vision-close" onclick="closeVision()">إغلاق المعرض</button>
 </div>
 
-<header class="header"><a href="#" class="logo">VIRA MALL</a></header>
+<header class="ultra-header"><a href="#" class="logo">VIRA MALL</a></header>
 
-<div id="mainContent">
-    <div class="top-tools">
-        <input type="text" id="searchInput" class="search-input" placeholder="ابحثي عن قطعة أو متجر..." oninput="search()">
-        <button class="btn-merchant" onclick="showModal('merchantModal')">انضمي كتاجرة 👑</button>
+<div id="p-home">
+    <div class="smart-bar">
+        <div class="search-container">
+            <input type="text" id="vSearch" placeholder="ابحثي عن قطعة، ماركة، أو متجر..." oninput="ultraSearch()">
+        </div>
+        <button class="btn-premium" onclick="openM('merchantM')">انضمي 👑</button>
     </div>
-    <div id="merchGrid" class="grid"></div>
-    <div class="vira-footer">
-        <h2>✨ VIRA ROYAL COLLECTION</h2>
-        <button class="btn-view-vira" onclick="showViraOnly()">عرض الكل 🔥</button>
+
+    <div class="section-header">🌍 عالم التاجرات</div>
+    <div id="merchGrid" class="ultra-grid"></div>
+
+    <div class="vira-royal-banner">
+        <h2>VIRA</h2>
+        <p style="color: #666;">لمسة من الفخامة لكل امرأة سودانية</p>
+        <button class="btn-royal-view" onclick="toggleVira(true)">تصفح متاجري الخاصة 🔥</button>
     </div>
 </div>
 
-<div id="viraView" style="display:none">
-    <div style="padding:15px; background:#fff; position:sticky; top:88px; z-index:1100; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold);">
-        <b style="font-size:18px;">👑 متجري الخاص</b>
-        <button onclick="hideViraOnly()" style="background:var(--gold); border:none; padding:5px 15px; border-radius:10px; font-weight:700;">رجوع</button>
+<div id="p-vira" style="display:none">
+    <div style="padding:15px; background:#fff; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold); position:sticky; top:88px; z-index:4001;">
+        <h3 style="margin:0; font-weight:900; letter-spacing:2px;">👑 VIRA COLLECTION</h3>
+        <button onclick="toggleVira(false)" style="background:var(--gold); border:none; padding:8px 20px; border-radius:15px; font-weight:800; font-size:12px;">رجوع</button>
     </div>
-    <div id="myGrid" class="grid"></div>
+    <div id="viraGrid" class="ultra-grid" style="margin-top:15px;"></div>
 </div>
 
-<div id="cartModal" class="modal"><div class="modal-content">
-    <h3>سلة الجمال 🛒</h3>
-    <div id="cartList" style="text-align:right"></div>
-    <div style="background:#fff9e6; padding:10px; border-radius:12px; margin:15px 0; border:1px solid var(--gold); font-size:11px; color:#856404;">
-        ℹ️ رسوم التوصيل تعتمد على موقع كل متجر.
+<div id="cartM" class="cart-modal"><div class="cart-inner">
+    <h2 style="text-align:center; margin-top:0;">🛒 حقيبة التسوق</h2>
+    <div id="cartList" class="cart-scroll"></div>
+    <div class="total-summary">
+        <small style="color:#888;">إجمالي قيمة المنتجات</small>
+        <h1 id="totalPrice" style="margin:5px 0; color:var(--black);">0 SDG</h1>
+        <div style="background:#fff9e6; color:#856404; padding:10px; border-radius:12px; font-size:11px; margin-top:10px;">
+            ℹ️ رسوم التوصيل يحددها كل تاجر بشكل مستقل حسب موقعه.
+        </div>
     </div>
-    <div class="total-box"><h4 id="totalPrice" style="margin:0">إجمالي المنتجات: 0 SDG</h4></div>
-    <button class="btn-add" style="margin-top:15px;" onclick="sendOrder()">تأكيد الطلب واتساب 📤</button>
-    <button onclick="closeModal('cartModal')" style="background:none; border:none; margin-top:10px; color:red;">إغلاق</button>
+    <button class="btn-luxury-cart" style="width:100%; padding:16px; font-size:15px;" onclick="checkoutWA()">تأكيد الطلب عبر واتساب</button>
+    <button onclick="closeM('cartM')" style="width:100%; background:none; border:none; color:red; margin-top:15px; font-weight:700;">إغلاق</button>
 </div></div>
 
-<div id="merchantModal" class="modal"><div class="modal-content">
-    <h2 style="color:var(--gold)">انضمي لأسرة التاجرات</h2>
-    <p>رسوم الاشتراك: <b>30,000 SDG</b></p>
-    <button class="btn-add" style="background:var(--gold); color:#000;" onclick="window.open('https://wa.me/249967584275?text=حولت الـ 30 ألف.. أريد تفعيل متجري ✨')">إرسال إشعار التحويل ✅</button>
-    <button onclick="closeModal('merchantModal')" style="background:none; border:none; margin-top:15px; color:red;">إغلاق</button>
+<div id="merchantM" class="cart-modal"><div class="cart-inner" style="text-align:center;">
+    <h2 style="color:var(--gold)">ابدأي تجارتك معنا</h2>
+    <p>انضمي لأكبر منصة تسوق سودانية احترافية</p>
+    <div style="background:#f9f9f9; padding:20px; border-radius:20px; margin:20px 0;">
+        رسوم فتح المتجر<br><b style="font-size:24px;">30,000 SDG</b>
+    </div>
+    <button class="btn-luxury-cart" style="width:100%" onclick="window.open('https://wa.me/249967584275')">تواصل مع الإدارة ✅</button>
+    <button onclick="closeM('merchantM')" style="background:none; border:none; color:red; margin-top:15px;">إغلاق</button>
 </div></div>
 
-<nav class="navbar">
-    <div class="nav-item" onclick="location.reload()">🏠<br>الرئيسية</div>
-    <div class="nav-item" onclick="showViraOnly()">👑<br>متجري</div>
-    <div class="nav-item" onclick="showModal('cartModal')">🛒<br>السلة <span id="cartCount" class="badge">0</span></div>
-    <div class="nav-item" onclick="alert('قسم المفضلة قيد التجهيز لجمالك!')">❤️<br>المفضلة</div>
+<nav class="bottom-nav">
+    <div class="nav-btn active" onclick="location.reload()">🏠<br>الرئيسية</div>
+    <div class="nav-btn" onclick="toggleVira(true)">👑<br>فيرا</div>
+    <div class="nav-btn" style="position:relative;" onclick="openM('cartM')">
+        🛒<br>السلة <span id="cartCount" class="count-badge">0</span>
+    </div>
+    <div class="nav-btn" onclick="alert('قسم المفضلة قيد التطوير ✨')">❤️<br>المفضلة</div>
 </nav>
 
 <script>
     const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
-    let allData = []; let cart = []; let currentAlbum = []; let albumIdx = 0;
+    let fullDB = []; let cart = []; let gallery = []; let gIdx = 0;
 
-    async function loadData() {
+    async function initSystem() {
         try {
             const [r1, r2] = await Promise.all([
                 fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`),
                 fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1152504859`)
             ]);
-            const t1 = await r1.text(); const t2 = await r2.text();
+            const d1 = await r1.text(); const d2 = await r2.text();
             
-            const parse = (text, isVira) => {
-                const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-                if (isVira) return rows.slice(1).map(c => ({ name: c[0]?.replace(/"/g,''), price: c[1]?.replace(/"/g,''), store: 'VIRA', img: c[3]?.replace(/"/g,'') }));
-                
-                const headers = rows[0].map(h => h.replace(/"/g,'').trim());
-                const iStore = headers.indexOf('اسم المتجر');
-                const iName = headers.indexOf('اسم المنتج');
-                const iPrice = headers.indexOf('السعر بالجنيه (SDG)"');
-                const iImg = headers.indexOf('رابط الصورة المباشر');
-
-                return rows.slice(1).map(c => ({
-                    store: c[iStore]?.replace(/"/g,'') || 'متجر غير معروف',
-                    name: c[iName]?.replace(/"/g,''),
-                    price: c[iPrice]?.replace(/"/g,''),
-                    img: c[iImg]?.replace(/"/g,'')
-                }));
+            const parse = (csv, isV) => {
+                const rows = csv.split('\n').map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+                const h = rows[0].map(x => x.replace(/"/g,'').trim());
+                return rows.slice(1).map(c => {
+                    const f = (k) => { const i = h.findIndex(x => x.includes(k)); return i!==-1?c[i]?.replace(/"/g,'').trim():''; };
+                    return isV ? 
+                    { name: c[0], price: c[1], store: c[2]||'VIRA', img: c[3], desc: c[5] } :
+                    { store: f('اسم المتجر')||'متجر شريك', name: f('اسم المنتج'), price: f('السعر'), img: f('رابط الصورة'), desc: f('وصف')||f('مميزات') };
+                }).filter(p => p.name && p.img);
             };
 
-            allData = [...parse(t1, true), ...parse(t2, false)].filter(p => p.name && p.img);
-            render(allData);
-        } catch(e) { console.error(e); }
+            fullDB = [...parse(d1, true), ...parse(d2, false)];
+            render(fullDB);
+        } catch(e) { console.error("System Error"); }
     }
 
     function render(data) {
-        let vHtml = '', mHtml = '';
+        let vH = '', mH = '';
         data.forEach(p => {
-            const card = `<div class="card">
-                <div class="fav-heart" onclick="this.classList.toggle('active')">❤</div>
-                <div class="price-chip">${p.price}</div>
-                <img src="${p.img.split(';')[0]}" onclick="openLB('${p.img}')">
-                <div class="info">
-                    <span style="font-size:9px; color:var(--gold); font-weight:800;">${p.store}</span>
-                    <div class="title">${p.name}</div>
-                    <button class="btn-add" onclick="addToCart('${p.name}','${p.price}')">إضافة 🛒</button>
+            const ui = `
+            <div class="luxury-card">
+                <div class="image-box">
+                    <div class="price-chip">${p.price}</div>
+                    <div class="heart-action" onclick="this.classList.toggle('active')">❤</div>
+                    <img src="${p.img.split(';')[0]}" onclick="openVision('${p.img}')" loading="lazy">
+                </div>
+                <div class="luxury-card-content">
+                    <span class="merchant-tag">${p.store}</span>
+                    <div class="product-name">${p.name}</div>
+                    <span class="product-snippet">${p.desc || 'لمسة جمالية فريدة'}</span>
+                    <button class="btn-luxury-cart" onclick="addToCart('${p.name}','${p.price}','${p.store}')">إضافة للسلة 🛒</button>
                 </div>
             </div>`;
-            if(p.store.toUpperCase().includes('VIRA')) vHtml += card; else mHtml += card;
+            if(p.store.toUpperCase().includes('VIRA')) vH += ui; else mH += ui;
         });
-        document.getElementById('myGrid').innerHTML = vHtml;
-        document.getElementById('merchGrid').innerHTML = mHtml;
+        document.getElementById('viraGrid').innerHTML = vH;
+        document.getElementById('merchGrid').innerHTML = mH;
     }
 
-    function openLB(imgs) {
-        currentAlbum = imgs.split(';').map(s => s.trim()); albumIdx = 0;
-        document.getElementById('lbImg').src = currentAlbum[0];
-        document.getElementById('lightbox').style.display = 'flex';
+    // زووم فيرا الاحترافي
+    function viraZoom(e) {
+        const img = document.getElementById('stageImg');
+        const box = document.getElementById('zoomBase').getBoundingClientRect();
+        const x = ((e.clientX - box.left) / box.width) * 100;
+        const y = ((e.clientY - box.top) / box.height) * 100;
+        img.style.transformOrigin = `${x}% ${y}%`;
+        img.style.transform = "scale(2.5)";
+    }
+    function viraZoomOut() { document.getElementById('stageImg').style.transform = "scale(1)"; }
+
+    function openVision(imgs) {
+        gallery = imgs.split(';').map(s => s.trim()); gIdx = 0;
+        document.getElementById('stageImg').src = gallery[0];
+        document.getElementById('visionStage').style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        const navs = document.querySelectorAll('.lb-nav');
-        navs.forEach(n => n.style.display = currentAlbum.length > 1 ? 'flex' : 'none');
+        document.querySelectorAll('.vision-nav').forEach(n => n.style.display = gallery.length > 1 ? 'block' : 'none');
     }
-    function changeImg(step) {
-        albumIdx = (albumIdx + step + currentAlbum.length) % currentAlbum.length;
-        document.getElementById('lbImg').src = currentAlbum[albumIdx];
+    function navGallery(d) {
+        gIdx = (gIdx + d + gallery.length) % gallery.length;
+        document.getElementById('stageImg').src = gallery[gIdx];
+        viraZoomOut();
     }
-    function closeLB() {
-        document.getElementById('lightbox').style.display = 'none';
-        document.body.style.overflow = 'auto';
+    function closeVision() { document.getElementById('visionStage').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+    function addToCart(n, p, s) {
+        cart.push({n,p,s});
+        updateCartUI();
+        // تأثير توست خفيف
+        const t = document.createElement('div');
+        t.innerText = 'أضيف للجمال ✨';
+        t.style = 'position:fixed; bottom:110px; left:50%; transform:translateX(-50%); background:var(--black); color:var(--gold); padding:10px 25px; border-radius:50px; z-index:9999; font-size:12px; font-weight:700;';
+        document.body.appendChild(t);
+        setTimeout(()=>t.remove(), 2000);
     }
 
-    function addToCart(n, p) { cart.push({n,p}); document.getElementById('cartCount').innerText = cart.length; updateCartUI(); }
     function updateCartUI() {
-        document.getElementById('cartList').innerHTML = cart.map((i,idx) => `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #eee"><span>${i.n}</span><b>${i.p} <span onclick="cart.splice(${idx},1);updateCartUI();" style="color:red; cursor:pointer">❌</span></b></div>`).join('');
-        const sub = cart.reduce((a,i) => a + parseInt(i.p.replace(/[^0-9]/g,'')||0), 0);
-        document.getElementById('totalPrice').innerText = `إجمالي المنتجات: ${sub.toLocaleString()} SDG`;
+        document.getElementById('cartCount').innerText = cart.length;
+        document.getElementById('cartList').innerHTML = cart.map((i,x) => `
+            <div class="cart-row">
+                <div class="row-top">
+                    <span>${i.n}</span>
+                    <span>${i.p} <small onclick="cart.splice(${x},1);updateCartUI();" style="color:red; cursor:pointer; margin-right:8px;">×</small></span>
+                </div>
+                <div class="delivery-by">بواسطة: ${i.s} • التوصيل يحدد بواسطة التاجر</div>
+            </div>`).join('');
+        const total = cart.reduce((a,i) => a + parseInt(i.p.replace(/[^0-9]/g,'')||0), 0);
+        document.getElementById('totalPrice').innerText = `${total.toLocaleString()} SDG`;
     }
 
-    function sendOrder() {
-        if(cart.length === 0) return alert('السلة فارغة!');
-        const msg = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i=>`• ${i.n} (${i.p})`).join('\n')}\n\n💰 الإجمالي: ${document.getElementById('totalPrice').innerText}\n🚚 رسوم التوصيل: حسب المتجر`);
-        window.open(`https://wa.me/249967584275?text=${msg}`);
+    function checkoutWA() {
+        if(!cart.length) return alert('سلتك خالية يا جميلة!');
+        const m = encodeURIComponent(`طلب جديد من VIRA MALL 👑\n\n${cart.map(i=>`• ${i.n} (${i.p})\n  المتجر: ${i.s}`).join('\n\n')}\n\n💰 إجمالي المنتجات: ${document.getElementById('totalPrice').innerText}\n🚚 ملاحظة: رسوم التوصيل يتم الاتفاق عليها مع التاجر.`);
+        window.open(`https://wa.me/249967584275?text=${m}`);
     }
 
-    function search() { const q = document.getElementById('searchInput').value.toLowerCase(); render(allData.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q))); }
-    function showViraOnly() { document.getElementById('mainContent').style.display='none'; document.getElementById('viraView').style.display='block'; window.scrollTo(0,0); }
-    function hideViraOnly() { document.getElementById('mainContent').style.display='block'; document.getElementById('viraView').style.display='none'; }
-    function showModal(id) { document.getElementById(id).style.display='block'; }
-    function closeModal(id) { document.getElementById(id).style.display='none'; }
-    loadData();
+    function ultraSearch() {
+        const q = document.getElementById('vSearch').value.toLowerCase();
+        render(fullDB.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q) || (p.desc && p.desc.toLowerCase().includes(q))));
+    }
+
+    function toggleVira(s) {
+        document.getElementById('p-home').style.display = s ? 'none' : 'block';
+        document.getElementById('p-vira').style.display = s ? 'block' : 'none';
+        window.scrollTo(0,0);
+    }
+
+    function openM(id) { document.getElementById(id).style.display = 'block'; }
+    function closeM(id) { document.getElementById(id).style.display = 'none'; }
+
+    initSystem();
 </script>
 </body>
 </html>
