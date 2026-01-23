@@ -40,11 +40,12 @@
     </tbody>
   </table>
 
-  <!-- زر نسخ جميع الروابط -->
+  <!-- أزرار نسخ وتحميل CSV -->
   <button id="copyLinksBtn">نسخ جميع الروابط</button>
   <button id="downloadCSVBtn">تحميل CSV</button>
 
   <script type="module">
+    // 🔹 استدعاء Firebase من الملف المركزي
     import { storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js';
 
     const imageInput = document.getElementById('imageInput');
@@ -80,7 +81,7 @@
 
       uploadBytes(storageRef, file).then(snapshot => {
         getDownloadURL(snapshot.ref).then(url => {
-          // أضف المنتج للجدول
+          // إضافة المنتج للجدول
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${productName}</td>
