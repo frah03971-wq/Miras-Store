@@ -2,32 +2,37 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIRA MALL | فيرا مول</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         :root { --gold: #D4AF37; --black: #000000; --dark: #111111; }
+        
         body { margin: 0; background: var(--black); color: white; font-family: 'Cairo', sans-serif; padding-bottom: 90px; }
         
-        header { padding: 20px; text-align: center; background: #000; border-bottom: 2px solid var(--gold); }
-        /* تصحيح رابط اللوجو لضمان الظهور */
-        .logo-img { width: 100px; filter: drop-shadow(0 0 5px var(--gold)); }
+        /* هيدر فخم وثابت */
+        header { padding: 20px; text-align: center; background: #000; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .logo-img { width: 90px; filter: drop-shadow(0 0 5px var(--gold)); }
 
+        /* بار العملات */
         .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 12px; background: #080808; border-bottom: 1px solid #222; }
         .currency-nav button { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: bold; }
         .currency-nav button.active { background: var(--gold); color: black; }
 
+        /* عرض المنتجات */
         .main-container { padding: 15px; }
         .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .product-card img { width: 100%; height: auto; display: block; background: #111; min-height: 200px; object-fit: cover; }
+        .product-card img { width: 100%; height: auto; display: block; min-height: 250px; background: #000; object-fit: cover; }
         .p-details { padding: 20px; text-align: center; }
-        .p-name { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+        .p-name { font-size: 22px; font-weight: bold; margin-bottom: 10px; color: #fff; }
         .p-price { font-size: 24px; color: var(--gold); font-weight: bold; }
+        
         .add-btn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; border: none; font-size: 16px; margin-top: 15px; cursor: pointer; }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
+        /* البار السفلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000; }
         .nav-item { text-align: center; color: var(--gold); text-decoration: none; font-size: 14px; font-weight: bold; }
     </style>
 </head>
@@ -35,22 +40,21 @@
 
 <header>
     <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" class="logo-img" alt="VIRA MALL">
-    <div style="color:var(--gold); margin-top:5px; letter-spacing: 2px; font-weight: bold;">VIRA MALL</div>
 </header>
 
-<div class="currency-nav">
+<div class="currency-nav" id="curr-nav">
     <button class="active" onclick="changeCurr(1, 'SDG', this)">السودان 🇸🇩</button>
     <button onclick="changeCurr(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
     <button onclick="changeCurr(0.082, 'EGP', this)">مصر 🇪🇬</button>
 </div>
 
 <div class="main-container" id="plist">
-    <div style="text-align:center; padding:50px;">جاري تحميل إمبراطورية فيرا... ✨</div>
+    <div style="text-align:center; padding:50px;">جاري تحميل عالم الفخامة... ✨</div>
 </div>
 
 <div class="bottom-nav">
     <a href="#" class="nav-item">🏠 الرئيسية</a>
-    <a href="https://wa.me/249967584275" class="nav-item">👑 بوابة التاجرات</a>
+    <a href="https://wa.me/249967584275" class="nav-item">💬 اطلبي الآن</a>
 </div>
 
 <script>
@@ -63,40 +67,41 @@
             header: false,
             complete: function(results) {
                 let h = '';
+                // البدء من السطر التاني عشان نتخطى الهيدر
                 results.data.forEach((row, index) => {
-                    if (index === 0) return; // تخطي الهيدر
-                    
                     const name = row[0]?.trim();
-                    const priceRaw = row[1]?.toString().trim();
+                    const priceRaw = row[1]?.trim();
                     const img = row[3]?.trim();
 
-                    // فلتر ذكي جداً:
-                    // 1. لازم الاسم ما يكون فيه كلمة Date
-                    // 2. لازم السعر يكون رقم حقيقي أكبر من 0
-                    // 3. لازم رابط الصورة يبدأ بـ http
+                    // فلتر "الخبير":
+                    // 1. يتجاهل أي سطر فيه كلمة Date أو التاريخ
+                    // 2. يتجاهل أي سطر ما فيه سعر حقيقي
+                    // 3. يتجاهل أي سطر ما فيه رابط صورة يبدأ بـ http
                     const price = parseFloat(priceRaw);
                     
-                    if (name && !name.toLowerCase().includes('date') && !isNaN(price) && price > 0 && img && img.startsWith('http')) {
+                    if (name && !name.includes('/') && !name.toLowerCase().includes('date') && !isNaN(price) && price > 0 && img && img.startsWith('http')) {
                         h += `
                         <div class="product-card">
                             <img src="${img}" onerror="this.src='https://via.placeholder.com/400x400?text=Vira+Mall'">
                             <div class="p-details">
                                 <div class="p-name">${name}</div>
                                 <div class="p-price">${(price * rate).toLocaleString()} ${sym}</div>
-                                <button class="add-btn" onclick="window.location.href='https://wa.me/249967584275?text=طلب منتج: ${name}'">اطلبي الآن 🛒</button>
+                                <button class="add-btn" onclick="window.location.href='https://wa.me/249967584275?text=أريد طلب: ${name}'">اطلبي عبر الواتساب 🛒</button>
                             </div>
                         </div>`;
                     }
                 });
-                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">أضيفي منتجاتك في الشيت يا ملكة وسوف تظهر هنا فوراً 👑</div>';
+                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">نضيف منتجاتنا هسي وتظهر هنا 👑</div>';
             }
         });
     }
 
     function changeCurr(r, s, b) {
         rate = r; sym = s;
-        document.querySelectorAll('.currency-nav button').forEach(x => x.classList.remove('active'));
-        b.classList.add('active'); loadProducts();
+        const btns = document.querySelectorAll('.currency-nav button');
+        btns.forEach(btn => btn.classList.remove('active'));
+        b.classList.add('active');
+        loadProducts();
     }
 
     window.onload = loadProducts;
