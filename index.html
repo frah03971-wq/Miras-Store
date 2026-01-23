@@ -1,101 +1,167 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRA MALL | فيرا مول</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        :root { --gold: #D4AF37; --black: #000000; }
-        body { margin: 0; background: var(--black); color: white; font-family: 'Cairo', sans-serif; padding-bottom: 80px; }
-        
-        /* هيدر المتجر */
-        header { padding: 15px; text-align: center; background: #000; border-bottom: 2px solid var(--gold); sticky; top: 0; z-index: 1000; }
-        .logo { width: 80px; filter: drop-shadow(0 0 5px var(--gold)); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        /* السلايدر (الصور المتحركة) */
-        .slider { width: 100%; height: 200px; overflow: hidden; position: relative; border-bottom: 1px solid #222; }
-        .slides { display: flex; width: 300%; height: 100%; animation: slide 10s infinite linear; }
-        .slides img { width: 33.33%; object-fit: cover; border: none; }
-        @keyframes slide {
-            0%, 30% { transform: translateX(0); }
-            33%, 63% { transform: translateX(33.33%); }
-            66%, 100% { transform: translateX(66.66%); }
-        }
+<title>VIRA MALL | فيرا مول</title>
 
-        /* شبكة المنتجات */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .card { background: #111; border-radius: 15px; overflow: hidden; border: 1px solid #222; position: relative; }
-        .card img { width: 100%; height: 150px; object-fit: cover; }
-        .shipping { position: absolute; top: 5px; left: 5px; background: green; color: white; padding: 2px 6px; border-radius: 5px; font-size: 9px; }
-        .info { padding: 10px; text-align: center; }
-        .price { color: var(--gold); font-weight: bold; font-size: 16px; margin: 5px 0; }
-        .btn { background: var(--gold); color: black; border: none; width: 100%; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
+<!-- SEO -->
+<meta name="description" content="فيرا مول منصة سودانية تجمع المتاجر والبراندات في مكان واحد. تسوق ذكي وطلب سريع.">
+<meta name="keywords" content="Vira Mall, فيرا مول, متجر سوداني, تسوق اونلاين السودان">
+<meta name="author" content="VIRA MALL">
+<meta name="robots" content="index, follow">
 
-        /* البار السفلي (زي التطبيقات) */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080808; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222; z-index: 2000; }
-        .nav-link { color: #888; text-decoration: none; text-align: center; font-size: 10px; }
-        .nav-link i { font-size: 20px; display: block; margin-bottom: 3px; }
-        .nav-link.active { color: var(--gold); }
-    </style>
+<!-- Social -->
+<meta property="og:title" content="VIRA MALL | فيرا مول">
+<meta property="og:description" content="منصة سودانية تجمع البراندات والمتاجر في مكان واحد">
+<meta property="og:type" content="website">
+
+<!-- PWA -->
+<meta name="theme-color" content="#0f1111">
+<link rel="manifest" href="data:application/json,{
+  &quot;name&quot;:&quot;VIRA Mall&quot;,
+  &quot;short_name&quot;:&quot;VIRA&quot;,
+  &quot;start_url&quot;:&quot;.&quot;,
+  &quot;display&quot;:&quot;standalone&quot;,
+  &quot;background_color&quot;:&quot;#0f1111&quot;,
+  &quot;theme_color&quot;:&quot;#D4AF37&quot;
+}">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--red:#e41e31;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gray);font-family:'Cairo',sans-serif;padding-bottom:110px}
+header{position:sticky;top:0;z-index:1000;padding:12px 15px;background:var(--dark);display:flex;justify-content:space-between;align-items:center}
+.menu-btn{font-size:26px;color:var(--gold);cursor:pointer}
+.brand{font-family:'Cinzel Decorative';font-size:22px;color:white;font-weight:900}
+.brand span{color:var(--gold)}
+.curr-switcher{display:flex;background:#222;border-radius:20px;padding:2px}
+.curr-opt{padding:4px 10px;font-size:10px;color:#fff;border-radius:18px;cursor:pointer;font-weight:bold}
+.curr-opt.active{background:var(--gold);color:#000}
+
+.side-menu{position:fixed;top:0;right:-100%;width:280px;height:100%;background:var(--dark);z-index:10000;transition:.4s;padding:40px 20px}
+.side-menu.active{right:0}
+.menu-item{color:white;padding:15px;border-bottom:1px solid #333;display:block;text-decoration:none;font-size:18px}
+
+.container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:15px}
+.card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.05);position:relative}
+
+.swiper{width:100%;height:300px}
+.swiper-slide img{width:100%;height:100%;object-fit:contain}
+
+.heart-btn{position:absolute;top:15px;left:15px;background:rgba(255,255,255,.6);width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.heart-btn.active{color:var(--red)}
+
+.details{padding:15px}
+.store-tag{font-size:10px;font-weight:900;color:var(--gold)}
+.p-title{font-size:14px;font-weight:bold;height:40px;overflow:hidden}
+.p-price{font-size:18px;font-weight:900}
+.add-btn{background:var(--gold);border:none;width:100%;padding:12px;border-radius:12px;font-weight:bold;cursor:pointer}
+
+.overlay{display:none;position:fixed;inset:0;background:white;z-index:20000;padding:25px;overflow-y:auto}
+.close-x{font-size:35px;cursor:pointer}
+
+nav{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;background:#0f1111;border-radius:30px;display:flex;justify-content:space-around;padding:12px;z-index:5000}
+.nav-link{color:#888;font-size:10px;text-align:center}
+.nav-link.active{color:var(--gold)}
+.badge{position:absolute;top:-8px;right:-8px;background:var(--gold);color:black;font-size:10px;padding:2px 6px;border-radius:50%}
+
+#loader{position:fixed;inset:0;background:#0f1111;display:flex;align-items:center;justify-content:center;z-index:99999;color:var(--gold);font-size:26px;font-weight:900}
+</style>
 </head>
+
 <body>
 
-<header><img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" class="logo"></header>
+<div id="loader">VIRA MALL ✨</div>
 
-<div class="slider">
-    <div class="slides">
-        <img src="https://via.placeholder.com/800x400/000/D4AF37?text=VIRA+MALL">
-        <img src="https://via.placeholder.com/800x400/111/D4AF37?text=بخور+وعطور+ملكية">
-        <img src="https://via.placeholder.com/800x400/000/D4AF37?text=توصيل+مجاني">
-    </div>
+<header>
+  <div class="menu-btn" onclick="toggleM()">☰</div>
+  <div class="brand">V<span>IRA</span> MALL</div>
+  <div class="curr-switcher">
+    <div id="btnSDG" class="curr-opt active" onclick="setCurrency('SDG')">SDG</div>
+    <div id="btnSAR" class="curr-opt" onclick="setCurrency('SAR')">SAR</div>
+  </div>
+</header>
+
+<div id="sideMenu" class="side-menu">
+  <div class="close-x" style="color:var(--gold)" onclick="toggleM()">✕</div>
+  <div style="margin-top:60px">
+    <a class="menu-item" onclick="location.reload()">✨ الرئيسية</a>
+    <a class="menu-item" onclick="openO('cartPage')">🛒 السلة</a>
+  </div>
 </div>
 
-<div class="grid" id="product-list">
-    <div style="grid-column: 1/3; text-align: center; padding: 50px;">جاري تحميل المنتجات... ✨</div>
+<div id="grid" class="container"></div>
+
+<div id="cartPage" class="overlay">
+  <span class="close-x" onclick="closeO()">✕</span>
+  <h2 style="margin-top:50px">سلة المشتريات</h2>
+  <div id="cartContent"></div>
+  <h3 id="totalVal"></h3>
+  <button class="add-btn" onclick="checkout()">تأكيد الطلب واتساب</button>
 </div>
 
-<div class="bottom-nav">
-    <a href="#" class="nav-link active"><i class="fas fa-home"></i>الرئيسية</a>
-    <a href="https://wa.me/249967584275" class="nav-item nav-link"><i class="fab fa-whatsapp"></i>واتساب</a>
-    <a href="javascript:void(0)" onclick="alert('حساب بنكك: 2280384')" class="nav-link"><i class="fas fa-university"></i>بنكك</a>
-    <a href="javascript:void(0)" onclick="alert('التوصيل مجاني لجميع الطلبات 🚚')" class="nav-link"><i class="fas fa-truck"></i>التوصيل</a>
-</div>
+<nav>
+  <div class="nav-link active" onclick="location.reload()">🏠<br>الرئيسية</div>
+  <div class="nav-link" onclick="openO('cartPage')">🛒<br>السلة <span id="cBadge" class="badge">0</span></div>
+  <div class="nav-link" onclick="toggleM()">☰<br>المزيد</div>
+</nav>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // رابط الشيت حقك
-    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+let db=[],cart=JSON.parse(localStorage.getItem('cart')||'[]'),currentCurr='SDG';
+const RATE=0.0031;
 
-    function loadData() {
-        Papa.parse(sheetURL, {
-            download: true,
-            complete: function(results) {
-                let html = '';
-                results.data.forEach((row, i) => {
-                    // تخطي أول سطر والتأكد من وجود اسم وصورة
-                    if (i > 0 && row[0] && row[3] && row[3].includes('http')) {
-                        html += `
-                        <div class="card">
-                            <div class="shipping">توصيل مجاني 🚚</div>
-                            <img src="${row[3].trim()}">
-                            <div class="info">
-                                <div style="font-size:13px; height:32px; overflow:hidden;">${row[0]}</div>
-                                <div class="price">${row[1]} SDG</div>
-                                <button class="btn" onclick="location.href='https://wa.me/249967584275?text=أريد طلب: ${row[0]}'">اطلبي الآن</button>
-                            </div>
-                        </div>`;
-                    }
-                });
-                document.getElementById('product-list').innerHTML = html || '<p style="text-align:center; width:100%;">لا توجد منتجات حالياً</p>';
-            }
-        });
-    }
+async function init(){
+ const r=await fetch(SHEET_URL);const t=await r.text();
+ const rows=t.split(/\n/).slice(1);
+ db=rows.map((row,i)=>{
+  const c=row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,''));
+  return{id:i,name:c[3],price:+c[4]||0,imgs:c[5]?.split(' ')||[]}
+ }).filter(p=>p.name);
+ render();
+ document.getElementById('loader').style.display='none';
+}
 
-    window.onload = loadData;
+function render(){
+ grid.innerHTML=db.map((p,i)=>{
+  let price=currentCurr==='SDG'?p.price+' SDG':(p.price*RATE).toFixed(2)+' SAR';
+  return `<div class="card">
+   <div class="swiper s${i}"><div class="swiper-wrapper">
+    ${p.imgs.map(img=>`<div class="swiper-slide"><img src="${img}"></div>`).join('')}
+   </div></div>
+   <div class="details">
+    <div class="p-title">${p.name}</div>
+    <div class="p-price">${price}</div>
+    <button class="add-btn" onclick="addC(${p.id})">إضافة للسلة</button>
+   </div></div>`
+ }).join('');
+ db.forEach((_,i)=>new Swiper('.s'+i));
+}
+
+function addC(id){
+ cart.push(db.find(p=>p.id===id));
+ localStorage.setItem('cart',JSON.stringify(cart));
+ updateCart();alert('تمت الإضافة');
+}
+function updateCart(){
+ cartContent.innerHTML=cart.map(i=>`<div>${i.name}</div>`).join('');
+ cBadge.innerText=cart.length;
+ totalVal.innerText='الإجمالي: '+cart.reduce((s,i)=>s+i.price,0);
+}
+function checkout(){
+ window.open('https://wa.me/249967584275?text='+encodeURIComponent('طلب جديد'));
+}
+function toggleM(){sideMenu.classList.toggle('active')}
+function openO(id){document.getElementById(id).style.display='block';updateCart()}
+function closeO(){document.querySelectorAll('.overlay').forEach(o=>o.style.display='none')}
+function setCurrency(c){currentCurr=c;render()}
+init();
 </script>
-
 </body>
 </html>
