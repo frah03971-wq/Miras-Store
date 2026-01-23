@@ -11,32 +11,26 @@
         :root { --gold: #D4AF37; --black: #000000; --dark: #111111; }
         body { margin: 0; background: var(--black); color: white; font-family: 'Cairo', sans-serif; padding-bottom: 90px; }
         
-        /* الهيدر واللوجو */
         header { padding: 15px; text-align: center; background: #000; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .logo-img { width: 90px; filter: drop-shadow(0 0 5px var(--gold)); margin: 0 auto; }
         .menu-icon { font-size: 28px; color: var(--gold); cursor: pointer; padding: 0 15px; }
 
-        /* بار العملات */
         .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 12px; background: #080808; scrollbar-width: none; }
         .currency-nav button { background: none; border: 1px solid #333; color: white; padding: 6px 15px; border-radius: 20px; white-space: nowrap; cursor: pointer; }
         .currency-nav button.active { background: var(--gold); color: black; font-weight: bold; }
 
-        /* بطاقات المنتجات الفخمة */
-        .main-container { padding: 15px; }
-        .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .product-card img { width: 100%; height: auto; display: block; min-height: 250px; background: #111; object-fit: cover; }
+        .main-container { padding: 15px; min-height: 400px; }
+        .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; }
+        .product-card img { width: 100%; height: auto; display: block; background: #111; }
         .p-details { padding: 20px; text-align: center; }
         .p-name { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
         .p-price { font-size: 24px; color: var(--gold); font-weight: bold; }
-        .add-btn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; border: none; font-size: 16px; margin-top: 15px; cursor: pointer; }
+        .add-btn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; border: none; font-size: 16px; margin-top: 15px; }
 
-        /* القائمة الجانبية */
         .sidebar { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #0d0d0d; transition: 0.4s; z-index: 2000; padding: 40px 20px; border-left: 2px solid var(--gold); }
         .sidebar.open { right: 0; }
         .close-btn { color: var(--gold); font-size: 35px; cursor: pointer; }
-        .menu-link { color: white; text-decoration: none; display: block; padding: 20px 10px; border-bottom: 1px solid #222; }
 
-        /* البار السفلي */
         .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 11px; text-decoration: none; }
         .nav-item.active { color: var(--gold); }
@@ -53,14 +47,9 @@
 <div id="sidebar" class="sidebar">
     <span class="close-btn" onclick="toggleMenu()">×</span>
     <div style="margin-top: 40px;">
-        <a href="#" class="menu-link">🏠 الرئيسية</a>
-        <a href="#" class="menu-link">🛒 سلة التسوق</a>
-        <a href="#" class="menu-link">❤️ المفضلة</a>
-        <div style="padding: 15px; border: 1px dashed var(--gold); border-radius: 15px; margin-top: 20px; text-align: center;">
-            <div style="color:var(--gold); font-weight:bold;">👑 بوابة التاجرات</div>
-            <p style="font-size: 12px;">بنكك: 2280384</p>
-            <a href="https://wa.me/249967584275" style="color:var(--gold); text-decoration:none; font-weight:bold;">أرسلي الإيصال</a>
-        </div>
+        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">🏠 الرئيسية</a>
+        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">🛒 سلة التسوق</a>
+        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">❤️ المفضلة</a>
     </div>
 </div>
 
@@ -71,7 +60,7 @@
 </div>
 
 <div class="main-container" id="plist">
-    <div style="text-align:center; padding:100px;">جاري تحميل المنتجات... ✨</div>
+    <div style="text-align:center; padding:50px;">جاري تحميل الفخامة... ✨</div>
 </div>
 
 <div class="bottom-bar">
@@ -83,7 +72,6 @@
 
 <script>
     let rate = 1; let sym = 'SDG';
-    // الرابط المباشر لملف الـ CSV
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
 
     function loadProducts() {
@@ -93,27 +81,27 @@
             complete: function(results) {
                 let h = '';
                 results.data.forEach((row, index) => {
-                    if (index === 0) return; // تخطي الهيدر
+                    if (index === 0) return; 
                     
-                    // بحث ذكي عن البيانات في الأعمدة
                     const name = row[0]?.trim();
-                    const price = parseFloat(row[1]);
+                    const rawPrice = row[1]?.toString().replace(/[^0-9.]/g, ''); // تنظيف السعر من أي نصوص
+                    const price = parseFloat(rawPrice);
                     const img = row[3]?.trim();
 
-                    // شرط العرض: لازم يكون فيه اسم وسعر وصورة تبدأ بـ http
-                    if (name && price > 0 && img && img.startsWith('http')) {
+                    // شرط مرن: يكفي وجود اسم وسعر عشان المنتج يظهر
+                    if (name && !isNaN(price) && price > 0 && !name.toLowerCase().includes('date')) {
                         h += `
                             <div class="product-card">
-                                <img src="${img}" onerror="this.src='https://via.placeholder.com/400x400?text=VIRA+MALL'">
+                                <img src="${img || 'https://via.placeholder.com/400x400?text=VIRA+MALL'}" onerror="this.src='https://via.placeholder.com/400x400?text=VIRA+MALL'">
                                 <div class="p-details">
                                     <div class="p-name">${name}</div>
                                     <div class="p-price">${(price * rate).toLocaleString()} ${sym}</div>
-                                    <button class="add-btn" onclick="alert('تمت الإضافة ✨')">إضافة للسلة 🛒</button>
+                                    <button class="add-btn" onclick="alert('أبشري! تم الحفظ ✨')">إضافة للسلة 🛒</button>
                                 </div>
                             </div>`;
                     }
                 });
-                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">نعتذر، لا توجد منتجات جاهزة للعرض حالياً 💔<br><small>تأكدي من إضافة روابط الصور والأسعار في الشيت</small></div>';
+                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">لا توجد منتجات حالياً 💔</div>';
             }
         });
     }
