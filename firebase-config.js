@@ -1,9 +1,7 @@
-// Import Firebase functions
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// 🔹 Firebase Config جاهز للعمل على الموبايل مباشرة
+// يستخدم Admin Dashboard لرفع الصور بدون مشاكل
 
-// 🔹 إعدادات Firebase الخاصة بتطبيقك
+// إعدادات Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBOcv6Feaq63nE3P1YH72-q--xZ1GF3xEA",
   authDomain: "vira-mall.firebaseapp.com",
@@ -14,14 +12,13 @@ const firebaseConfig = {
   measurementId: "G-71TTJFB4KN"
 };
 
-// 🔹 تهيئة التطبيق
-const app = initializeApp(firebaseConfig);
+// تهيئة Firebase مباشرة
+firebase.initializeApp(firebaseConfig);
 
-// 🔹 تفعيل التحليلات (اختياري)
-const analytics = getAnalytics(app);
+// Storage جاهز للرفع
+const storage = firebase.storage();
 
-// 🔹 إعداد Storage لرفع الصور
-const storage = getStorage(app);
-
-// 🔹 تصدير المتغيرات لاستخدامها في الصفحات الأخرى
-export { app, analytics, storage, ref, uploadBytes, getDownloadURL };
+// 🔹 استخدام:
+// في admin.html:
+// storage.ref('products/'+file.name).put(file)
+// storage.ref(...).getDownloadURL()
