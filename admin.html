@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم التاجر - Vira Mall</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>لوحة تحكم التاجر</h1>
+
+  <!-- قسم رفع المنتجات -->
+  <div class="upload-section">
+    <input type="file" id="imageInput" accept="image/*">
+    <input type="text" id="productName" placeholder="اسم المنتج">
+    <input type="text" id="productColor" placeholder="لون المنتج">
+    <input type="text" id="productDesc" placeholder="وصف المنتج">
+    <input type="text" id="productPrice" placeholder="السعر">
+    <input type="text" id="productSize" placeholder="المقاس">
+    <input type="text" id="productEmbroidery" placeholder="التطريز">
+    <button id="uploadBtn">رفع المنتج</button>
+  </div>
+
+  <!-- جدول المنتجات المرفوعة -->
+  <h2>المنتجات المرفوعة</h2>
+  <table border="1" id="productsTable">
+    <thead>
+      <tr>
+        <th>اسم المنتج</th>
+        <th>اللون</th>
+        <th>الوصف</th>
+        <th>السعر</th>
+        <th>المقاس</th>
+        <th>التطريز</th>
+        <th>رابط الصورة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- سيتم ملء الجدول تلقائياً -->
+    </tbody>
+  </table>
+
+  <!-- زر نسخ جميع الروابط -->
+  <button id="copyLinksBtn">نسخ جميع الروابط</button>
+  <button id="downloadCSVBtn">تحميل CSV</button>
+
+  <script type="module">
+    import { storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js';
+
+    const imageInput = document.getElementById('imageInput');
+    const uploadButton = document.getElementById('uploadBtn');
+    const productNameInput = document.getElementById('productName');
+    const productColorInput = document.getElementById('productColor');
+    const productDescInput = document.getElementById('productDesc');
+    const productPriceInput = document.getElementById('productPrice');
+    const productSizeInput = document.getElementById('productSize');
+    const productEmbroideryInput = document.getElementById('productEmbroidery');
+    const tableBody = document.getElementById('productsTable').querySelector('tbody');
+    const copyLinksBtn = document.getElementById('copyLinksBtn');
+    const downloadCSVBtn = document.getElementById('downloadCSVBtn');
+
+    const uploadedProducts = []; // لتخزين كل بيانات المنتجات
+
+    // رفع المنتج
+    uploadButton.addEventListener('click', () => {
+      const file = imageInput.files[0];
+      const productName = productNameInput.value || "بدون اسم";
+      const productColor = productColorInput.value || "غير محدد";
+      const productDesc = productDescInput.value || "-";
+      const productPrice = productPriceInput.value || "-";
+      const productSize = productSizeInput.value || "-";
+      const productEmbroidery = productEmbroideryInput.value || "-";
+
+      if (!file) {
+        alert("اختاري صورة للمنتج أولاً!");
+        return;
+      }
+
+      const storageRef = ref(storage, `products/${file.name}`);
+
+      uploadBytes(storageRef, file).then(snapshot => {
+        getDownloadURL(snapshot.ref).then(url => {
+          // أضف المنتج للجدول
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${productName}</td>
+            <td>${productColor}</td>
+            <td>${productDesc}</td>
+            <td>${productPrice}</td>
+            <td>${productSize}</td>
+            <td>${productEmbroidery}</td>
+            <td><a href="${url}" target="_blank">${url}</a></td>
+          `;
+          tableBody.appendChild(row);
+
+          // حفظ المنتج كاملًا
+          uploadedProducts.push({
+            name: productName,
+            color: productColor,
+            desc: productDesc,
+            price: productPrice,
+            size: productSize,
+            embroidery: productEmbroidery,
+            imageUrl: url
+          });
+
+          // مسح الإدخالات بعد الرفع
+          imageInput.value = '';
+          productNameInput.value = '';
+          productColorInput.value = '';
+          productDescInput.value = '';
+          productPriceInput.value = '';
+          productSizeInput.value = '';
+          productEmbroideryInput.value = '';
+        });
+      }).catch(err => {
+        console.error("خطأ في الرفع:", err);
+        alert("حدث خطأ أثناء رفع الصورة");
+      });
+    });
+
+    // نسخ جميع روابط الصور
+    copyLinksBtn.addEventListener('click', () => {
+      if (uploadedProducts.length === 0) {
+        alert("لا توجد روابط للنسخ!");
+        return;
+      }
+      const textToCopy = uploadedProducts.map(p => p.imageUrl).join('\n');
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert("تم نسخ جميع روابط الصور!");
+      }).catch(err => {
+        console.error("خطأ في النسخ:", err);
+        alert("حدث خطأ أثناء النسخ");
+      });
+    });
+
+    // تحميل CSV
+    downloadCSVBtn.addEventListener('click', () => {
+      if (uploadedProducts.length === 0) {
+        alert("لا توجد منتجات لتحويلها CSV!");
+        return;
+      }
+
+      const headers = ["اسم المنتج","اللون","الوصف","السعر","المقاس","التطريز","رابط الصورة"];
+      const rows = uploadedProducts.map(p => [
+        p.name,p.color,p.desc,p.price,p.size,p.embroidery,p.imageUrl
+      ]);
+
+      let csvContent = headers.join(",") + "\n";
+      rows.forEach(row => {
+        csvContent += row.map(field => `"${field}"`).join(",") + "\n";
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'products.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+
+  </script>
+</body>
+</html>
