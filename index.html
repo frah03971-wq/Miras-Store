@@ -8,50 +8,44 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        :root { --gold: #D4AF37; --black: #000000; --dark: #0f0f0f; }
-        
+        :root { --gold: #D4AF37; --black: #000000; --dark: #111111; }
         body { margin: 0; background: var(--black); color: white; font-family: 'Cairo', sans-serif; padding-bottom: 90px; }
         
-        /* هيدر جديد لضمان ظهور اللوجو */
-        header { padding: 30px 20px; text-align: center; background: linear-gradient(to bottom, #111, #000); border-bottom: 1px solid var(--gold); }
-        .logo-img { width: 120px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 0 10px var(--gold)); }
+        header { padding: 20px; text-align: center; background: #000; border-bottom: 2px solid var(--gold); }
+        /* تصحيح رابط اللوجو لضمان الظهور */
+        .logo-img { width: 100px; filter: drop-shadow(0 0 5px var(--gold)); }
 
-        /* بار العملات */
-        .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 15px; background: #080808; scrollbar-width: none; }
-        .currency-nav button { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 8px 18px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: bold; }
+        .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 12px; background: #080808; border-bottom: 1px solid #222; }
+        .currency-nav button { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: bold; }
         .currency-nav button.active { background: var(--gold); color: black; }
 
-        /* المنتجات فخامة */
-        .main-container { padding: 20px; }
-        .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 35px; border: 1px solid #222; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
-        .product-card img { width: 100%; height: auto; display: block; min-height: 200px; background: #000; }
-        
-        .p-details { padding: 25px; text-align: center; }
-        .p-name { font-size: 22px; font-weight: bold; margin-bottom: 15px; color: #fff; }
-        .p-price { font-size: 24px; color: var(--gold); font-weight: bold; margin-bottom: 20px; }
-        
-        .add-btn { background: var(--gold); color: black; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; border: none; font-size: 18px; cursor: pointer; }
+        .main-container { padding: 15px; }
+        .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .product-card img { width: 100%; height: auto; display: block; background: #111; min-height: 200px; object-fit: cover; }
+        .p-details { padding: 20px; text-align: center; }
+        .p-name { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+        .p-price { font-size: 24px; color: var(--gold); font-weight: bold; }
+        .add-btn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; border: none; font-size: 16px; margin-top: 15px; cursor: pointer; }
 
-        /* البار السفلي */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
         .nav-item { text-align: center; color: var(--gold); text-decoration: none; font-size: 14px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png?v=1" class="logo-img" alt="VIRA MALL">
-    <div style="color:var(--gold); margin-top:15px; font-weight:bold; letter-spacing: 4px; font-size: 20px;">VIRA MALL</div>
+    <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" class="logo-img" alt="VIRA MALL">
+    <div style="color:var(--gold); margin-top:5px; letter-spacing: 2px; font-weight: bold;">VIRA MALL</div>
 </header>
 
 <div class="currency-nav">
-    <button class="active" onclick="updateCurr(1, 'SDG', this)">السودان 🇸🇩</button>
-    <button onclick="updateCurr(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
-    <button onclick="updateCurr(0.082, 'EGP', this)">مصر 🇪🇬</button>
+    <button class="active" onclick="changeCurr(1, 'SDG', this)">السودان 🇸🇩</button>
+    <button onclick="changeCurr(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
+    <button onclick="changeCurr(0.082, 'EGP', this)">مصر 🇪🇬</button>
 </div>
 
 <div class="main-container" id="plist">
-    <div style="text-align:center; padding:100px; color:var(--gold);">جاري فتح أبواب الفخامة... ✨</div>
+    <div style="text-align:center; padding:50px;">جاري تحميل إمبراطورية فيرا... ✨</div>
 </div>
 
 <div class="bottom-nav">
@@ -61,50 +55,51 @@
 
 <script>
     let rate = 1; let sym = 'SDG';
-    // استخدام الرابط المباشر مع توقيت لمنع التخزين
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv&cache=' + new Date().getTime();
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
 
-    function load() {
+    function loadProducts() {
         Papa.parse(CSV_URL, {
             download: true,
             header: false,
             complete: function(results) {
-                let html = '';
-                results.data.forEach((row, idx) => {
-                    if (idx === 0) return; // تخطي العنوان
+                let h = '';
+                results.data.forEach((row, index) => {
+                    if (index === 0) return; // تخطي الهيدر
                     
-                    let name = row[0]?.trim();
-                    let price = parseFloat(row[1]);
-                    let img = row[3]?.trim();
+                    const name = row[0]?.trim();
+                    const priceRaw = row[1]?.toString().trim();
+                    const img = row[3]?.trim();
 
-                    // شرط مرن لظهور أي منتج فيه اسم وصورة
-                    if (name && img && img.startsWith('http')) {
-                        html += `
+                    // فلتر ذكي جداً:
+                    // 1. لازم الاسم ما يكون فيه كلمة Date
+                    // 2. لازم السعر يكون رقم حقيقي أكبر من 0
+                    // 3. لازم رابط الصورة يبدأ بـ http
+                    const price = parseFloat(priceRaw);
+                    
+                    if (name && !name.toLowerCase().includes('date') && !isNaN(price) && price > 0 && img && img.startsWith('http')) {
+                        h += `
                         <div class="product-card">
-                            <img src="${img}" onerror="this.src='https://via.placeholder.com/400?text=Vira+Mall'">
+                            <img src="${img}" onerror="this.src='https://via.placeholder.com/400x400?text=Vira+Mall'">
                             <div class="p-details">
                                 <div class="p-name">${name}</div>
-                                <div class="p-price">${isNaN(price) ? '' : (price * rate).toLocaleString() + ' ' + sym}</div>
-                                <button class="add-btn" onclick="window.location.href='https://wa.me/249967584275?text=طلب منتج من فيرا: ${name}'">اطلبي الآن 🛒</button>
+                                <div class="p-price">${(price * rate).toLocaleString()} ${sym}</div>
+                                <button class="add-btn" onclick="window.location.href='https://wa.me/249967584275?text=طلب منتج: ${name}'">اطلبي الآن 🛒</button>
                             </div>
                         </div>`;
                     }
                 });
-                document.getElementById('plist').innerHTML = html || '<div style="text-align:center; padding:50px;">تأكدي من إضافة المنتجات في الشيت يا ملكة 👑</div>';
-            },
-            error: function() {
-                document.getElementById('plist').innerHTML = '<div style="text-align:center;">عذراً، مشكلة في تحميل البيانات ⚠️</div>';
+                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">أضيفي منتجاتك في الشيت يا ملكة وسوف تظهر هنا فوراً 👑</div>';
             }
         });
     }
 
-    function updateCurr(r, s, b) {
+    function changeCurr(r, s, b) {
         rate = r; sym = s;
         document.querySelectorAll('.currency-nav button').forEach(x => x.classList.remove('active'));
-        b.classList.add('active'); load();
+        b.classList.add('active'); loadProducts();
     }
 
-    window.onload = load;
+    window.onload = loadProducts;
 </script>
 
 </body>
