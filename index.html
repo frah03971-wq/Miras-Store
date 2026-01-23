@@ -2,104 +2,309 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRA MALL | الإمبراطورية الرقمية</title>
-    
-    <meta name="description" content="VIRA MALL - المنصة الأذكى للتجارة الإلكترونية. انضمي كتاجر واستمتعي بتجربة تسوق عالمية.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VIRA MALL | إمبراطورية الفخامة العالمية</title>
+
+    <meta name="description" content="VIRA MALL - المنصة العالمية الرائدة للتجارة الإلكترونية. تسوقي أفخم المنتجات وانضمي كتاجر في إمبراطوريتنا.">
+    <meta name="keywords" content="فيرا مول, Vira Mall, تسوق السودان, بخور ريناس, تجارة إلكترونية, سوق الخليج">
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" href="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png">
 
     <style>
-        :root { --gold: #D4AF37; --black: #000000; --glass: rgba(255, 255, 255, 0.1); }
-        body { background: var(--black); color: white; font-family: 'Cairo', sans-serif; margin: 0; }
-        
-        /* الهيدر الفخم */
-        header { background: linear-gradient(145deg, #111, #000); padding: 20px; text-align: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        
-        /* قسم الاشتراك للتاجرات */
-        .merchant-section { background: var(--glass); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid var(--gold); text-align: center; }
-        .bank-info { background: #1a1a1a; padding: 10px; border-radius: 10px; margin-top: 10px; font-weight: bold; color: var(--gold); }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap');
 
-        /* السلة والعملات */
-        .currency-selector { display: flex; justify-content: center; gap: 10px; padding: 10px; overflow-x: auto; background: #080808; }
-        .currency-selector button { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; cursor: pointer; }
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8860B;
+            --black: #000000;
+            --dark-grey: #121212;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
 
-        /* شبكة المنتجات الذكية */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 15px; }
-        .product-card { background: #111; border-radius: 12px; overflow: hidden; border: 0.5px solid #333; transition: 0.3s; }
-        .product-card:hover { transform: scale(1.03); border-color: var(--gold); }
-        .product-card img { width: 100%; height: 180px; object-fit: cover; }
-        
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            margin: 0;
+            background-color: var(--black);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* الهيدر */
+        header {
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-logo { width: 100px; filter: drop-shadow(0 0 8px var(--gold)); transition: 0.5s; }
+        .main-logo:hover { transform: rotateY(360deg); }
+
+        /* بار العملات */
+        .currency-bar {
+            display: flex;
+            background: #080808;
+            padding: 10px;
+            gap: 10px;
+            overflow-x: auto;
+            border-bottom: 1px solid #222;
+            scrollbar-width: none;
+        }
+        .currency-bar::-webkit-scrollbar { display: none; }
+        .currency-bar button {
+            background: var(--glass);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 15px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .currency-bar button.active { background: var(--gold); color: black; font-weight: bold; }
+
+        /* السلايدر الاحترافي */
+        .slider-container {
+            width: 100%;
+            height: 200px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomInOut 10s infinite alternate;
+        }
+        @keyframes zoomInOut { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        /* بوابة التاجر */
+        .merchant-card {
+            margin: 20px;
+            padding: 20px;
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            border-radius: 15px;
+            border: 1px solid var(--gold);
+            text-align: center;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        .bank-box {
+            background: #000;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 1px dashed var(--gold);
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* شبكة المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+        .product-card {
+            background: var(--dark-grey);
+            border-radius: 12px;
+            border: 0.5px solid #333;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            cursor: zoom-in;
+        }
+        .p-info { padding: 12px; text-align: center; }
+        .p-title { font-size: 14px; margin-bottom: 8px; height: 40px; overflow: hidden; }
+        .p-price { color: var(--gold); font-size: 18px; font-weight: bold; }
+        .shipping-tag { color: #00ff00; font-size: 10px; margin-top: 5px; }
+
         /* السلة العائمة */
-        .cart-float { position: fixed; bottom: 20px; left: 20px; background: var(--gold); color: black; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 0 20px var(--gold); z-index: 2000; cursor: pointer; }
+        .cart-float {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            background: var(--gold);
+            color: black;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+            z-index: 2000;
+            cursor: pointer;
+        }
+        .cart-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+
+        /* الفوتر */
+        footer {
+            background: #080808;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        /* زر الإضافة للسلة */
+        .add-btn {
+            background: var(--gold);
+            border: none;
+            color: black;
+            padding: 8px;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" width="90" alt="VIRA MALL">
-    <h1 style="color:var(--gold); margin: 5px 0; font-size: 22px;">VIRA MALL</h1>
+    <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" class="main-logo" alt="VIRA MALL">
+    <div style="font-size: 12px; color: var(--gold); letter-spacing: 3px;">VIRA MALL</div>
 </header>
 
-<div class="currency-selector">
-    <button onclick="updatePrices(1, 'SDG')">السودان 🇸🇩</button>
-    <button onclick="updatePrices(0.0022, 'SAR')">السعودية 🇸🇦</button>
-    <button onclick="updatePrices(0.082, 'EGP')">مصر 🇪🇬</button>
+<div class="currency-bar" id="currencyBar">
+    <button class="active" onclick="setCurrency(1, 'SDG', this)">السودان 🇸🇩</button>
+    <button onclick="setCurrency(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
+    <button onclick="setCurrency(0.082, 'EGP', this)">مصر 🇪🇬</button>
+    <button onclick="setCurrency(0.0021, 'QAR', this)">قطر 🇶🇦</button>
+    <button onclick="setCurrency(0.00022, 'OMR', this)">عمان 🇴🇲</button>
 </div>
 
-<div class="merchant-section">
-    <h3 style="color:var(--gold);">👑 انضمي كتاجر في الإمبراطورية</h3>
-    <p>للاشتراك وتفعيل متجرك، يرجى التحويل للرقم:</p>
-    <div class="bank-info">رقم الحساب: 2280384 (بنكك)</div>
-    <p style="font-size: 12px;">بعد التحويل، أرسلي الإيصال للواتساب:</p>
-    <a href="https://wa.me/249967584275" style="color:var(--gold); font-weight: bold; text-decoration: none;">📱 00249967584275</a>
+<div class="slider-container">
+    <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/banner.jpg" alt="Vira Mall Elite">
 </div>
 
-<div id="product-container" class="product-grid">
+<div class="merchant-card">
+    <h2 style="color:var(--gold); margin:0;">👑 بوابة التاجرات</h2>
+    <p style="font-size: 13px;">اشتركي الآن في أقوى نظام تحويل رقمي</p>
+    <div class="bank-box">
+        الحساب البنكي: 2280384<br>
+        <span style="font-size: 12px;">(بنكك - بنك الخرطوم)</span>
+    </div>
+    <a href="https://wa.me/249967584275?text=اريد الاشتراك في فيرا مول كتاجر" 
+       style="display:inline-block; background:var(--gold); color:black; padding:10px 25px; border-radius:8px; text-decoration:none; font-weight:bold;">
+       أرسلي إيصال الاشتراك 📱
+    </a>
+</div>
+
+<div class="products-grid" id="products">
     </div>
 
-<div class="cart-float" onclick="checkout()">🛒</div>
+<div class="cart-float" onclick="sendToWhatsApp()">
+    🛒 <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<footer>
+    <p>© 2024 VIRA MALL - إمبراطورية الفخامة</p>
+    <p style="font-size: 10px; color: #555;">جميع الحقوق محفوظة لإيثار - VIRA MALL Digital Team</p>
+</footer>
 
 <script>
-    // ربط المنتجات من الشيت حقك (Miras Store)
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs/gviz/tq?tqx=out:json';
+    let cart = [];
+    let currentRate = 1;
+    let currentCurrency = 'SDG';
 
-    async function loadProducts() {
+    // رابط قراءة الشيت حقك
+    const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    async function fetchProducts() {
         try {
             const response = await fetch(SHEET_URL);
             const text = await response.text();
-            const data = JSON.parse(text.substr(47).slice(0, -2));
-            const rows = data.table.rows;
+            const json = JSON.parse(text.substr(47).slice(0, -2));
+            const rows = json.table.rows;
             
-            let html = '';
-            rows.forEach(row => {
-                const name = row.c[0] ? row.c[0].v : 'منتج فخم';
-                const price = row.c[1] ? row.c[1].v : '0';
-                const img = row.c[3] ? row.c[3].v : '';
-                
-                html += `
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+
+            rows.forEach((row, index) => {
+                const name = row.c[0] ? row.c[0].v : 'منتج فيرا';
+                const price = row.c[1] ? row.c[1].v : 0;
+                const img = row.c[3] ? row.c[3].v : 'https://via.placeholder.com/300x300?text=VIRA+MALL';
+
+                productsContainer.innerHTML += `
                     <div class="product-card">
-                        <img src="${img}" alt="${name}" onclick="zoomImage(this)">
-                        <div style="padding:10px; text-align:center;">
-                            <div style="font-size:14px;">${name}</div>
-                            <div class="price" style="color:var(--gold); font-weight:bold;">${price} SDG</div>
-                            <button onclick="addToCart('${name}')" style="background:var(--gold); border:none; border-radius:5px; width:100%; margin-top:5px; padding:5px; font-weight:bold;">إضافة للسلة</button>
+                        <img src="${img}" alt="${name}" onclick="window.open(this.src)">
+                        <div class="p-info">
+                            <div class="p-title">${name}</div>
+                            <div class="p-price">${(price * currentRate).toLocaleString()} ${currentCurrency}</div>
+                            <div class="shipping-info">🚚 توصيل على المتجر</div>
+                            <button class="add-btn" onclick="addToCart('${name}', ${price})">إضافة للسلة</button>
                         </div>
                     </div>
                 `;
             });
-            document.getElementById('product-container').innerHTML = html;
-        } catch (e) {
-            console.log("Error loading products");
+        } catch (error) {
+            console.error("Error loading products");
         }
     }
 
-    function addToCart(item) {
-        alert(item + " اتضاف للسلة يا ملكة! ✨");
+    function setCurrency(rate, name, btn) {
+        currentRate = rate;
+        currentCurrency = name;
+        document.querySelectorAll('.currency-bar button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        fetchProducts(); // إعادة التحميل لتحديث الأسعار
     }
 
-    loadProducts();
+    function addToCart(name, price) {
+        cart.push({name, price: (price * currentRate).toLocaleString() + " " + currentCurrency});
+        document.getElementById('cartCount').innerText = cart.length;
+        alert("أبشري! " + name + " انضم للسلة ✨");
+    }
+
+    function sendToWhatsApp() {
+        if (cart.length === 0) {
+            alert("السلة فاضية يا ملكة!");
+            return;
+        }
+        let message = "طلب جديد من VIRA MALL 👑%0A%0A";
+        cart.forEach((item, i) => {
+            message += `${i+1}. ${item.name} - ${item.price}%0A`;
+        });
+        message += `%0Aالإجمالي: ${cart.length} منتجات`;
+        window.location.href = `https://wa.me/249967584275?text=${message}`;
+    }
+
+    // تشغيل التطبيق
+    window.onload = fetchProducts;
+
+    // كود تحويل الموقع لتطبيق (PWA)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
 </script>
 
 </body>
