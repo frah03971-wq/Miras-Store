@@ -9,111 +9,99 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         :root { --gold: #D4AF37; --black: #000000; --dark: #111111; }
+        
         body { margin: 0; background: var(--black); color: white; font-family: 'Cairo', sans-serif; padding-bottom: 90px; }
         
-        header { padding: 15px; text-align: center; background: #000; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo-img { width: 90px; filter: drop-shadow(0 0 5px var(--gold)); margin: 0 auto; }
-        .menu-icon { font-size: 28px; color: var(--gold); cursor: pointer; padding: 0 15px; }
+        header { padding: 25px; text-align: center; background: #000; border-bottom: 2px solid var(--gold); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2); }
+        .logo-img { width: 110px; filter: drop-shadow(0 0 8px var(--gold)); }
 
-        .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 12px; background: #080808; scrollbar-width: none; }
-        .currency-nav button { background: none; border: 1px solid #333; color: white; padding: 6px 15px; border-radius: 20px; white-space: nowrap; cursor: pointer; }
-        .currency-nav button.active { background: var(--gold); color: black; font-weight: bold; }
+        .currency-nav { display: flex; gap: 10px; overflow-x: auto; padding: 12px; background: #080808; border-bottom: 1px solid #222; }
+        .currency-nav button { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 7px 18px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .currency-nav button.active { background: var(--gold); color: black; }
 
-        .main-container { padding: 15px; min-height: 400px; }
-        .product-card { background: var(--dark); border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; }
-        .product-card img { width: 100%; height: auto; display: block; background: #111; }
-        .p-details { padding: 20px; text-align: center; }
-        .p-name { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
-        .p-price { font-size: 24px; color: var(--gold); font-weight: bold; }
-        .add-btn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; border: none; font-size: 16px; margin-top: 15px; }
+        .main-container { padding: 20px; display: flex; flex-direction: column; gap: 30px; }
+        .product-card { background: var(--dark); border-radius: 30px; overflow: hidden; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        .product-card img { width: 100%; height: auto; display: block; object-fit: cover; background: #000; }
+        
+        .p-details { padding: 25px; text-align: center; }
+        .p-name { font-size: 24px; font-weight: bold; margin-bottom: 12px; color: #fff; }
+        .p-price { font-size: 26px; color: var(--gold); font-weight: bold; margin-bottom: 15px; }
+        
+        .add-btn { background: var(--gold); color: black; width: 100%; padding: 18px; border-radius: 20px; font-weight: bold; border: none; font-size: 18px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
 
-        .sidebar { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #0d0d0d; transition: 0.4s; z-index: 2000; padding: 40px 20px; border-left: 2px solid var(--gold); }
-        .sidebar.open { right: 0; }
-        .close-btn { color: var(--gold); font-size: 35px; cursor: pointer; }
-
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222; z-index: 1000; }
-        .nav-item { text-align: center; color: #666; font-size: 11px; text-decoration: none; }
-        .nav-item.active { color: var(--gold); }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000; }
+        .nav-item { text-align: center; color: var(--gold); text-decoration: none; font-size: 14px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="width: 50px;"></div>
     <img src="https://raw.githubusercontent.com/71-wq/71-wq.github.io/main/vira_logo.png" class="logo-img">
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div style="color:var(--gold); margin-top:10px; font-weight:bold; letter-spacing: 3px;">VIRA MALL</div>
 </header>
 
-<div id="sidebar" class="sidebar">
-    <span class="close-btn" onclick="toggleMenu()">×</span>
-    <div style="margin-top: 40px;">
-        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">🏠 الرئيسية</a>
-        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">🛒 سلة التسوق</a>
-        <a href="#" style="color:white; text-decoration:none; display:block; padding:15px; border-bottom:1px solid #222;">❤️ المفضلة</a>
-    </div>
-</div>
-
 <div class="currency-nav">
-    <button class="active" onclick="changeCurr(1, 'SDG', this)">السودان 🇸🇩</button>
-    <button onclick="changeCurr(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
-    <button onclick="changeCurr(0.082, 'EGP', this)">مصر 🇪🇬</button>
+    <button class="active" onclick="updateCurr(1, 'SDG', this)">السودان 🇸🇩</button>
+    <button onclick="updateCurr(0.0022, 'SAR', this)">السعودية 🇸🇦</button>
+    <button onclick="updateCurr(0.082, 'EGP', this)">مصر 🇪🇬</button>
 </div>
 
 <div class="main-container" id="plist">
-    <div style="text-align:center; padding:50px;">جاري تحميل الفخامة... ✨</div>
+    <div style="text-align:center; padding:100px; color:var(--gold);">جاري فتح أبواب الإمبراطورية... ✨</div>
 </div>
 
-<div class="bottom-bar">
-    <a href="#" class="nav-item active">🏠<br>الرئيسية</a>
-    <a href="#" class="nav-item">🛒<br>السلة</a>
-    <a href="#" class="nav-item">❤️<br>المفضلة</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="toggleMenu()">☰<br>المزيد</a>
+<div class="bottom-nav">
+    <a href="#" class="nav-item">🏠 الرئيسية</a>
+    <a href="https://wa.me/249967584275" class="nav-item">👑 بوابة التاجرات</a>
 </div>
 
 <script>
     let rate = 1; let sym = 'SDG';
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+    // الرابط اللي بيقرأ الشيت بشكل مضمون 100%
+    const SHEET_ID = '1UZnlp45dVMRJxNibcg3fm52H6S4DB4YbGLr4KK3jPqs';
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-    function loadProducts() {
+    function load() {
         Papa.parse(CSV_URL, {
             download: true,
             header: false,
             complete: function(results) {
-                let h = '';
-                results.data.forEach((row, index) => {
-                    if (index === 0) return; 
+                let html = '';
+                results.data.forEach((row, idx) => {
+                    if (idx === 0) return; // تخطي العنوان
                     
-                    const name = row[0]?.trim();
-                    const rawPrice = row[1]?.toString().replace(/[^0-9.]/g, ''); // تنظيف السعر من أي نصوص
-                    const price = parseFloat(rawPrice);
-                    const img = row[3]?.trim();
+                    let name = row[0];
+                    let price = parseFloat(row[1]);
+                    let img = row[3];
 
-                    // شرط مرن: يكفي وجود اسم وسعر عشان المنتج يظهر
-                    if (name && !isNaN(price) && price > 0 && !name.toLowerCase().includes('date')) {
-                        h += `
-                            <div class="product-card">
-                                <img src="${img || 'https://via.placeholder.com/400x400?text=VIRA+MALL'}" onerror="this.src='https://via.placeholder.com/400x400?text=VIRA+MALL'">
-                                <div class="p-details">
-                                    <div class="p-name">${name}</div>
-                                    <div class="p-price">${(price * rate).toLocaleString()} ${sym}</div>
-                                    <button class="add-btn" onclick="alert('أبشري! تم الحفظ ✨')">إضافة للسلة 🛒</button>
-                                </div>
-                            </div>`;
+                    // التحقق من صحة البيانات (اسم، سعر، وصورة حقيقية)
+                    if (name && !isNaN(price) && img && img.startsWith('http')) {
+                        html += `
+                        <div class="product-card">
+                            <img src="${img}" alt="${name}">
+                            <div class="p-details">
+                                <div class="p-name">${name}</div>
+                                <div class="p-price">${(price * rate).toLocaleString()} ${sym}</div>
+                                <button class="add-btn" onclick="window.location.href='https://wa.me/249967584275?text=طلب جديد من فيرا مول: ${name}'">اطلبيه الآن 🛒</button>
+                            </div>
+                        </div>`;
                     }
                 });
-                document.getElementById('plist').innerHTML = h || '<div style="text-align:center; padding:50px;">لا توجد منتجات حالياً 💔</div>';
+                document.getElementById('plist').innerHTML = html || '<div style="text-align:center; padding:50px;">في انتظار إضافة منتجاتك الفخمة في الشيت 👑</div>';
+            },
+            error: function() {
+                document.getElementById('plist').innerHTML = '<div style="text-align:center;">حدث خطأ بسيط، حاولي تحديث الصفحة ⚠️</div>';
             }
         });
     }
 
-    function changeCurr(r, s, b) {
+    function updateCurr(r, s, b) {
         rate = r; sym = s;
         document.querySelectorAll('.currency-nav button').forEach(x => x.classList.remove('active'));
-        b.classList.add('active'); loadProducts();
+        b.classList.add('active'); load();
     }
 
-    function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
-    window.onload = loadProducts;
+    window.onload = load;
 </script>
 
 </body>
