@@ -6,43 +6,41 @@
 <title>VIRA MALL | فيرا مول</title>
 <style>
 :root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31}
-body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden}
+body{margin:0;font-family:'Segoe UI',Tahoma;background:var(--gray);direction:rtl;overflow-x:hidden}
 
-/* الهيدر الاحترافي */
+/* الهيدر */
 header{background:var(--dark);color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center}
-header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1px}
+header h1{margin:0;color:var(--gold);font-size:22px;flex-grow:1}
 .menu-btn{font-size:30px;cursor:pointer;color:var(--gold);padding:0 10px}
 
 /* القائمة الجانبية */
 .sidebar{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--dark);z-index:2000;transition:0.3s;color:white;padding:25px;box-shadow:-5px 0 15px rgba(0,0,0,0.5)}
 .sidebar.open{right:0}
-.sidebar h2{color:var(--gold);border-bottom:1px solid #333;padding-bottom:10px;margin-bottom:20px}
+.sidebar h2{color:var(--gold);border-bottom:1px solid #333;padding-bottom:10px}
 .side-item{padding:15px 0;border-bottom:1px solid #222;cursor:pointer;display:flex;align-items:center;gap:10px}
 
-/* حاوية المنتجات */
+/* شبكة المنتجات */
 .container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;max-width:1200px;margin:auto}
 .card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
 
-/* السلايدر المطور */
-.slider-box{position:relative;height:210px;overflow:hidden;direction:ltr!important;background:#eee}
+/* السلايدر الزيت */
+.slider{position:relative;height:220px;overflow:hidden;direction:ltr!important;background:#f0f0f0}
 .track{display:flex;height:100%;transition:transform 0.5s ease-in-out}
 .track img{min-width:100%;width:100%;height:100%;object-fit:cover}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;z-index:10;cursor:pointer;font-weight:bold}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.5)}
+.dot.active{background:var(--gold);width:15px;border-radius:10px}
 
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;z-index:10;cursor:pointer}
-.dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
-.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5)}
-.dot.active{background:var(--gold);width:12px;border-radius:10px}
-
-/* المعلومات */
 .info{padding:12px;text-align:center;direction:rtl}
-.store-tag{font-size:10px;color:var(--gold);font-weight:bold;margin-bottom:5px;display:block}
-.title{font-size:14px;font-weight:bold;height:38px;overflow:hidden;margin-bottom:8px;color:var(--dark)}
-.price{font-size:17px;font-weight:900;color:#222;margin-bottom:10px}
-.btn-wa{background:var(--gold);color:var(--dark);border:none;padding:10px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer;display:block;text-decoration:none}
+.store{font-size:11px;color:var(--gold);font-weight:bold}
+.title{font-size:14px;font-weight:bold;height:38px;overflow:hidden;margin:5px 0}
+.price{font-size:17px;font-weight:900;color:var(--dark)}
+.btn-wa{background:var(--gold);color:var(--dark);border:none;padding:12px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer;margin-top:10px;text-decoration:none;display:block}
 
-/* النوافذ */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;z-index:3000;align-items:center;justify-content:center;padding:20px}
-.modal{background:white;padding:25px;border-radius:20px;width:100%;max-width:350px;text-align:center;color:black}
+/* المودال */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;z-index:3000;align-items:center;justify-content:center}
+.modal{background:white;padding:25px;border-radius:20px;width:80%;max-width:350px;text-align:center;color:black}
 </style>
 </head>
 <body>
@@ -55,115 +53,102 @@ header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1
 
 <div class="sidebar" id="sidebar">
     <div style="text-align:left; font-size:30px; cursor:pointer" onclick="toggleSide()">×</div>
-    <h2>القائمة 🌟</h2>
-    <div class="side-item" onclick="showPop('bank')">💳 دفع (بنكك)</div>
-    <div class="side-item" onclick="showPop('shipping')">🚚 التوصيل</div>
-    <div class="side-item" onclick="window.location.href='admin.html'">👩‍💼 بوابة التاجرات</div>
+    <h2>القائمة 🌸</h2>
+    <div class="side-item" onclick="showModal('bank')">💳 دفع (بنكك)</div>
+    <div class="side-item" onclick="showModal('shipping')">🚚 التوصيل</div>
+    <div class="side-item" onclick="window.location.href='admin.html'">👩‍💼 التاجرات</div>
 </div>
 
 <div class="container" id="grid">
-    <p id="loading-msg" style="text-align:center; grid-column:1/-1; padding:50px; color:#888">جاري تحديث الموديلات... ✨</p>
+    <p style="text-align:center; grid-column:1/-1; padding:50px;">جاري تشغيل المتجر... ✨</p>
 </div>
 
-<div class="overlay" id="overlay" onclick="closePop()">
+<div class="overlay" id="overlay" onclick="closeModal()">
     <div class="modal" onclick="event.stopPropagation()">
-        <h3 id="popTitle" style="color:var(--gold)"></h3>
-        <div id="popContent" style="margin:15px 0"></div>
-        <button class="btn-wa" onclick="closePop()">موافق</button>
+        <h3 id="mTitle" style="color:var(--gold)"></h3>
+        <div id="mContent" style="margin:15px 0"></div>
+        <button class="btn-wa" onclick="closeModal()">فهمت</button>
     </div>
 </div>
 
 <script>
-// إضافة timestamp لمنع التخزين المؤقت (Cache) وضمان ظهور أحدث البيانات
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv&t=' + new Date().getTime();
+const URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
 
-async function fetchProducts() {
+async function loadProducts() {
     try {
-        const response = await fetch(SHEET_URL);
-        const data = await response.text();
-        const rows = data.split(/\r?\n/).slice(1);
+        const res = await fetch(URL + '&t=' + Date.now());
+        const text = await res.text();
+        const rows = text.split(/\r?\n/).slice(1);
         
-        const products = rows.map((row, index) => {
-            const cols = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c => c.replace(/"/g, '').trim());
-            if (!cols[0] || cols[0] === "") return null;
-            return {
-                id: index,
-                name: cols[0],
-                price: cols[1],
-                store: cols[2],
-                images: cols[3] ? cols[3].split(' ') : [],
-                whatsapp: cols[4]
-            };
+        const products = rows.map(row => {
+            // تقسيم ذكي يتعامل مع الفواصل داخل النصوص
+            const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
+            if (!c[0]) return null;
+            // معالجة روابط الصور (لو مفصولة بمسافة أو سطر)
+            const imgs = c[3] ? c[3].split(/[\s\n]+/).filter(link => link.includes('http')) : [];
+            return { name: c[0], price: c[1], store: c[2], images: imgs, wa: c[4] };
         }).filter(p => p);
 
-        if (products.length === 0) {
-            document.getElementById('grid').innerHTML = "<p style='text-align:center; grid-column:1/-1; padding:50px;'>لا توجد منتجات حالياً، يرجى المحاولة لاحقاً.</p>";
-        } else {
-            renderProducts(products);
-        }
-    } catch (error) {
-        document.getElementById('grid').innerHTML = "<p style='text-align:center; grid-column:1/-1; padding:50px;'>عذراً، حدث خطأ في الاتصال بالبيانات.</p>";
+        render(products);
+    } catch (e) {
+        document.getElementById('grid').innerHTML = "حدث خطأ، يرجى تحديث الصفحة.";
     }
 }
 
-function renderProducts(list) {
+function render(list) {
     const grid = document.getElementById('grid');
-    grid.innerHTML = list.map(p => {
+    if(list.length === 0) { grid.innerHTML = "المتجر فارغ حالياً."; return; }
+    
+    grid.innerHTML = list.map((p, pIdx) => {
         const dots = p.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('');
         return `
-        <div class="card" data-idx="0">
-            <div class="slider-box">
-                <div class="track">${p.images.map(img => `<img src="${img}" alt="product">`).join('')}</div>
+        <div class="card" id="card-${pIdx}" data-i="0">
+            <div class="slider">
+                <div class="track">${p.images.map(img => `<img src="${img}">`).join('')}</div>
                 ${p.images.length > 1 ? `
-                    <button class="nav-btn" style="left:5px" onclick="move(this, -1)">❮</button>
-                    <button class="nav-btn" style="right:5px" onclick="move(this, 1)">❯</button>
+                    <button class="nav-btn" style="left:5px" onclick="goSlide(${pIdx}, -1)">❮</button>
+                    <button class="nav-btn" style="right:5px" onclick="goSlide(${pIdx}, 1)">❯</button>
                     <div class="dots">${dots}</div>
                 ` : ''}
             </div>
             <div class="info">
-                <span class="store-tag">✨ ${p.store}</span>
+                <span class="store">✨ ${p.store}</span>
                 <div class="title">${p.name}</div>
                 <div class="price">${p.price} SDG</div>
-                <a class="btn-wa" target="_blank" href="https://wa.me/${p.whatsapp.replace(/\s/g,'')}?text=طلب: ${p.name}">طلب واتساب ✅</a>
+                <a class="btn-wa" href="https://wa.me/${p.wa}?text=طلب: ${p.name}" target="_blank">طلب واتساب ✅</a>
             </div>
         </div>`;
     }).join('');
 }
 
-function move(btn, dir) {
-    const card = btn.closest('.card');
+function goSlide(pIdx, dir) {
+    const card = document.getElementById(`card-${pIdx}`);
     const track = card.querySelector('.track');
     const dots = card.querySelectorAll('.dot');
     const total = track.children.length;
-    let idx = (parseInt(card.dataset.idx) + dir + total) % total;
-    card.dataset.idx = idx;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-    if (dots.length) {
-        dots.forEach(d => d.classList.remove('active'));
-        dots[idx].classList.add('active');
-    }
+    let i = (parseInt(card.dataset.i) + dir + total) % total;
+    card.dataset.i = i;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
 }
 
 function toggleSide() { document.getElementById('sidebar').classList.toggle('open'); }
-function closePop() { document.getElementById('overlay').style.display = 'none'; }
+function closeModal() { document.getElementById('overlay').style.display = 'none'; }
 
-function showPop(type) {
+function showModal(type) {
     toggleSide();
     const overlay = document.getElementById('overlay');
-    const title = document.getElementById('popTitle');
-    const content = document.getElementById('popContent');
     overlay.style.display = 'flex';
-
-    if (type === 'bank') {
-        title.innerText = "💳 الدفع (بنكك)";
-        content.innerHTML = "يرجى التحويل للحساب التالي:<br><strong style='font-size:22px'>2280384</strong><br>الاسم: فيرا مول";
-    } else if (type === 'shipping') {
-        title.innerText = "🚚 التوصيل";
-        content.innerHTML = "التوصيل متوفر لجميع الولايات ويحدد السعر عند الطلب.";
+    if(type === 'bank') {
+        document.getElementById('mTitle').innerText = "💳 بنكك";
+        document.getElementById('mContent').innerHTML = "رقم الحساب: <br><strong>2280384</strong><br>الاسم: فيرا مول";
+    } else {
+        document.getElementById('mTitle').innerText = "🚚 التوصيل";
+        document.getElementById('mContent').innerText = "توصيل سريع لكل ولايات السودان.";
     }
 }
 
-fetchProducts();
+loadProducts();
 </script>
 </body>
 </html>
