@@ -8,10 +8,10 @@
 :root{ --gold:#D4AF37; --dark:#0f1111; --gray:#f5f5f7; --white:#fff; --red:#e41e31; }
 body{margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:var(--gray); direction:rtl; overflow-x:hidden;}
 
-/* الهيدر والشعار */
+/* الهيدر */
 header{background:var(--dark); color:white; padding:20px 10px; text-align:center; position:sticky; top:0; z-index:1000; border-bottom:3px solid var(--gold);}
 header h1{margin:0; font-size:28px; color:var(--gold); letter-spacing:1px;}
-.slogan{margin:5px 0 0; font-size:13px; color:#ddd; font-weight:300;}
+.slogan{margin:5px 0 0; font-size:13px; color:#ddd;}
 
 .menu-btn { cursor:pointer; font-size:26px; color:var(--gold); position: absolute; top: 22px; right: 20px; z-index: 1001; }
 .header-tools { position: absolute; top: 22px; left: 15px; display: flex; gap: 8px; }
@@ -20,20 +20,20 @@ header h1{margin:0; font-size:28px; color:var(--gold); letter-spacing:1px;}
 
 .container{padding:15px; display:grid; grid-template-columns:repeat(auto-fill,minmax(165px,1fr)); gap:15px; max-width:1200px; margin:0 auto;}
 
-/* كرت المنتج والسلايدر */
-.card{background:var(--white); border-radius:15px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.08); position:relative; display:flex; flex-direction:column;}
-.slider-container { position:relative; width:100%; height:200px; background:#f0f0f0; overflow:hidden; }
+/* كرت المنتج والسلايدر المصلح */
+.card{background:var(--white); border-radius:15px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.08); position:relative; direction: ltr !important;} /* لضمان عمل السلايدر */
 
-.slider-track { display:flex; width:100%; height:100%; transition: transform 0.4s ease-out; }
+.slider-container { position:relative; width:100%; height:210px; background:#f0f0f0; overflow:hidden; }
+.slider-track { display:flex; width:100%; height:100%; transition: transform 0.4s ease-in-out; }
 .slider-track img { min-width:100%; width:100%; height:100%; object-fit:cover; cursor:pointer; }
 
 .nav-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; width:30px; height:30px; cursor:pointer; border-radius:50%; z-index:10; font-weight:bold; }
 .next { right:5px; } .prev { left:5px; }
 
-.fav-icon { position:absolute; top:10px; left:10px; z-index:15; color:rgba(255,255,255,0.7); font-size:22px; cursor:pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+.fav-icon { position:absolute; top:10px; right:10px; z-index:15; color:rgba(255,255,255,0.7); font-size:22px; cursor:pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
 .fav-icon.active { color: var(--red); }
 
-.info{padding:12px; text-align:center; flex-grow:1;}
+.info{padding:12px; text-align:center; direction: rtl;}
 .store{font-size:10px; color:var(--gold); font-weight:bold; margin-bottom:5px;}
 .title{font-size:14px; font-weight:bold; color:var(--dark); height:38px; overflow:hidden; margin-bottom:8px;}
 .price{font-size:16px; font-weight:800; color:#222; margin-bottom:10px;}
@@ -43,11 +43,11 @@ header h1{margin:0; font-size:28px; color:var(--gold); letter-spacing:1px;}
 #viewer{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:99999; align-items:center; justify-content:center;}
 #viewer img{max-width:95%; max-height:85%; border-radius:8px; border:2px solid var(--gold);}
 
-/* القائمة الجانبية المحدثة */
+/* القائمة الجانبية */
 .sidebar { height:100%; width:0; position:fixed; z-index:10001; top:0; right:0; background:var(--dark); overflow-x:hidden; transition:0.4s; color:white; }
 .sidebar-content { padding:30px; }
-.sidebar h3 { color:var(--gold); font-size:18px; border-bottom:1px solid #333; padding-bottom:10px; }
-.fav-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13px; background:#1a1a1a; padding:5px; border-radius:5px; }
+.sidebar h3 { color:var(--gold); font-size:18px; border-bottom:1px solid #333; padding-bottom:10px; margin-top:20px;}
+.fav-item { display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:13px; background:#1a1a1a; padding:8px; border-radius:8px; }
 </style>
 </head>
 <body>
@@ -68,7 +68,7 @@ header h1{margin:0; font-size:28px; color:var(--gold); letter-spacing:1px;}
   <div style="padding:15px; font-size:30px; cursor:pointer; color:var(--gold)" onclick="closeNav()">×</div>
   <div class="sidebar-content">
       <h3>🚚 التوصيل</h3>
-      <p id="deliveryInfo" style="font-size:14px; color:#ccc;">يتم تحديد سعر التوصيل بواسطة المتجر عند الطلب.</p>
+      <p style="font-size:14px; color:#ccc;">يتم تحديد سعر التوصيل بواسطة المتجر عند الطلب.</p>
       
       <h3>❤️ المفضلة</h3>
       <div id="favList" style="font-size:13px; color:#aaa;">لا يوجد منتجات في المفضلة بعد.</div>
@@ -107,13 +107,13 @@ function renderGrid(){
   document.getElementById('grid').innerHTML = allProducts.map(p=>{
     const price = currentCurr==='SDG' ? p.price : (p.price * 0.0031).toFixed(2);
     const imgsHtml = p.imgs.map(img => `<img src="${img.trim()}" onclick="showFull('${img.trim()}')">`).join('');
-    const navs = p.imgs.length > 1 ? `<button class="nav-btn next" onclick="moveSlide(this,1)">❯</button><button class="nav-btn prev" onclick="moveSlide(this,-1)">❮</button>` : '';
+    const navs = p.imgs.length > 1 ? `<button class="nav-btn next" onclick="moveSlide(this,-1)">❯</button><button class="nav-btn prev" onclick="moveSlide(this,1)">❮</button>` : '';
     const isFav = favorites.some(f => f.name === p.name) ? 'active' : '';
     
     return `
     <div class="card" data-idx="0">
       <div class="slider-container">
-        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}', '${p.imgs[0]}', this)">❤</div>
+        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}', '${p.imgs[0]}', event, this)">❤</div>
         <div class="slider-track">${imgsHtml}</div>
         ${navs}
       </div>
@@ -127,19 +127,22 @@ function renderGrid(){
   }).join('');
 }
 
-// ✅ السلايدر المصلح 100%
+// ✅ السلايدر العالمي (شغال في كل الاتجاهات)
 function moveSlide(btn, dir) {
     const card = btn.closest('.card');
     const track = card.querySelector('.slider-track');
     const imgs = track.querySelectorAll('img');
     let current = parseInt(card.getAttribute('data-idx'));
+    
     current = (current + dir + imgs.length) % imgs.length;
     card.setAttribute('data-idx', current);
+    
+    // التحريك بنسبة مئوية واضحة
     track.style.transform = `translateX(${current * 100}%)`;
 }
 
-// ✅ نظام المفضلة
-function toggleFav(name, img, el) {
+function toggleFav(name, img, event, el) {
+    event.stopPropagation();
     const index = favorites.findIndex(f => f.name === name);
     if(index > -1) {
         favorites.splice(index, 1);
@@ -149,6 +152,7 @@ function toggleFav(name, img, el) {
         el.classList.add('active');
     }
     localStorage.setItem('vira_favs', JSON.stringify(favorites));
+    updateFavUI();
 }
 
 function updateFavUI() {
@@ -156,7 +160,7 @@ function updateFavUI() {
     if(favorites.length === 0) { list.innerHTML = "القائمة فارغة"; return; }
     list.innerHTML = favorites.map(f => `
         <div class="fav-item">
-            <img src="${f.img}" width="30" height="30" style="border-radius:4px; object-fit:cover;">
+            <img src="${f.img}" width="40" height="40" style="border-radius:6px; object-fit:cover;">
             <span>${f.name}</span>
         </div>
     `).join('');
