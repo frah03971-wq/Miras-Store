@@ -7,29 +7,44 @@
 <style>
 :root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31;}
 body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden;}
+
+/* الهيدر الاحترافي */
 header{background:var(--dark);color:white;padding:20px 10px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);}
 header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
 .slogan{margin:5px 0 0;font-size:13px;color:#ddd;}
+
 .menu-btn{cursor:pointer;font-size:26px;color:var(--gold);position:absolute;top:22px;right:20px;z-index:1001;}
 .header-tools{position:absolute;top:22px;left:15px;display:flex;gap:8px;}
 .currency-switch{cursor:pointer;padding:4px 8px;background:#222;border-radius:8px;color:white;font-size:11px;border:1px solid #444;}
 .currency-switch.active{background:var(--gold);color:#000;}
+
+/* شبكة المنتجات */
 .container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:15px;max-width:1200px;margin:0 auto;}
-.card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;direction:ltr!important;}
-.slider-container{position:relative;width:100%;height:210px;background:#f0f0f0;overflow:hidden;}
-.slider-track{display:flex;width:100%;height:100%;transition:transform 0.4s ease-in-out;}
+
+/* كرت المنتج والسلايدر (حل مشكلة الحركة) */
+.card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column;}
+
+.slider-container{position:relative;width:100%;height:210px;background:#f0f0f0;overflow:hidden;direction:ltr!important;}
+.slider-track{display:flex;width:100%;height:100%;transition:transform 0.5s ease-in-out;will-change: transform;}
 .slider-track img{min-width:100%;width:100%;height:100%;object-fit:cover;cursor:pointer;}
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:30px;height:30px;cursor:pointer;border-radius:50%;z-index:10;font-weight:bold;}
-.next{right:5px;}.prev{left:5px;}
-.fav-icon{position:absolute;top:10px;right:10px;z-index:15;color:rgba(255,255,255,0.7);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
+
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);color:white;border:none;width:32px;height:32px;cursor:pointer;border-radius:50%;z-index:10;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.next{right:8px;}.prev{left:8px;}
+
+.fav-icon{position:absolute;top:10px;right:10px;z-index:15;color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
 .fav-icon.active{color:var(--red);}
-.info{padding:12px;text-align:center;direction:rtl;}
+
+.info{padding:12px;text-align:center;direction:rtl;flex-grow:1;}
 .store{font-size:10px;color:var(--gold);font-weight:bold;margin-bottom:5px;}
 .title{font-size:14px;font-weight:bold;color:var(--dark);height:38px;overflow:hidden;margin-bottom:8px;}
 .price{font-size:16px;font-weight:800;color:#222;margin-bottom:10px;}
 .btn-order{background:var(--gold);color:var(--dark);border:none;width:100%;padding:10px;border-radius:10px;font-weight:bold;cursor:pointer;}
+
+/* عرض الصورة الكبيرة */
 #viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:99999;align-items:center;justify-content:center;}
-#viewer img{max-width:95%;max-height:85%;border-radius:8px;border:2px solid var(--gold);}
+#viewer img{max-width:90%;max-height:80%;border-radius:8px;border:2px solid var(--gold);}
+
+/* القائمة الجانبية */
 .sidebar{height:100%;width:0;position:fixed;z-index:10001;top:0;right:0;background:var(--dark);overflow-x:hidden;transition:0.4s;color:white;}
 .sidebar-content{padding:30px;}
 .sidebar h3{color:var(--gold);font-size:18px;border-bottom:1px solid #333;padding-bottom:10px;margin-top:20px;}
@@ -70,7 +85,7 @@ header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
 
 <script>
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
-let currentCurr='SDG',allProducts=[],favorites=JSON.parse(localStorage.getItem('vira_favs')||'[]');
+let currentCurr='SDG', allProducts=[], favorites=JSON.parse(localStorage.getItem('vira_favs')||'[]');
 
 function openNav(){document.getElementById("mySidebar").style.width="280px";updateFavUI();}
 function closeNav(){document.getElementById("mySidebar").style.width="0";}
@@ -92,34 +107,45 @@ async function loadProducts(){
 function renderGrid(){
   document.getElementById('grid').innerHTML = allProducts.map(p=>{
     const price=currentCurr==='SDG'?p.price:(p.price*0.0031).toFixed(2);
-    const imgsHtml=p.imgs.map(img=>`<img src="${img.trim()}" onclick="showFull('${img.trim()}')">`).join('');
-    const navs=p.imgs.length>1?`<button class="nav-btn next" onclick="moveSlide(this,1)">❯</button><button class="nav-btn prev" onclick="moveSlide(this,-1)">❮</button>`:'';
+    const cleanImgs = p.imgs.filter(i => i.trim() !== "");
+    const imgsHtml=cleanImgs.map(img=>`<img src="${img.trim()}" onclick="showFull('${img.trim()}')">`).join('');
+    
+    // الأزرار تظهر فقط لو في أكثر من صورة
+    const navs=cleanImgs.length > 1 ? `
+      <button class="nav-btn next" onclick="moveSlide(this, 1)">❯</button>
+      <button class="nav-btn prev" onclick="moveSlide(this, -1)">❮</button>
+    ` : '';
+    
     const isFav=favorites.some(f=>f.name===p.name)?'active':'';
     
     return `<div class="card" data-idx="0">
       <div class="slider-container">
-        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}','${p.imgs[0]}',event,this)">❤</div>
-        <div class="slider-track" style="display:flex;transition:0.4s ease-in-out;">${imgsHtml}</div>
+        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}','${cleanImgs[0]}',event,this)">❤</div>
+        <div class="slider-track">${imgsHtml}</div>
         ${navs}
       </div>
       <div class="info">
         <div class="store">✨ ${p.store}</div>
         <div class="title">${p.name}</div>
         <div class="price">${price} ${currentCurr}</div>
-        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa.replace(/\s/g,'')}?text=طلب: ${p.name}')">طلب واتساب ✅</button>
+        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa.replace(/\s/g,'')}?text=طلب منتج: ${p.name}')">طلب واتساب ✅</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function moveSlide(btn,dir){
-  const card=btn.closest('.card');
-  const track=card.querySelector('.slider-track');
-  const imgs=track.querySelectorAll('img');
-  let current=parseInt(card.getAttribute('data-idx'))||0;
-  current=(current+dir+imgs.length)%imgs.length;
-  card.setAttribute('data-idx',current);
-  track.style.transform=`translateX(-${current*100}%)`;
+// دالة السلايدر الزيت - شغالة 100%
+function moveSlide(btn, dir){
+  const card = btn.closest('.card');
+  const track = card.querySelector('.slider-track');
+  const imgs = track.querySelectorAll('img');
+  let current = parseInt(card.getAttribute('data-idx')) || 0;
+  
+  current = (current + dir + imgs.length) % imgs.length;
+  card.setAttribute('data-idx', current);
+  
+  // التحريك بنسبة 100% لليسار لكل صورة
+  track.style.transform = `translateX(-${current * 100}%)`;
 }
 
 function toggleFav(name,img,event,el){
