@@ -6,231 +6,197 @@
 <title>VIRA MALL | فيرا مول</title>
 
 <style>
-:root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff}
+:root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31}
 body{margin:0;font-family:'Segoe UI',Tahoma;background:var(--gray);overflow-x:hidden}
 
-header{
-background:var(--dark);
-color:white;
-padding:15px;
-text-align:center;
-position:sticky;
-top:0;
-z-index:1000;
-border-bottom:3px solid var(--gold);
-display:flex;
-align-items:center;
-justify-content:space-between
-}
-header h1{margin:0;color:var(--gold);font-size:24px;flex:1}
+/* الهيدر والقائمة */
+header{background:var(--dark);color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;color:var(--gold);font-size:22px;flex-grow:1}
+.menu-btn{font-size:28px;cursor:pointer;color:var(--gold);padding:0 10px}
 
-.menu-btn{font-size:28px;color:var(--gold);cursor:pointer}
+/* القائمة الجانبية */
+.sidebar{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--dark);z-index:2000;transition:0.3s;color:white;padding:20px;box-shadow:-5px 0 15px rgba(0,0,0,0.5)}
+.sidebar.open{right:0}
+.sidebar h2{color:var(--gold);border-bottom:1px solid #333;padding-bottom:10px}
+.side-item{padding:15px 0;border-bottom:1px solid #222;cursor:pointer;display:flex;align-items:center;gap:10px}
+.side-item:hover{color:var(--gold)}
+.close-sidebar{font-size:30px;cursor:pointer;text-align:left;display:block}
 
-.container{
-padding:15px;
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-gap:15px;
-max-width:1200px;
-margin:auto
-}
+/* حاوية المنتجات */
+.container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:15px;max-width:1200px;margin:auto}
 
-.card{
-background:white;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08)
-}
+.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative}
 
-/* ===== SLIDER ===== */
-.slider{
-position:relative;
-height:210px;
-overflow:hidden;
-direction:ltr;
-background:#eee
-}
-.track{
-display:flex;
-height:100%;
-transition:transform .4s ease
-}
-.track img{
-width:100%;
-flex-shrink:0;
-object-fit:cover
-}
-.nav{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-width:28px;
-height:28px;
-border-radius:50%;
-background:rgba(0,0,0,.5);
-color:white;
-border:none;
-cursor:pointer;
-z-index:10
-}
-.prev{left:6px}
-.next{right:6px}
+/* السلايدر */
+.slider{position:relative;height:220px;overflow:hidden;direction:ltr}
+.track{display:flex;height:100%;transition:transform .5s cubic-bezier(0.4, 0, 0.2, 1)}
+.track img{width:100%;flex-shrink:0;object-fit:cover;cursor:pointer}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;z-index:10;cursor:pointer}
+.prev{left:8px} .next{right:8px}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.5)}
+.dot.active{background:var(--gold);width:15px;border-radius:10px}
 
-.dots{
-position:absolute;
-bottom:6px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:4px
-}
-.dot{
-width:6px;
-height:6px;
-border-radius:50%;
-background:rgba(255,255,255,.6)
-}
-.dot.active{background:var(--gold);width:12px;border-radius:10px}
+.fav{position:absolute;top:10px;right:10px;font-size:24px;color:white;text-shadow:0 0 5px #000;z-index:15;cursor:pointer}
+.fav.active{color:var(--red)}
 
-/* INFO */
 .info{padding:12px;text-align:center}
-.store{font-size:10px;color:var(--gold);font-weight:bold}
-.title{font-size:14px;font-weight:bold;height:38px;overflow:hidden;margin:6px 0}
-.price{font-size:17px;font-weight:900;margin-bottom:10px}
-.btn{
-background:var(--gold);
-border:none;
-padding:10px;
-border-radius:10px;
-font-weight:bold;
-width:100%;
-cursor:pointer
-}
+.store{font-size:11px;color:var(--gold);font-weight:bold;margin-bottom:5px;display:block}
+.title{font-size:14px;font-weight:bold;height:38px;overflow:hidden;margin-bottom:10px;line-height:1.3}
+.price{font-size:16px;font-weight:900;color:var(--dark);margin-bottom:10px}
+.btn{background:var(--gold);border:none;padding:12px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer;transition:0.2s}
+.btn:active{transform:scale(0.95)}
+
+/* اشتراك وتوصيل */
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:3000;align-items:center;justify-content:center}
+.modal{background:white;padding:25px;border-radius:15px;width:80%;max-width:400px;text-align:center;color:black}
+.modal input{width:90%;padding:10px;margin:15px 0;border-radius:8px;border:1px solid #ddd}
 </style>
 </head>
-
 <body>
 
 <header>
-<div style="width:40px"></div>
-<h1>VIRA MALL</h1>
-<div class="menu-btn">☰</div>
+    <div class="header-tools" style="width:40px"></div> <div>
+        <h1>VIRA MALL</h1>
+        <p class="slogan">منصة البراندات السودانية 🇸🇩</p>
+    </div>
+    <div class="menu-btn" onclick="toggleSide()">☰</div>
 </header>
 
-<div class="container" id="grid">
-<p style="grid-column:1/-1;text-align:center;color:#777;padding:40px">
-جاري تحميل المنتجات…
-</p>
+<div class="sidebar" id="sidebar">
+    <span class="close-sidebar" onclick="toggleSide()">×</span>
+    <h2>القائمة الرئيسية</h2>
+    <div class="side-item" onclick="showModal('favs')">❤️ المنتجات المفضلة</div>
+    <div class="side-item" onclick="showModal('shipping')">🚚 معلومات التوصيل</div>
+    <div class="side-item" onclick="showModal('sub')">📩 إشتراك في التنبيهات</div>
+    <div class="side-item" onclick="window.location.href='admin.html'">👩‍💼 بوابة التاجرات</div>
+    <div style="margin-top:40px; font-size:12px; color:#666">جميع الحقوق محفوظة فيرا مول 2026</div>
+</div>
+
+<div class="container" id="grid"></div>
+
+<div class="overlay" id="overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+        <h3 id="modalTitle"></h3>
+        <div id="modalContent"></div>
+        <button class="btn" style="margin-top:15px" onclick="closeModal()">إغلاق</button>
+    </div>
 </div>
 
 <script>
-/* 🔗 رابط الشيت */
-const SHEET_URL =
-'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+let favs=JSON.parse(localStorage.getItem('viraFav')||'[]');
+let productsData = [];
 
-async function fetchProducts(){
- try{
-  const res = await fetch(SHEET_URL + '&_=' + Date.now());
-  const text = await res.text();
+async function load(){
+ const r=await fetch(SHEET_URL);
+ const t=await r.text();
+ const rows=t.split(/\r?\n/).slice(1);
+ productsData = rows.map((r,i)=>{
+  const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,'').trim());
+  if(!c[0]) return null;
+  return{ id:i,name:c[0],price:c[1],store:c[2],imgs:c[3]?.split(' ')||[],wa:c[4]};
+ }).filter(p=>p);
 
-  const rows = text
-   .replace(/\uFEFF/g,'')
-   .split(/\r?\n/)
-   .slice(1);
-
-  const products = rows.map((row,i)=>{
-   const c = row
-    .split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/)
-    .map(x=>x.replace(/"/g,'').trim());
-
-   if(!c[0] || c[0].length<2) return null;
-
-   return{
-    id:i,
-    name:c[0],
-    price:c[1]||'0',
-    store:c[2]||'VIRA',
-    imgs:c[3]
-      ? c[3].split(/[ ,]+/).filter(x=>x.startsWith('http'))
-      : [],
-    wa:c[4]||'249000000000'
-   };
-  }).filter(Boolean);
-
-  render(products);
- }
- catch(e){
-  document.getElementById('grid').innerHTML =
-  '<p style="grid-column:1/-1;color:red;text-align:center">فشل تحميل المنتجات</p>';
- }
+ render(productsData);
 }
 
 function render(list){
- const grid=document.getElementById('grid');
-
- grid.innerHTML = list.map(p=>{
-  const imgs = p.imgs.length
-   ? p.imgs
-   : ['https://via.placeholder.com/300x300?text=VIRA+MALL'];
-
-  const dots = imgs.map((_,i)=>
-   `<div class="dot ${i==0?'active':''}"></div>`
-  ).join('');
-
-  return `
+ const grid = document.getElementById('grid');
+ grid.innerHTML=list.map(p=>{
+  const dots=p.imgs.map((_,i)=>`<div class="dot ${i==0?'active':''}"></div>`).join('');
+  const isFav = favs.includes(p.id) ? 'active' : '';
+  return`
   <div class="card" data-i="0">
    <div class="slider">
+    <div class="fav ${isFav}" onclick="toggleFav(${p.id},this)">❤</div>
     <div class="track">
-     ${imgs.map(img=>`<img src="${img}">`).join('')}
+     ${p.imgs.map(img=>`<img src="${img}" loading="lazy">`).join('')}
     </div>
-
-    ${imgs.length>1?`
+    ${p.imgs.length>1?`
      <button class="nav prev" onclick="slide(this,-1)">❮</button>
      <button class="nav next" onclick="slide(this,1)">❯</button>
      <div class="dots">${dots}</div>
     `:''}
    </div>
-
    <div class="info">
-    <div class="store">✨ ${p.store}</div>
+    <span class="store">✨ ${p.store}</span>
     <div class="title">${p.name}</div>
     <div class="price">${p.price} SDG</div>
-    <button class="btn"
-     onclick="window.open('https://wa.me/${p.wa}?text=طلب: ${p.name}')">
-     طلب واتساب
-    </button>
+    <button class="btn" onclick="window.open('https://wa.me/${p.wa}?text=أهلاً، أرغب في طلب: ${p.name}')">طلب واتساب ✅</button>
    </div>
   </div>`;
  }).join('');
 
- autoSlide();
+ initSliders();
 }
 
+/* ===== السلايدر ===== */
 function slide(btn,dir){
- const card = btn.closest('.card');
- const track = card.querySelector('.track');
- const dots = card.querySelectorAll('.dot');
- const total = track.children.length;
- let i = +card.dataset.i;
+ const card=btn.closest('.card');
+ const track=card.querySelector('.track');
+ const dots=card.querySelectorAll('.dot');
+ let i=+card.dataset.i;
+ const total=track.children.length;
 
- i = (i + dir + total) % total;
- card.dataset.i = i;
- track.style.transform = `translateX(-${i*100}%)`;
-
- dots.forEach(d=>d.classList.remove('active'));
- if(dots[i]) dots[i].classList.add('active');
+ i=(i+dir+total)%total;
+ card.dataset.i=i;
+ track.style.transform=`translateX(-${i*100}%)`;
+ if(dots.length) {
+    dots.forEach(d=>d.classList.remove('active'));
+    dots[i].classList.add('active');
+ }
 }
 
-function autoSlide(){
- setInterval(()=>{
-  document.querySelectorAll('.card').forEach(card=>{
-   const next = card.querySelector('.next');
-   if(next) slide(next,1);
-  });
- },5000);
+function initSliders(){
+ document.querySelectorAll('.slider').forEach(slider=>{
+  let startX=0;
+  slider.addEventListener('touchstart',e=>startX=e.touches[0].clientX, {passive: true});
+  slider.addEventListener('touchend',e=>{
+   const endX=e.changedTouches[0].clientX;
+   if(startX-endX>50) slide(slider.querySelector('.next'), 1);
+   if(endX-startX>50) slide(slider.querySelector('.prev'), -1);
+  }, {passive: true});
+ });
 }
 
-fetchProducts();
+/* ===== القائمة الجانبية والأدوات ===== */
+function toggleSide(){ document.getElementById('sidebar').classList.toggle('open'); }
+
+function showModal(type){
+    const overlay = document.getElementById('overlay');
+    const title = document.getElementById('modalTitle');
+    const content = document.getElementById('modalContent');
+    overlay.style.display = 'flex';
+    toggleSide();
+
+    if(type==='shipping'){
+        title.innerText = "🚚 معلومات التوصيل";
+        content.innerHTML = "<p>التوصيل داخل الخرطوم والولايات يتم تحديده حسب بعد المنطقة. السعر يبدأ من 3000 SDG.</p>";
+    } else if(type==='sub'){
+        title.innerText = "📩 إشترك معنا";
+        content.innerHTML = "<p>أدخل بريدك ليصلك جديد البراندات السودانية:</p><input type='email' placeholder='email@example.com'><button class='btn'>إرسال</button>";
+    } else if(type==='favs'){
+        title.innerText = "❤️ مفضلتك";
+        const myFavs = productsData.filter(p => favs.includes(p.id));
+        content.innerHTML = myFavs.length ? myFavs.map(p => `<p style='border-bottom:1px solid #eee; padding:5px'>${p.name}</p>`).join('') : "لم تضف أي منتجات بعد.";
+    }
+}
+
+function closeModal(){ document.getElementById('overlay').style.display = 'none'; }
+
+function toggleFav(id,el){
+ if(favs.includes(id)){
+  favs=favs.filter(x=>x!==id);
+  el.classList.remove('active');
+ }else{
+  favs.push(id);
+  el.classList.add('active');
+ }
+ localStorage.setItem('viraFav',JSON.stringify(favs));
+}
+
+load();
 </script>
 
 </body>
