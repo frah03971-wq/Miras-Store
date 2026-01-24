@@ -4,159 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIRA MALL | فيرا مول</title>
+
 <style>
-:root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31;}
-body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden;}
+:root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31}
+body{margin:0;font-family:'Segoe UI',Tahoma;background:var(--gray)}
 
-/* الهيدر */
-header{background:var(--dark);color:white;padding:20px 10px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);}
-header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
-.slogan{margin:5px 0 0;font-size:13px;color:#ddd;}
+header{
+background:var(--dark);
+color:white;
+padding:20px 10px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:1000;
+border-bottom:3px solid var(--gold)
+}
+header h1{margin:0;color:var(--gold)}
+.slogan{font-size:13px;color:#ccc}
 
-.menu-btn{cursor:pointer;font-size:26px;color:var(--gold);position:absolute;top:22px;right:20px;z-index:1001;}
-.header-tools{position:absolute;top:22px;left:15px;display:flex;gap:8px;}
-.currency-switch{cursor:pointer;padding:4px 8px;background:#222;border-radius:8px;color:white;font-size:11px;border:1px solid #444;}
-.currency-switch.active{background:var(--gold);color:#000;}
+.container{
+padding:15px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+gap:15px;
+max-width:1200px;
+margin:auto
+}
 
-/* الحاوية */
-.container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:15px;max-width:1200px;margin:0 auto;}
+.card{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,.08)
+}
 
-/* كرت المنتج والسلايدر */
-.card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column;}
+/* ===== SLIDER ===== */
+.slider{
+position:relative;
+height:210px;
+overflow:hidden;
+direction:ltr;
+touch-action:pan-y
+}
+.track{
+display:flex;
+height:100%;
+transition:transform .4s ease
+}
+.track img{
+width:100%;
+flex-shrink:0;
+object-fit:cover
+}
+.nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:32px;
+height:32px;
+border-radius:50%;
+background:rgba(0,0,0,.6);
+color:white;
+border:none;
+cursor:pointer;
+z-index:10
+}
+.prev{left:8px}
+.next{right:8px}
 
-.slider-container{position:relative;width:100%;height:210px;background:#eee;overflow:hidden;direction:ltr!important;}
-.slider-track{display:flex;width:100%;height:100%;transition:transform 0.5s ease-in-out;}
-.slider-track img{min-width:100%;width:100%;height:100%;object-fit:cover;cursor:pointer;}
+.dots{
+position:absolute;
+bottom:8px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:5px
+}
+.dot{
+width:7px;
+height:7px;
+border-radius:50%;
+background:#bbb
+}
+.dot.active{background:var(--gold)}
 
-/* أزرار السلايدر - واضحة جداً */
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(212,175,55,0.8);color:black;border:none;width:28px;height:28px;cursor:pointer;border-radius:50%;z-index:10;font-weight:bold;display:flex;align-items:center;justify-content:center;}
-.next{right:5px;} .prev{left:5px;}
+.fav{
+position:absolute;
+top:10px;
+right:10px;
+font-size:22px;
+color:white;
+text-shadow:0 0 5px #000;
+cursor:pointer
+}
+.fav.active{color:var(--red)}
 
-/* نقاط التنقل */
-.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:4px;z-index:11;}
-.dot{width:6px;height:6px;background:rgba(255,255,255,0.5);border-radius:50%;transition:0.3s;}
-.dot.active{background:var(--gold);width:12px;border-radius:4px;}
-
-.fav-icon{position:absolute;top:10px;left:10px;z-index:15;color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
-.fav-icon.active{color:var(--red);}
-
-.info{padding:12px;text-align:center;direction:rtl;flex-grow:1;}
-.store{font-size:10px;color:var(--gold);font-weight:bold;margin-bottom:5px;}
-.title{font-size:14px;font-weight:bold;color:var(--dark);height:38px;overflow:hidden;margin-bottom:8px;}
-.price{font-size:16px;font-weight:800;color:#222;margin-bottom:10px;}
-.btn-order{background:var(--gold);color:var(--dark);border:none;width:100%;padding:10px;border-radius:10px;font-weight:bold;cursor:pointer;}
-
-/* القائمة الجانبية */
-.sidebar{height:100%;width:0;position:fixed;z-index:10001;top:0;right:0;background:var(--dark);overflow-x:hidden;transition:0.4s;color:white;}
-.sidebar-content{padding:30px;}
-.sidebar h3{color:var(--gold);font-size:18px;border-bottom:1px solid #333;padding-bottom:10px;margin-top:20px;}
+.info{
+padding:12px;
+text-align:center
+}
+.store{font-size:10px;color:var(--gold);font-weight:bold}
+.title{font-size:14px;font-weight:bold;height:36px;overflow:hidden}
+.price{font-weight:900;margin:8px 0}
+.btn{
+background:var(--gold);
+border:none;
+padding:10px;
+border-radius:10px;
+font-weight:bold;
+width:100%;
+cursor:pointer
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="menu-btn" onclick="openNav()">☰</div>
-  <h1>VIRA MALL</h1>
-  <p class="slogan">خيارك الأول في السودان 🇸🇩</p>
-  <div class="header-tools">
-    <div class="currency-switch active" id="btnSDG" onclick="setCurrency('SDG')">SDG</div>
-    <div class="currency-switch" id="btnSAR" onclick="setCurrency('SAR')">SAR</div>
-  </div>
+<h1>VIRA MALL</h1>
+<p class="slogan">منصة البراندات السودانية 🇸🇩</p>
 </header>
 
 <div class="container" id="grid"></div>
 
-<div id="mySidebar" class="sidebar">
-  <div style="padding:15px;font-size:30px;cursor:pointer;color:var(--gold)" onclick="closeNav()">×</div>
-  <div class="sidebar-content">
-      <h3>🚚 التوصيل</h3>
-      <p style="font-size:14px;color:#ccc;">يتم تحديد سعر التوصيل بواسطة المتجر عند الطلب.</p>
-      <h3>💳 الدفع</h3>
-      <p style="font-size:14px;">حساب بنكك: <strong style="color:var(--gold)">2280384</strong></p>
-      <hr style="border:0;border-top:1px solid #333;margin:20px 0;">
-      <button onclick="window.location.href='admin.html'" style="background:var(--gold);width:100%;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;">دخول التاجرات ✨</button>
-  </div>
-</div>
-
 <script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
-let currentCurr='SDG', allProducts=[];
+const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+let favs=JSON.parse(localStorage.getItem('viraFav')||'[]');
 
-function openNav(){document.getElementById("mySidebar").style.width="280px";}
-function closeNav(){document.getElementById("mySidebar").style.width="0";}
+async function load(){
+ const r=await fetch(SHEET_URL);
+ const t=await r.text();
+ const rows=t.split(/\r?\n/).slice(1);
+ const data=rows.map((r,i)=>{
+  const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,''));
+  return{ id:i,name:c[0],price:c[1],store:c[2],imgs:c[3]?.split(' ')||[],wa:c[4]};
+ }).filter(p=>p.name);
 
-async function loadProducts(){
-  try{
-    const res=await fetch(SHEET_URL);
-    const text=await res.text();
-    const rows=text.split(/\r?\n/).slice(1);
-    allProducts=rows.map((r,idx)=>{
-      // معالجة البيانات بدقة لمنع ظهور الأكواد
-      const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,'').trim());
-      if(!c[0] || c[0].startsWith('=')) return null; 
-      
-      // التأكد من تقسيم روابط الصور لو كانت مفصولة بمسافة
-      const imgs = c[3] ? c[3].split(/\s+/).filter(i => i.startsWith('http')) : [];
-      
-      return {id:idx, name:c[0], price:parseFloat(c[1])||0, store:c[2], imgs:imgs, wa:c[4]};
-    }).filter(p=>p);
-    renderGrid();
-  }catch(e){console.error("Error");}
+ render(data);
 }
 
-function renderGrid(){
-  document.getElementById('grid').innerHTML = allProducts.map(p=>{
-    const price = currentCurr==='SDG' ? p.price : (p.price * 0.0031).toFixed(2);
-    const imgsHtml = p.imgs.map(img => `<img src="${img}">`).join('');
-    
-    // نقاط التنقل
-    const dotsHtml = p.imgs.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
-    
-    const navs = p.imgs.length > 1 ? `
-      <div class="dots">${dotsHtml}</div>
-      <button class="nav-btn next" onclick="moveSlide(this, 1)">❯</button>
-      <button class="nav-btn prev" onclick="moveSlide(this, -1)">❮</button>
-    ` : '';
-    
-    return `<div class="card" data-idx="0">
-      <div class="slider-container">
-        <div class="fav-icon" onclick="this.classList.toggle('active')">❤</div>
-        <div class="slider-track">${imgsHtml}</div>
-        ${navs}
-      </div>
-      <div class="info">
-        <div class="store">✨ ${p.store}</div>
-        <div class="title">${p.name}</div>
-        <div class="price">${price} ${currentCurr}</div>
-        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa}?text=طلب: ${p.name}')">طلب واتساب ✅</button>
-      </div>
-    </div>`;
-  }).join('');
+function render(list){
+ grid.innerHTML=list.map(p=>{
+  const dots=p.imgs.map((_,i)=>`<div class="dot ${i==0?'active':''}"></div>`).join('');
+  const fav=favs.includes(p.id)?'active':'';
+  return`
+  <div class="card" data-i="0">
+   <div class="slider">
+    <div class="fav ${fav}" onclick="toggleFav(${p.id},this)">❤</div>
+    <div class="track">
+     ${p.imgs.map(img=>`<img src="${img}">`).join('')}
+    </div>
+    ${p.imgs.length>1?`
+     <button class="nav prev" onclick="slide(this,-1)">❮</button>
+     <button class="nav next" onclick="slide(this,1)">❯</button>
+     <div class="dots">${dots}</div>
+    `:''}
+   </div>
+   <div class="info">
+    <div class="store">${p.store}</div>
+    <div class="title">${p.name}</div>
+    <div class="price">${p.price} SDG</div>
+    <button class="btn" onclick="window.open('https://wa.me/${p.wa}?text=طلب: ${p.name}')">طلب واتساب</button>
+   </div>
+  </div>`;
+ }).join('');
+
+ initSliders();
 }
 
-function moveSlide(btn, dir){
-  const card = btn.closest('.card');
-  const track = card.querySelector('.slider-track');
-  const dots = card.querySelectorAll('.dot');
-  const imgs = track.querySelectorAll('img');
-  let current = parseInt(card.getAttribute('data-idx')) || 0;
-  
-  current = (current + dir + imgs.length) % imgs.length;
-  card.setAttribute('data-idx', current);
-  track.style.transform = `translateX(-${current * 100}%)`;
-  
-  // تحديث النقاط
-  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+/* ===== SLIDER LOGIC ===== */
+function slide(btn,dir){
+ const card=btn.closest('.card');
+ const track=card.querySelector('.track');
+ const dots=card.querySelectorAll('.dot');
+ let i=+card.dataset.i;
+ const total=track.children.length;
+
+ i=(i+dir+total)%total;
+ card.dataset.i=i;
+ track.style.transform=`translateX(-${i*100}%)`;
+ dots.forEach(d=>d.classList.remove('active'));
+ dots[i].classList.add('active');
 }
 
-function setCurrency(c){
-  currentCurr=c;
-  document.querySelectorAll('.currency-switch').forEach(e=>e.classList.remove('active'));
-  document.getElementById('btn'+c).classList.add('active');
-  renderGrid();
+/* Swipe + Auto */
+function initSliders(){
+ document.querySelectorAll('.slider').forEach(slider=>{
+  let startX=0;
+  slider.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+  slider.addEventListener('touchend',e=>{
+   const endX=e.changedTouches[0].clientX;
+   if(startX-endX>50) slider.querySelector('.next')?.click();
+   if(endX-startX>50) slider.querySelector('.prev')?.click();
+  });
+
+  setInterval(()=>{
+   slider.querySelector('.next')?.click();
+  },4000);
+ });
 }
 
-loadProducts();
+function toggleFav(id,el){
+ if(favs.includes(id)){
+  favs=favs.filter(x=>x!==id);
+  el.classList.remove('active');
+ }else{
+  favs.push(id);
+  el.classList.add('active');
+ }
+ localStorage.setItem('viraFav',JSON.stringify(favs));
+}
+
+load();
 </script>
+
 </body>
 </html>
