@@ -3,145 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم التاجر - VIRA MALL</title>
+<title>VIRA MALL | لوحة الإدارة الذكية</title>
 <style>
-body{font-family:'Cairo',sans-serif;background:#f5f5f7;padding:15px}
-h1{text-align:center;color:#0f1111}
-.upload-section{background:white;padding:15px;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);margin-bottom:20px;display:flex;flex-direction:column;gap:10px}
-input,button{padding:10px;border-radius:10px;border:1px solid #ccc;font-size:14px}
-button{background:#D4AF37;color:#000;border:none;cursor:pointer;font-weight:bold}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{border:1px solid #ccc;padding:8px;text-align:center;font-size:12px}
-th{background:#0f1111;color:#D4AF37}
-a{color:#D4AF37;text-decoration:none;word-break:break-all}
-button:hover{opacity:.8}
+    :root { --gold: #D4AF37; --dark: #0f1111; --white: #ffffff; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 15px; direction: rtl; }
+    .admin-card { max-width: 650px; margin: 20px auto; background: var(--white); padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); }
+    h2 { text-align: center; color: var(--dark); font-size: 24px; margin-bottom: 25px; }
+    
+    .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .full { grid-column: span 2; }
+    
+    label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; font-size: 14px; }
+    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 12px; box-sizing: border-box; outline: none; transition: 0.3s; }
+    input:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,0.2); }
+
+    /* تنسيق روابط الصور */
+    .images-section { background: #fdfaf0; padding: 15px; border-radius: 15px; border: 1px solid #faeecb; margin: 15px 0; }
+    .img-input-row { display: flex; gap: 10px; margin-bottom: 8px; }
+    .img-preview-sm { width: 45px; height: 45px; border-radius: 8px; background: #eee; object-fit: cover; border: 1px solid #ddd; }
+
+    .btn-action { background: var(--dark); color: var(--gold); width: 100%; padding: 16px; border: 2px solid var(--gold); border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 17px; margin-top: 15px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-action:hover { background: var(--gold); color: var(--dark); transform: translateY(-3px); }
+    
+    .copy-success { display: none; text-align: center; color: #28a745; font-weight: bold; margin-top: 10px; }
 </style>
 </head>
 <body>
 
-<h1>لوحة تحكم التاجر - VIRA MALL</h1>
+<div class="admin-card">
+    <h2>إضافة منتج (سلايدر صور) ✨</h2>
+    
+    <div class="grid-inputs">
+        <div class="input-group">
+            <label>اسم المنتج:</label>
+            <input type="text" id="pName" placeholder="مثلاً: فستان تركي">
+        </div>
+        <div class="input-group">
+            <label>السعر (SDG):</label>
+            <input type="number" id="pPrice" placeholder="50000">
+        </div>
+        <div class="input-group">
+            <label>اسم المتجر:</label>
+            <input type="text" id="pStore" placeholder="بوتيك الملكة">
+        </div>
+        <div class="input-group">
+            <label>واتساب التاجر:</label>
+            <input type="text" id="pWa" placeholder="249...">
+        </div>
+    </div>
 
-<div class="upload-section">
-  <input type="file" id="imageInput" accept="image/*">
-  <input type="text" id="productName" placeholder="اسم المنتج">
-  <input type="text" id="productColor" placeholder="لون المنتج">
-  <input type="text" id="productDesc" placeholder="وصف المنتج">
-  <input type="text" id="productPrice" placeholder="السعر">
-  <input type="text" id="productSize" placeholder="المقاس">
-  <input type="text" id="productEmbroidery" placeholder="التطريز">
-  <button id="uploadBtn">رفع المنتج</button>
+    <div class="images-section">
+        <label>روابط الصور (يمكنك إضافة حتى 5 صور):</label>
+        <div class="img-input-row">
+            <input type="text" class="img-link" placeholder="رابط الصورة 1 (الأساسية)" oninput="preview(this)">
+            <img class="img-preview-sm" src="">
+        </div>
+        <div class="img-input-row">
+            <input type="text" class="img-link" placeholder="رابط الصورة 2 (اختياري)" oninput="preview(this)">
+            <img class="img-preview-sm" src="">
+        </div>
+        <div class="img-input-row">
+            <input type="text" class="img-link" placeholder="رابط الصورة 3 (اختياري)" oninput="preview(this)">
+            <img class="img-preview-sm" src="">
+        </div>
+        <div id="moreImages" style="display:none">
+            <div class="img-input-row"><input type="text" class="img-link" placeholder="رابط 4" oninput="preview(this)"><img class="img-preview-sm" src=""></div>
+            <div class="img-input-row"><input type="text" class="img-link" placeholder="رابط 5" oninput="preview(this)"><img class="img-preview-sm" src=""></div>
+        </div>
+        <button onclick="document.getElementById('moreImages').style.display='block'; this.style.display='none'" style="background:none; border:none; color:var(--gold); cursor:pointer; font-size:12px;">+ إضافة صور أكثر</button>
+    </div>
+
+    <button class="btn-action" onclick="prepareData()">نسخ بيانات المنتج بالكامل 📋</button>
+    <div id="successMsg" class="copy-success">تم النسخ! اذهبي لجدول قوقل الآن ✨</div>
 </div>
 
-<h2>المنتجات المرفوعة</h2>
-<table id="productsTable">
-<thead>
-<tr>
-<th>اسم المنتج</th>
-<th>اللون</th>
-<th>الوصف</th>
-<th>السعر</th>
-<th>المقاس</th>
-<th>التطريز</th>
-<th>رابط الصورة</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-
-<button id="copyLinksBtn">نسخ جميع الروابط</button>
-<button id="downloadCSVBtn">تحميل CSV</button>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBOcv6Feaq63nE3P1YH72-q--xZ1GF3xEA",
-  authDomain: "vira-mall.firebaseapp.com",
-  projectId: "vira-mall",
-  storageBucket: "vira-mall.appspot.com",
-  messagingSenderId: "504385201131",
-  appId: "1:504385201131:web:af56a81e75630b76b12fae",
-  measurementId: "G-71TTJFB4KN"
-};
+    function preview(input) {
+        const imgTag = input.nextElementSibling;
+        if(input.value.startsWith('http')) {
+            imgTag.src = input.value;
+            imgTag.style.opacity = '1';
+        } else {
+            imgTag.src = '';
+            imgTag.style.opacity = '0';
+        }
+    }
 
-firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
+    function prepareData() {
+        const name = document.getElementById('pName').value.trim();
+        const price = document.getElementById('pPrice').value.trim();
+        const store = document.getElementById('pStore').value.trim();
+        const wa = document.getElementById('pWa').value.trim();
+        
+        // جمع كل الروابط غير الفارغة وربطها بفاصلة
+        const links = Array.from(document.querySelectorAll('.img-link'))
+                           .map(i => i.value.trim())
+                           .filter(v => v !== "");
 
-const imageInput = document.getElementById('imageInput');
-const uploadButton = document.getElementById('uploadBtn');
-const productNameInput = document.getElementById('productName');
-const productColorInput = document.getElementById('productColor');
-const productDescInput = document.getElementById('productDesc');
-const productPriceInput = document.getElementById('productPrice');
-const productSizeInput = document.getElementById('productSize');
-const productEmbroideryInput = document.getElementById('productEmbroidery');
-const tableBody = document.getElementById('productsTable').querySelector('tbody');
-const copyLinksBtn = document.getElementById('copyLinksBtn');
-const downloadCSVBtn = document.getElementById('downloadCSVBtn');
+        if(!name || !price || links.length === 0) {
+            alert("يا قلبي، لازم تكتبي الاسم والسعر وتحطي صورة واحدة على الأقل!");
+            return;
+        }
 
-const uploadedProducts = [];
+        const allImages = links.join(','); // السحر هنا: دمج الصور بفاصلة
+        
+        // الترتيب: اسم، سعر، متجر، صور، واتساب
+        const finalRow = `${name}\t${price}\t${store}\t${allImages}\t${wa}`;
+        
+        copyToClipboard(finalRow);
+    }
 
-uploadButton.addEventListener('click', async () => {
-  const file = imageInput.files[0];
-  if(!file){ alert('اختاري صورة للمنتج'); return; }
-
-  const name = productNameInput.value || "بدون اسم";
-  const color = productColorInput.value || "-";
-  const desc = productDescInput.value || "-";
-  const price = productPriceInput.value || "-";
-  const size = productSizeInput.value || "-";
-  const embroidery = productEmbroideryInput.value || "-";
-
-  try {
-    const storageRef = storage.ref('products/' + file.name);
-    const snapshot = await storageRef.put(file);
-    const url = await snapshot.ref.getDownloadURL();
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${name}</td>
-      <td>${color}</td>
-      <td>${desc}</td>
-      <td>${price}</td>
-      <td>${size}</td>
-      <td>${embroidery}</td>
-      <td><a href="${url}" target="_blank">${url}</a></td>
-    `;
-    tableBody.appendChild(row);
-
-    uploadedProducts.push({name,color,desc,price,size,embroidery,url});
-
-    imageInput.value = '';
-    productNameInput.value = '';
-    productColorInput.value = '';
-    productDescInput.value = '';
-    productPriceInput.value = '';
-    productSizeInput.value = '';
-    productEmbroideryInput.value = '';
-  } catch(err){ console.error(err); alert('خطأ في الرفع'); }
-});
-
-// نسخ الروابط
-copyLinksBtn.addEventListener('click', () => {
-  if(uploadedProducts.length===0){ alert('لا توجد روابط للنسخ'); return; }
-  const text = uploadedProducts.map(p=>p.url).join('\n');
-  navigator.clipboard.writeText(text).then(()=>alert('تم نسخ جميع الروابط'));
-});
-
-// تنزيل CSV
-downloadCSVBtn.addEventListener('click', () => {
-  if(uploadedProducts.length===0){ alert('لا توجد منتجات لتحويلها CSV'); return; }
-  const headers = ["اسم المنتج","اللون","الوصف","السعر","المقاس","التطريز","رابط الصورة"];
-  let csv = headers.join(",") + "\n";
-  uploadedProducts.forEach(p=>{
-    csv += [p.name,p.color,p.desc,p.price,p.size,p.embroidery,p.url].map(f=>`"${f}"`).join(",") + "\n";
-  });
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='products.csv';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-});
+    function copyToClipboard(text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        
+        const msg = document.getElementById('successMsg');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 3000);
+    }
 </script>
 
 </body>
