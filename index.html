@@ -1,107 +1,160 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIRA MALL | فيرا مول</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIRA MALL | فيرا مول</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --dark: #1a1a1a;
+            --gray: #f8f9fa;
+            --white: #ffffff;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray);
+            direction: rtl;
+        }
+        header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 25px 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        header h1 { margin: 0; font-size: 28px; letter-spacing: 2px; color: var(--gold); }
+        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover; /* لخلفية صور احترافية */
+            cursor: pointer;
+            background: #fdfdfd;
+        }
+
+        .info { padding: 15px; text-align: center; flex-grow: 1; }
+        .store { font-size: 10px; color: var(--gold); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .title { font-size: 15px; font-weight: 700; margin: 5px 0; color: var(--dark); height: 40px; overflow: hidden; }
+        .price { font-size: 17px; font-weight: 800; color: #2c3e50; margin: 10px 0; }
+        
+        .btn {
+            background: var(--dark);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            width: 100%;
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+        .btn:hover { background: var(--gold); color: var(--dark); }
+
+        /* Viewer */
+        #viewer {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 10000; align-items: center; justify-content: center;
+        }
+        #viewer img { max-width: 95%; max-height: 90%; border-radius: 10px; border: 2px solid var(--gold); }
+    </style>
 </head>
 <body>
 
-<div id="loader">VIRA MALL ✨</div>
-
 <header>
-  <div class="menu-btn" onclick="toggleM()">☰</div>
-  <div class="brand">V<span>IRA</span> MALL</div>
-  <div class="curr-switcher">
-    <div id="btnSDG" class="curr-opt active" onclick="setCurrency('SDG')">SDG</div>
-    <div id="btnSAR" class="curr-opt" onclick="setCurrency('SAR')">SAR</div>
-  </div>
+    <h1>VIRA MALL</h1>
+    <p>الأناقة والتميز في قلب السودان 🇸🇩</p>
 </header>
 
-<div id="sideMenu" class="side-menu">
-  <div class="close-x" style="color:var(--gold)" onclick="toggleM()">✕</div>
-  <div style="margin-top:60px">
-    <a class="menu-item" onclick="location.reload()">✨ الرئيسية</a>
-    <a class="menu-item" onclick="openO('cartPage')">🛒 السلة</a>
-  </div>
+<div class="container" id="grid">
+    <p style="text-align:center; grid-column: 1/-1;">جاري تجهيز المنتجات الفخمة...</p>
 </div>
 
-<div id="grid" class="container"></div>
-
-<div id="cartPage" class="overlay">
-  <span class="close-x" onclick="closeO()">✕</span>
-  <h2 style="margin-top:50px">سلة المشتريات</h2>
-  <div id="cartContent"></div>
-  <h3 id="totalVal"></h3>
-  <button class="add-btn" onclick="checkout()">تأكيد الطلب واتساب</button>
+<div id="viewer" onclick="this.style.display='none'">
+    <img id="viewerImg">
 </div>
 
-<nav>
-  <div class="nav-link active" onclick="location.reload()">🏠<br>الرئيسية</div>
-  <div class="nav-link" onclick="openO('cartPage')">🛒<br>السلة <span id="cBadge" class="badge">0</span></div>
-  <div class="nav-link" onclick="toggleM()">☰<br>المزيد</div>
-</nav>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
-let db=[],cart=JSON.parse(localStorage.getItem('cart')||'[]'),currentCurr='SDG';
-const RATE=0.0031; // تحويل SDG -> SAR
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQf-BNBoN_gR0k0q3JGWDZJLR6zTV2tj89jc6yHde34acOcYg-eGslZxUH4QSjpNNjSKyjbcjgl4-tr/pub?output=csv';
 
-async function init(){
-  const r=await fetch(SHEET_URL);
-  const t=await r.text();
-  const rows=t.split(/\n/).slice(1);
-  db=rows.map((row,i)=>{
-    const c=row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,''));
-    return{id:i,name:c[0],price:+c[1]||0,imgs:c[2]?.split(' ')||[]}
-  }).filter(p=>p.name);
-  render();
-  document.getElementById('loader').style.display='none';
+async function loadProducts() {
+    try {
+        const res = await fetch(SHEET_URL);
+        const text = await res.text();
+        const rows = text.split(/\r?\n/).slice(1);
+
+        const products = rows.map(r => {
+            const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x => x.replace(/"/g, '').trim());
+            return {
+                name: c[0] || "منتج فيرا المميز",
+                price: c[1] || "حسب الطلب",
+                store: c[2] || "VIRA STORE",
+                img: c[3] || "https://via.placeholder.com/300?text=VIRA+MALL",
+                whatsapp: c[4] || "249967584275", // رقمك الأساسي
+                status: c[5] || "متوفر"
+            };
+        }).filter(p => p.name && p.img && p.img !== "");
+
+        render(products);
+    } catch (err) {
+        document.getElementById('grid').innerHTML = "تحصل مشكلة في التحميل، تأكدي من نشر الشيت!";
+    }
 }
 
-function render(){
-  grid.innerHTML=db.map((p,i)=>{
-    let price=currentCurr==='SDG'?p.price+' SDG':(p.price*RATE).toFixed(2)+' SAR';
-    return `<div class="card">
-      <div class="swiper s${i}"><div class="swiper-wrapper">
-        ${p.imgs.map(img=>`<div class="swiper-slide"><img src="${img}"></div>`).join('')}
-      </div></div>
-      <div class="details">
-        <div class="p-title">${p.name}</div>
-        <div class="p-price">${price}</div>
-        <button class="add-btn" onclick="addC(${p.id})">إضافة للسلة</button>
-      </div>
-    </div>`;
-  }).join('');
-  db.forEach((_,i)=>new Swiper('.s'+i));
+function render(list) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = list.map(p => `
+        <div class="card">
+            <img src="${p.img}" onclick="openImg('${p.img}')" alt="${p.name}">
+            <div class="info">
+                <div class="store">✨ ${p.store}</div>
+                <div class="title">${p.name}</div>
+                <div class="price">${p.price} <small style="font-size:10px">SDG</small></div>
+                <button class="btn" onclick="order('${p.whatsapp}','${p.name}')">
+                    اطلب الآن ✅
+                </button>
+            </div>
+        </div>
+    `).join('');
 }
 
-function addC(id){
-  cart.push(db.find(p=>p.id===id));
-  localStorage.setItem('cart',JSON.stringify(cart));
-  updateCart();
-  alert('تمت الإضافة');
+function openImg(src) {
+    document.getElementById('viewerImg').src = src;
+    document.getElementById('viewer').style.display = 'flex';
 }
 
-function updateCart(){
-  cartContent.innerHTML=cart.map(i=>`<div>${i.name}</div>`).join('');
-  cBadge.innerText=cart.length;
-  totalVal.innerText='الإجمالي: '+cart.reduce((s,i)=>s+i.price,0);
+function order(num, name) {
+    const cleanNum = num.replace('+', '').replace(/\s/g, '');
+    const msg = encodeURIComponent(`مرحباً فيرا مول، أريد طلب منتج: ${name}`);
+    window.open(`https://wa.me/${cleanNum}?text=${msg}`, '_blank');
 }
 
-function checkout(){
-  window.open('https://wa.me/249967584275?text='+encodeURIComponent('طلب جديد'));
-}
-
-function toggleM(){sideMenu.classList.toggle('active')}
-function openO(id){document.getElementById(id).style.display='block';updateCart()}
-function closeO(){document.querySelectorAll('.overlay').forEach(o=>o.style.display='none')}
-function setCurrency(c){currentCurr=c;render()}
-
-init();
+loadProducts();
 </script>
 </body>
 </html>
