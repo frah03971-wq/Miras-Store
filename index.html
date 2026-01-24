@@ -8,7 +8,7 @@
 :root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31;}
 body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden;}
 
-/* الهيدر الاحترافي */
+/* الهيدر */
 header{background:var(--dark);color:white;padding:20px 10px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);}
 header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
 .slogan{margin:5px 0 0;font-size:13px;color:#ddd;}
@@ -18,20 +18,26 @@ header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
 .currency-switch{cursor:pointer;padding:4px 8px;background:#222;border-radius:8px;color:white;font-size:11px;border:1px solid #444;}
 .currency-switch.active{background:var(--gold);color:#000;}
 
-/* شبكة المنتجات */
+/* الحاوية */
 .container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:15px;max-width:1200px;margin:0 auto;}
 
-/* كرت المنتج والسلايدر (حل مشكلة الحركة) */
+/* كرت المنتج والسلايدر */
 .card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column;}
 
-.slider-container{position:relative;width:100%;height:210px;background:#f0f0f0;overflow:hidden;direction:ltr!important;}
-.slider-track{display:flex;width:100%;height:100%;transition:transform 0.5s ease-in-out;will-change: transform;}
+.slider-container{position:relative;width:100%;height:210px;background:#eee;overflow:hidden;direction:ltr!important;}
+.slider-track{display:flex;width:100%;height:100%;transition:transform 0.5s ease-in-out;}
 .slider-track img{min-width:100%;width:100%;height:100%;object-fit:cover;cursor:pointer;}
 
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);color:white;border:none;width:32px;height:32px;cursor:pointer;border-radius:50%;z-index:10;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.next{right:8px;}.prev{left:8px;}
+/* أزرار السلايدر - واضحة جداً */
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(212,175,55,0.8);color:black;border:none;width:28px;height:28px;cursor:pointer;border-radius:50%;z-index:10;font-weight:bold;display:flex;align-items:center;justify-content:center;}
+.next{right:5px;} .prev{left:5px;}
 
-.fav-icon{position:absolute;top:10px;right:10px;z-index:15;color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
+/* نقاط التنقل */
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:4px;z-index:11;}
+.dot{width:6px;height:6px;background:rgba(255,255,255,0.5);border-radius:50%;transition:0.3s;}
+.dot.active{background:var(--gold);width:12px;border-radius:4px;}
+
+.fav-icon{position:absolute;top:10px;left:10px;z-index:15;color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
 .fav-icon.active{color:var(--red);}
 
 .info{padding:12px;text-align:center;direction:rtl;flex-grow:1;}
@@ -40,15 +46,10 @@ header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
 .price{font-size:16px;font-weight:800;color:#222;margin-bottom:10px;}
 .btn-order{background:var(--gold);color:var(--dark);border:none;width:100%;padding:10px;border-radius:10px;font-weight:bold;cursor:pointer;}
 
-/* عرض الصورة الكبيرة */
-#viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:99999;align-items:center;justify-content:center;}
-#viewer img{max-width:90%;max-height:80%;border-radius:8px;border:2px solid var(--gold);}
-
 /* القائمة الجانبية */
 .sidebar{height:100%;width:0;position:fixed;z-index:10001;top:0;right:0;background:var(--dark);overflow-x:hidden;transition:0.4s;color:white;}
 .sidebar-content{padding:30px;}
 .sidebar h3{color:var(--gold);font-size:18px;border-bottom:1px solid #333;padding-bottom:10px;margin-top:20px;}
-.fav-item{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;background:#1a1a1a;padding:8px;border-radius:8px;}
 </style>
 </head>
 <body>
@@ -70,10 +71,6 @@ header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
   <div class="sidebar-content">
       <h3>🚚 التوصيل</h3>
       <p style="font-size:14px;color:#ccc;">يتم تحديد سعر التوصيل بواسطة المتجر عند الطلب.</p>
-      
-      <h3>❤️ المفضلة</h3>
-      <div id="favList" style="font-size:13px;color:#aaa;">لا يوجد منتجات في المفضلة بعد.</div>
-      
       <h3>💳 الدفع</h3>
       <p style="font-size:14px;">حساب بنكك: <strong style="color:var(--gold)">2280384</strong></p>
       <hr style="border:0;border-top:1px solid #333;margin:20px 0;">
@@ -81,13 +78,11 @@ header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
   </div>
 </div>
 
-<div id="viewer" onclick="this.style.display='none'"><img id="vImg"></div>
-
 <script>
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
-let currentCurr='SDG', allProducts=[], favorites=JSON.parse(localStorage.getItem('vira_favs')||'[]');
+let currentCurr='SDG', allProducts=[];
 
-function openNav(){document.getElementById("mySidebar").style.width="280px";updateFavUI();}
+function openNav(){document.getElementById("mySidebar").style.width="280px";}
 function closeNav(){document.getElementById("mySidebar").style.width="0";}
 
 async function loadProducts(){
@@ -96,31 +91,36 @@ async function loadProducts(){
     const text=await res.text();
     const rows=text.split(/\r?\n/).slice(1);
     allProducts=rows.map((r,idx)=>{
+      // معالجة البيانات بدقة لمنع ظهور الأكواد
       const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,'').trim());
-      if(!c[0]||c[0].includes('!')) return null;
-      return {id:idx,name:c[0],price:parseFloat(c[1])||0,store:c[2],imgs:c[3]?c[3].split(' '):[],wa:c[4]};
+      if(!c[0] || c[0].startsWith('=')) return null; 
+      
+      // التأكد من تقسيم روابط الصور لو كانت مفصولة بمسافة
+      const imgs = c[3] ? c[3].split(/\s+/).filter(i => i.startsWith('http')) : [];
+      
+      return {id:idx, name:c[0], price:parseFloat(c[1])||0, store:c[2], imgs:imgs, wa:c[4]};
     }).filter(p=>p);
     renderGrid();
-  }catch(e){console.error("Error loading products");}
+  }catch(e){console.error("Error");}
 }
 
 function renderGrid(){
   document.getElementById('grid').innerHTML = allProducts.map(p=>{
-    const price=currentCurr==='SDG'?p.price:(p.price*0.0031).toFixed(2);
-    const cleanImgs = p.imgs.filter(i => i.trim() !== "");
-    const imgsHtml=cleanImgs.map(img=>`<img src="${img.trim()}" onclick="showFull('${img.trim()}')">`).join('');
+    const price = currentCurr==='SDG' ? p.price : (p.price * 0.0031).toFixed(2);
+    const imgsHtml = p.imgs.map(img => `<img src="${img}">`).join('');
     
-    // الأزرار تظهر فقط لو في أكثر من صورة
-    const navs=cleanImgs.length > 1 ? `
+    // نقاط التنقل
+    const dotsHtml = p.imgs.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+    
+    const navs = p.imgs.length > 1 ? `
+      <div class="dots">${dotsHtml}</div>
       <button class="nav-btn next" onclick="moveSlide(this, 1)">❯</button>
       <button class="nav-btn prev" onclick="moveSlide(this, -1)">❮</button>
     ` : '';
     
-    const isFav=favorites.some(f=>f.name===p.name)?'active':'';
-    
     return `<div class="card" data-idx="0">
       <div class="slider-container">
-        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}','${cleanImgs[0]}',event,this)">❤</div>
+        <div class="fav-icon" onclick="this.classList.toggle('active')">❤</div>
         <div class="slider-track">${imgsHtml}</div>
         ${navs}
       </div>
@@ -128,43 +128,33 @@ function renderGrid(){
         <div class="store">✨ ${p.store}</div>
         <div class="title">${p.name}</div>
         <div class="price">${price} ${currentCurr}</div>
-        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa.replace(/\s/g,'')}?text=طلب منتج: ${p.name}')">طلب واتساب ✅</button>
+        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa}?text=طلب: ${p.name}')">طلب واتساب ✅</button>
       </div>
     </div>`;
   }).join('');
 }
 
-// دالة السلايدر الزيت - شغالة 100%
 function moveSlide(btn, dir){
   const card = btn.closest('.card');
   const track = card.querySelector('.slider-track');
+  const dots = card.querySelectorAll('.dot');
   const imgs = track.querySelectorAll('img');
   let current = parseInt(card.getAttribute('data-idx')) || 0;
   
   current = (current + dir + imgs.length) % imgs.length;
   card.setAttribute('data-idx', current);
-  
-  // التحريك بنسبة 100% لليسار لكل صورة
   track.style.transform = `translateX(-${current * 100}%)`;
+  
+  // تحديث النقاط
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
 }
 
-function toggleFav(name,img,event,el){
-  event.stopPropagation();
-  const index=favorites.findIndex(f=>f.name===name);
-  if(index>-1){favorites.splice(index,1);el.classList.remove('active');} 
-  else{favorites.push({name,img});el.classList.add('active');}
-  localStorage.setItem('vira_favs',JSON.stringify(favorites));
-  updateFavUI();
+function setCurrency(c){
+  currentCurr=c;
+  document.querySelectorAll('.currency-switch').forEach(e=>e.classList.remove('active'));
+  document.getElementById('btn'+c).classList.add('active');
+  renderGrid();
 }
-
-function updateFavUI(){
-  const list=document.getElementById('favList');
-  if(favorites.length===0){list.innerHTML="القائمة فارغة";return;}
-  list.innerHTML=favorites.map(f=>`<div class="fav-item"><img src="${f.img}" width="40" height="40" style="border-radius:6px;object-fit:cover;"><span>${f.name}</span></div>`).join('');
-}
-
-function showFull(s){document.getElementById('vImg').src=s;document.getElementById('viewer').style.display='flex';}
-function setCurrency(c){currentCurr=c;document.querySelectorAll('.currency-switch').forEach(e=>e.classList.remove('active'));document.getElementById('btn'+c).classList.add('active');renderGrid();}
 
 loadProducts();
 </script>
