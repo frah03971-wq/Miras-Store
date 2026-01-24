@@ -3,92 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم التاجر - VIRA MALL</title>
+<title>لوحة تحكم VIRA MALL | الإدارة الذكية</title>
 <style>
-body{margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f5f5f7;}
-h1{text-align:center; color:#D4AF37; margin:20px 0;}
-.upload-section{max-width:600px; margin:0 auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.1);}
-.upload-section input, .upload-section button{width:100%; margin:8px 0; padding:10px; border-radius:8px; border:1px solid #ccc; font-size:14px;}
-.upload-section button{background:#D4AF37; border:none; color:#000; font-weight:bold; cursor:pointer;}
-table{width:90%; margin:20px auto; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden;}
-table th, table td{padding:8px; border:1px solid #ddd; text-align:center;}
-table th{background:#D4AF37; color:#000;}
-#copyLinksBtn, #downloadCSVBtn{margin:10px; padding:10px 15px; border:none; border-radius:8px; background:#0f1111; color:#D4AF37; cursor:pointer; font-weight:bold;}
+:root{ --gold:#D4AF37; --dark:#0f1111; --white:#fff; }
+body{margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; direction:rtl; padding-bottom: 50px;}
+header{background:var(--dark); color:var(--gold); padding:20px; text-align:center; border-bottom:4px solid var(--gold); box-shadow:0 4px 10px rgba(0,0,0,0.2);}
+h2{margin:0; font-size:22px; letter-spacing:1px;}
+
+.admin-container{max-width:800px; margin:30px auto; padding:0 15px;}
+.form-card{background:var(--white); padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08); border:1px solid #eee;}
+
+.grid-inputs{display:grid; grid-template-columns:1fr 1fr; gap:15px;}
+.full-width{grid-column: span 2;}
+
+label{display:block; margin:10px 5px 5px; font-weight:bold; color:#444; font-size:13px;}
+input{width:100%; padding:12px; border:1.5px solid #eee; border-radius:10px; font-size:14px; outline:none; transition:0.3s;}
+input:focus{border-color:var(--gold); box-shadow:0 0 8px rgba(212,175,55,0.1);}
+
+.btn-primary{background:var(--dark); color:var(--gold); border:2px solid var(--gold); width:100%; padding:15px; border-radius:12px; font-weight:bold; cursor:pointer; font-size:16px; margin-top:20px; transition:0.3s;}
+.btn-primary:hover{background:var(--gold); color:var(--dark);}
+
+.table-section{margin-top:40px; background:white; border-radius:15px; overflow-x:auto; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+table{width:100%; border-collapse:collapse; min-width:600px;}
+table th{background:#f8f9fa; color:#666; padding:15px; font-size:13px; border-bottom:2px solid #eee;}
+table td{padding:12px; text-align:center; border-bottom:1px solid #eee; font-size:13px;}
+
+.copy-btn{background:#28a745; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:11px;}
+.badge-img{width:40px; height:40px; object-fit:cover; border-radius:5px; border:1px solid #ddd;}
 </style>
 </head>
 <body>
 
-<h1>لوحة تحكم التاجر - VIRA MALL</h1>
+<header>
+  <h2>VIRA MALL ADMIN | لوحة التاجر</h2>
+</header>
 
-<div class="upload-section">
-  <input type="text" id="productName" placeholder="اسم المنتج">
-  <input type="text" id="productPrice" placeholder="السعر">
-  <input type="text" id="productStore" placeholder="اسم المتجر">
-  <input type="text" id="productImg" placeholder="رابط الصورة (يمكن متعدد مفصول بمسافة)">
-  <input type="text" id="productWhatsApp" placeholder="رابط واتساب">
-  <input type="text" id="productSale" placeholder="التخفيض (اختياري)">
-  <button id="uploadBtn">رفع المنتج</button>
+<div class="admin-container">
+  <div class="form-card">
+    <div class="grid-inputs">
+      <div>
+        <label>اسم المنتج</label>
+        <input type="text" id="pName" placeholder="مثلاً: فستان شيفون">
+      </div>
+      <div>
+        <label>السعر (بالرقم فقط)</label>
+        <input type="number" id="pPrice" placeholder="50000">
+      </div>
+      <div>
+        <label>اسم المتجر</label>
+        <input type="text" id="pStore" placeholder="متجر فيرا">
+      </div>
+      <div>
+        <label>الخصم (اختياري)</label>
+        <input type="text" id="pSale" placeholder="10% أو 'عيد'">
+      </div>
+      <div class="full-width">
+        <label>روابط الصور (ضع مسافة بين كل رابط ورابط)</label>
+        <input type="text" id="pImg" placeholder="رابط1 رابط2 رابط3 ...">
+      </div>
+      <div class="full-width">
+        <label>رقم واتساب التاجر (بدون +)</label>
+        <input type="text" id="pWa" placeholder="249967584275">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="addProduct()">إضافة المنتج للقائمة ➕</button>
+  </div>
+
+  <div class="table-section">
+    <table id="productsTable">
+      <thead>
+        <tr>
+          <th>الصورة</th>
+          <th>المنتج</th>
+          <th>السعر</th>
+          <th>الإجراء</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        </tbody>
+    </table>
+  </div>
+  
+  <p style="text-align:center; color:#888; font-size:12px; margin-top:20px;">
+    بعد الإضافة، اضغطي على "نسخ" وانتقلي لجدول قوقل واعملي "لصق" (Paste).
+  </p>
 </div>
 
-<h2 style="text-align:center">المنتجات المضافة</h2>
-<table id="productsTable">
-<thead>
-<tr>
-<th>الاسم</th><th>السعر</th><th>المتجر</th><th>رابط الصورة</th><th>واتساب</th><th>تخفيض</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-
-<button id="copyLinksBtn">نسخ جميع روابط الصور</button>
-<button id="downloadCSVBtn">تحميل CSV</button>
-
 <script>
-const tableBody=document.querySelector('#productsTable tbody');
-let uploadedProducts=[];
+let products = [];
 
-document.getElementById('uploadBtn').addEventListener('click',()=>{
-  const name=document.getElementById('productName').value.trim();
-  const price=document.getElementById('productPrice').value.trim();
-  const store=document.getElementById('productStore').value.trim();
-  const img=document.getElementById('productImg').value.trim();
-  const whatsapp=document.getElementById('productWhatsApp').value.trim();
-  const sale=document.getElementById('productSale').value.trim();
+function addProduct() {
+  const name = document.getElementById('pName').value.trim();
+  const price = document.getElementById('pPrice').value.trim();
+  const store = document.getElementById('pStore').value.trim();
+  const img = document.getElementById('pImg').value.trim();
+  const wa = document.getElementById('pWa').value.trim();
+  const sale = document.getElementById('pSale').value.trim();
 
-  if(!name || !price || !store || !img || !whatsapp){ alert('أكمل كل الحقول المطلوبة'); return; }
+  if(!name || !price || !img || !wa) {
+    alert("يا ملكة، عبي الخانات المهمة أول (الاسم، السعر، الصور، الواتساب)");
+    return;
+  }
 
-  const row=document.createElement('tr');
-  row.innerHTML=`<td>${name}</td><td>${price}</td><td>${store}</td><td><a href="${img}" target="_blank">${img}</a></td><td>${whatsapp}</td><td>${sale}</td>`;
-  tableBody.appendChild(row);
+  const p = { name, price, store, img, wa, sale };
+  products.push(p);
+  updateTable();
+  
+  // تنظيف الخانات لمنتج جديد
+  document.getElementById('pName').value = '';
+  document.getElementById('pPrice').value = '';
+  document.getElementById('pSale').value = '';
+  document.getElementById('pImg').value = '';
+}
 
-  uploadedProducts.push({name,price,store,img,whatsapp,sale});
+function updateTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = products.map((p, idx) => {
+    const firstImg = p.img.split(' ')[0]; // عرض أول صورة بس في الجدول
+    return `
+      <tr>
+        <td><img src="${firstImg}" class="badge-img" onerror="this.src='https://via.placeholder.com/50'"></td>
+        <td><b>${p.name}</b><br><small>${p.store}</small></td>
+        <td>${p.price} SDG</td>
+        <td>
+          <button class="copy-btn" onclick="copyRow(${idx})">نسخ للشيت 📋</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
 
-  // مسح الإدخالات
-  document.getElementById('productName').value='';
-  document.getElementById('productPrice').value='';
-  document.getElementById('productStore').value='';
-  document.getElementById('productImg').value='';
-  document.getElementById('productWhatsApp').value='';
-  document.getElementById('productSale').value='';
-});
-
-document.getElementById('copyLinksBtn').addEventListener('click',()=>{
-  if(uploadedProducts.length===0){alert('لا توجد روابط للنسخ'); return;}
-  const text=uploadedProducts.map(p=>p.img).join('\n');
-  navigator.clipboard.writeText(text).then(()=>alert('تم نسخ جميع الروابط'));
-});
-
-document.getElementById('downloadCSVBtn').addEventListener('click',()=>{
-  if(uploadedProducts.length===0){alert('لا توجد منتجات لتحويلها CSV'); return;}
-  const headers=["الاسم","السعر","المتجر","رابط الصورة","واتساب","تخفيض"];
-  const rows=uploadedProducts.map(p=>[p.name,p.price,p.store,p.img,p.whatsapp,p.sale]);
-  let csv=headers.join(",")+"\n";
-  rows.forEach(r=>{csv+=r.map(f=>`"${f}"`).join(",")+"\n";});
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='products.csv';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-});
+function copyRow(idx) {
+  const p = products[idx];
+  // الترتيب حسب أعمدة الشيت: الاسم، السعر، المتجر، الصور، الواتساب، التخفيض
+  const rowText = `${p.name}\t${p.price}\t${p.store}\t${p.img}\t${p.wa}\t${p.sale}`;
+  
+  navigator.clipboard.writeText(rowText).then(() => {
+    alert("تم نسخ سطر المنتج! روحي لجدول قوقل واعملي لصق (Paste) ✨");
+  });
+}
 </script>
 
 </body>
