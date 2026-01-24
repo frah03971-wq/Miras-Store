@@ -8,7 +8,7 @@
 :root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31}
 body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden}
 
-/* الهيدر */
+/* الهيدر الاحترافي */
 header{background:var(--dark);color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center}
 header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1px}
 .menu-btn{font-size:30px;cursor:pointer;color:var(--gold);padding:0 10px}
@@ -17,19 +17,18 @@ header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1
 .sidebar{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--dark);z-index:2000;transition:0.3s;color:white;padding:25px;box-shadow:-5px 0 15px rgba(0,0,0,0.5)}
 .sidebar.open{right:0}
 .sidebar h2{color:var(--gold);border-bottom:1px solid #333;padding-bottom:10px;margin-bottom:20px}
-.side-item{padding:15px 0;border-bottom:1px solid #222;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:16px}
-.side-item:hover{color:var(--gold)}
+.side-item{padding:15px 0;border-bottom:1px solid #222;cursor:pointer;display:flex;align-items:center;gap:10px}
 
 /* حاوية المنتجات */
 .container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;max-width:1200px;margin:auto}
 .card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
 
-/* السلايدر المصلح */
+/* السلايدر المطور */
 .slider-box{position:relative;height:210px;overflow:hidden;direction:ltr!important;background:#eee}
 .track{display:flex;height:100%;transition:transform 0.5s ease-in-out}
 .track img{min-width:100%;width:100%;height:100%;object-fit:cover}
 
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;z-index:10;cursor:pointer;font-weight:bold}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;z-index:10;cursor:pointer}
 .dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
 .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5)}
 .dot.active{background:var(--gold);width:12px;border-radius:10px}
@@ -41,9 +40,9 @@ header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1
 .price{font-size:17px;font-weight:900;color:#222;margin-bottom:10px}
 .btn-wa{background:var(--gold);color:var(--dark);border:none;padding:10px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer;display:block;text-decoration:none}
 
-/* النوافذ المنبثقة */
+/* النوافذ */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;z-index:3000;align-items:center;justify-content:center;padding:20px}
-.modal{background:white;padding:25px;border-radius:20px;width:100%;max-width:350px;text-align:center;color:black;position:relative}
+.modal{background:white;padding:25px;border-radius:20px;width:100%;max-width:350px;text-align:center;color:black}
 </style>
 </head>
 <body>
@@ -56,27 +55,27 @@ header h1{margin:0;color:var(--gold);font-size:24px;flex-grow:1;letter-spacing:1
 
 <div class="sidebar" id="sidebar">
     <div style="text-align:left; font-size:30px; cursor:pointer" onclick="toggleSide()">×</div>
-    <h2>فيرا مول ✨</h2>
+    <h2>القائمة 🌟</h2>
     <div class="side-item" onclick="showPop('bank')">💳 دفع (بنكك)</div>
     <div class="side-item" onclick="showPop('shipping')">🚚 التوصيل</div>
-    <div class="side-item" onclick="window.location.href='admin.html'">👩‍💼 دخول التاجرات</div>
-    <p style="position:absolute; bottom:20px; font-size:11px; color:#555">VIRA MALL 2026 - All Rights Reserved</p>
+    <div class="side-item" onclick="window.location.href='admin.html'">👩‍💼 بوابة التاجرات</div>
 </div>
 
 <div class="container" id="grid">
-    <p style="text-align:center; grid-column:1/-1; padding:50px; color:#888">جاري تحميل أحدث الموديلات...</p>
+    <p id="loading-msg" style="text-align:center; grid-column:1/-1; padding:50px; color:#888">جاري تحديث الموديلات... ✨</p>
 </div>
 
 <div class="overlay" id="overlay" onclick="closePop()">
     <div class="modal" onclick="event.stopPropagation()">
         <h3 id="popTitle" style="color:var(--gold)"></h3>
-        <div id="popContent" style="margin:15px 0; line-height:1.6"></div>
+        <div id="popContent" style="margin:15px 0"></div>
         <button class="btn-wa" onclick="closePop()">موافق</button>
     </div>
 </div>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+// إضافة timestamp لمنع التخزين المؤقت (Cache) وضمان ظهور أحدث البيانات
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv&t=' + new Date().getTime();
 
 async function fetchProducts() {
     try {
@@ -86,7 +85,7 @@ async function fetchProducts() {
         
         const products = rows.map((row, index) => {
             const cols = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c => c.replace(/"/g, '').trim());
-            if (!cols[0]) return null;
+            if (!cols[0] || cols[0] === "") return null;
             return {
                 id: index,
                 name: cols[0],
@@ -97,9 +96,13 @@ async function fetchProducts() {
             };
         }).filter(p => p);
 
-        renderProducts(products);
+        if (products.length === 0) {
+            document.getElementById('grid').innerHTML = "<p style='text-align:center; grid-column:1/-1; padding:50px;'>لا توجد منتجات حالياً، يرجى المحاولة لاحقاً.</p>";
+        } else {
+            renderProducts(products);
+        }
     } catch (error) {
-        document.getElementById('grid').innerHTML = "تعذر الاتصال بالمتجر، يرجى المحاولة لاحقاً.";
+        document.getElementById('grid').innerHTML = "<p style='text-align:center; grid-column:1/-1; padding:50px;'>عذراً، حدث خطأ في الاتصال بالبيانات.</p>";
     }
 }
 
@@ -121,18 +124,10 @@ function renderProducts(list) {
                 <span class="store-tag">✨ ${p.store}</span>
                 <div class="title">${p.name}</div>
                 <div class="price">${p.price} SDG</div>
-                <a class="btn-wa" target="_blank" href="https://wa.me/${p.whatsapp.replace(/\s/g,'')}?text=أهلاً، أرغب في طلب: ${p.name}">طلب واتساب ✅</a>
+                <a class="btn-wa" target="_blank" href="https://wa.me/${p.whatsapp.replace(/\s/g,'')}?text=طلب: ${p.name}">طلب واتساب ✅</a>
             </div>
         </div>`;
     }).join('');
-    
-    // تشغيل التقليب التلقائي
-    setInterval(() => {
-        document.querySelectorAll('.card').forEach(card => {
-            const nextBtn = card.querySelector('.nav-btn[style*="right"]');
-            if (nextBtn) move(nextBtn, 1);
-        });
-    }, 5000);
 }
 
 function move(btn, dir) {
@@ -141,7 +136,6 @@ function move(btn, dir) {
     const dots = card.querySelectorAll('.dot');
     const total = track.children.length;
     let idx = (parseInt(card.dataset.idx) + dir + total) % total;
-    
     card.dataset.idx = idx;
     track.style.transform = `translateX(-${idx * 100}%)`;
     if (dots.length) {
@@ -161,11 +155,11 @@ function showPop(type) {
     overlay.style.display = 'flex';
 
     if (type === 'bank') {
-        title.innerText = "💳 الدفع عبر بنكك";
-        content.innerHTML = "يرجى التحويل للحساب التالي:<br><strong style='font-size:22px'>2280384</strong><br>الاسم: فيرا مول<br>ثم أرسل الإشعار للتاجر.";
+        title.innerText = "💳 الدفع (بنكك)";
+        content.innerHTML = "يرجى التحويل للحساب التالي:<br><strong style='font-size:22px'>2280384</strong><br>الاسم: فيرا مول";
     } else if (type === 'shipping') {
-        title.innerText = "🚚 خدمات التوصيل";
-        content.innerHTML = "التوصيل متوفر لجميع الولايات.<br>الخرطوم: 3000-5000 ج.س<br>الولايات: حسب المسافة.";
+        title.innerText = "🚚 التوصيل";
+        content.innerHTML = "التوصيل متوفر لجميع الولايات ويحدد السعر عند الطلب.";
     }
 }
 
