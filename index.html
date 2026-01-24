@@ -3,33 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIRA MALL | فيرا مول</title>
+<title>VIRA MALL | فيرا مول الذكي</title>
 <style>
 :root{ --gold:#D4AF37; --dark:#0f1111; --gray:#f5f5f7; --white:#ffffff; }
-body{margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:var(--gray); direction:rtl;}
-header{background:var(--dark); color:white; padding:25px 15px; text-align:center; position:relative; border-bottom:3px solid var(--gold);}
-header h1{margin:0; font-size:30px; color:var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.3);}
-header p.slogan{margin:10px 0 0; font-size:15px; letter-spacing:1px;}
+body{margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:var(--gray); direction:rtl; overflow-x:hidden;}
+
+/* هيدر ثابت وفخم */
+header{background:var(--dark); color:white; padding:20px; text-align:center; position:sticky; top:0; z-index:1000; border-bottom:3px solid var(--gold);}
+header h1{margin:0; font-size:26px; color:var(--gold);}
+
+/* أيقونات الهيدر */
+.header-tools { position: absolute; top: 20px; left: 20px; display: flex; gap: 15px; }
+.cart-icon { position: relative; cursor: pointer; font-size: 22px; color: var(--gold); }
+.cart-count { position: absolute; top: -8px; right: -8px; background: red; color: white; font-size: 12px; padding: 2px 6px; border-radius: 50%; }
+.menu-btn { position: absolute; top: 20px; right: 20px; font-size: 26px; color: var(--gold); cursor: pointer; }
 
 /* القائمة الجانبية */
-.menu-btn { position: absolute; top: 25px; right: 20px; font-size: 26px; color: var(--gold); cursor: pointer; }
-.sidebar { height: 100%; width: 0; position: fixed; z-index: 10000; top: 0; right: 0; background-color: var(--dark); overflow-x: hidden; transition: 0.4s; padding-top: 60px; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
-.sidebar p { padding: 15px 25px; color: white; border-bottom: 1px solid #333; margin: 0; }
+.sidebar { height: 100%; width: 0; position: fixed; z-index: 10001; top: 0; right: 0; background: var(--dark); overflow-x: hidden; transition: 0.4s; padding-top: 60px; }
+.sidebar .section-title { padding: 15px 25px; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; cursor: pointer; display: flex; justify-content: space-between; }
+.sidebar .content { padding: 15px 25px; color: white; font-size: 14px; display: none; background: #1a1a1a; }
 .sidebar .closebtn { position: absolute; top: 10px; left: 25px; font-size: 36px; color: var(--gold); text-decoration: none; }
 
-.container{padding:20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:20px; max-width:1200px; margin:0 auto;}
-.card{background:var(--white); border-radius:20px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.06); transition:.3s; display:flex; flex-direction:column; border:1px solid #eee;}
-.card:hover{transform:translateY(-8px); box-shadow:0 10px 25px rgba(0,0,0,0.12);}
-.card img{width:100%; height:200px; object-fit:cover; cursor:pointer;}
-.info{padding:15px; text-align:center; flex-grow:1;}
-.store{font-size:10px; color:var(--gold); font-weight:bold; margin-bottom:5px;}
-.title{font-size:15px; font-weight:bold; color:var(--dark); margin:5px 0; height:40px;}
-.price{font-size:18px; font-weight:800; color:#222; margin-bottom:12px;}
-.btn{background:var(--dark); color:var(--gold); border:1px solid var(--gold); width:100%; padding:12px; border-radius:12px; cursor:pointer; font-weight:bold; transition:0.3s;}
-.btn:hover{background:var(--gold); color:var(--dark);}
+/* الحاوية والكروت */
+.container{padding:20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:15px; max-width:1200px; margin:0 auto;}
+.card{background:var(--white); border-radius:15px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,.05); display:flex; flex-direction:column; transition: 0.3s;}
+.card:hover { transform: translateY(-5px); }
+
+/* سلايدر الصور */
+.img-container { position: relative; width: 100%; height: 180px; background: #eee; overflow: hidden; }
+.img-container img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+
+.info{padding:12px; text-align:center; flex-grow:1;}
+.price{font-size:17px; font-weight:bold; color:#222; margin:8px 0;}
+.btn-add { background:var(--gold); color:var(--dark); border:none; width:100%; padding:10px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom: 5px; }
+.btn-wa { background:transparent; color:var(--gold); border:1px solid var(--gold); width:100%; padding:8px; border-radius:8px; cursor:pointer; font-size: 12px; }
+
+/* صفحة السلة والتوصيل */
+.overlay { display:none; position:fixed; inset:0; background:white; z-index:20000; padding:20px; overflow-y:auto; }
+.overlay h2 { color: var(--dark); border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+.checkout-btn { background: #25D366; color: white; border: none; width: 100%; padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
 #viewer{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:99999; align-items:center; justify-content:center;}
-#viewer img{max-width:95%; max-height:85%; border-radius:10px; border:2px solid var(--gold);}
+#viewer img{max-width:95%; max-height:85%; border-radius:10px;}
 </style>
 </head>
 <body>
@@ -37,53 +55,129 @@ header p.slogan{margin:10px 0 0; font-size:15px; letter-spacing:1px;}
 <header>
   <div class="menu-btn" onclick="openNav()">☰</div>
   <h1>VIRA MALL</h1>
-  <p class="slogan">خيارك الأول في السودان 🇸🇩</p>
+  <div class="header-tools">
+      <div class="cart-icon" onclick="openCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
+  </div>
 </header>
 
 <div id="mySidebar" class="sidebar">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  <p style="color:var(--gold); font-weight:bold;">💳 معلومات الدفع</p>
-  <p>رقم حساب التاجرات: <br><strong style="font-size:20px; color:var(--gold)">2280384</strong></p>
-  <p style="color:var(--gold); font-weight:bold;">🚚 التوصيل</p>
-  <p>يتم تحديد السعر حسب المتجر.</p>
+  
+  <div class="section-title" onclick="toggleSide('payContent')">💳 معلومات الدفع للتجار <span>+</span></div>
+  <div id="payContent" class="content">
+      رقم حساب التاجرات: <br> <strong style="color:var(--gold)">2280384</strong> <br><br>
+      <button style="background:var(--gold); border:none; padding:8px; border-radius:5px; cursor:pointer" onclick="window.open('https://wa.me/249967584275?text=اريد الاشتراك كتاجر')">إشترك الآن كتاجر ✨</button>
+  </div>
+
+  <div class="section-title" onclick="toggleSide('delivContent')">🚚 التوصيل <span>+</span></div>
+  <div id="delivContent" class="content">
+      الرجاء الضغط على السلة وتعبئة بياناتك (الولاية، المدينة، الشارع) عند تأكيد الطلب.
+  </div>
 </div>
 
 <div class="container" id="grid"></div>
 
-<div id="viewer" onclick="this.style.display='none'">
-  <img id="viewerImg">
+<div id="cartOverlay" class="overlay">
+    <div style="text-align: left; font-size: 24px; cursor: pointer;" onclick="closeCart()">✕</div>
+    <h2>سلة المشتريات 🛒</h2>
+    <div id="cartItems"></div>
+    <hr>
+    <h3>بيانات التوصيل 📍</h3>
+    <div class="form-group"><label>الولاية:</label><input type="text" id="state" placeholder="مثلاً: الخرطوم"></div>
+    <div class="form-group"><label>المدينة / المنطقة:</label><input type="text" id="city" placeholder="مثلاً: أمدرمان - الثورة"></div>
+    <div class="form-group"><label>الشارع / المعلم البارز:</label><input type="text" id="street" placeholder="مثلاً: شارع النص - قرب طلمبة النيل"></div>
+    
+    <div style="font-size: 20px; font-weight: bold; margin: 20px 0;">الإجمالي: <span id="totalPrice">0</span> SDG</div>
+    <button class="checkout-btn" onclick="sendOrder()">تأكيد الطلب عبر واتساب ✅</button>
 </div>
+
+<div id="viewer" onclick="this.style.display='none'"><img id="viewerImg"></div>
 
 <script>
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
 
-function openNav() { document.getElementById("mySidebar").style.width = "260px"; }
+let products = [];
+let cart = [];
+
+function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+function toggleSide(id) { 
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
 
 async function loadProducts(){
   const res = await fetch(SHEET_URL);
   const text = await res.text();
   const rows = text.split(/\r?\n/).slice(1);
-  const products = rows.map(r=>{
+  products = rows.map((r, index)=>{
     const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,'').trim());
-    return {name:c[0], price:c[1], store:c[2], img:c[3], whatsapp:c[4]};
+    return {id: index, name:c[0], price:c[1], store:c[2], img:c[3], whatsapp:c[4]};
   }).filter(p=>p.name && p.img);
-  
+  render();
+}
+
+function render(){
   document.getElementById('grid').innerHTML = products.map(p=>`
     <div class="card">
-      <img src="${p.img}" onclick="openImg('${p.img}')" onerror="this.src='https://via.placeholder.com/200'">
+      <div class="img-container">
+          <img src="${p.img}" onclick="openImg('${p.img}')" onerror="this.src='https://via.placeholder.com/200'">
+      </div>
       <div class="info">
         <div class="store">✨ ${p.store}</div>
-        <div class="title">${p.name}</div>
+        <div class="title" style="font-size:13px; font-weight:bold; height:32px; overflow:hidden;">${p.name}</div>
         <div class="price">${p.price} SDG</div>
-        <button class="btn" onclick="order('${p.whatsapp}','${p.name}')">اطلب عبر واتساب</button>
+        <button class="btn-add" onclick="addToCart(${p.id})">أضف للسلة 🛒</button>
+        <button class="btn-wa" onclick="order('${p.whatsapp}','${p.name}')">استفسار مباشر</button>
       </div>
     </div>
   `).join('');
 }
 
+function addToCart(id) {
+    const p = products.find(item => item.id === id);
+    cart.push(p);
+    updateCart();
+    alert("تمت الإضافة لملكة فيرا! ✨");
+}
+
+function updateCart() {
+    document.getElementById('cartCount').innerText = cart.length;
+    let total = 0;
+    document.getElementById('cartItems').innerHTML = cart.map((item, index) => {
+        total += parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+        return `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span>${item.name}</span>
+            <b>${item.price} SDG</b>
+        </div>`;
+    }).join('');
+    document.getElementById('totalPrice').innerText = total;
+}
+
+function openCart() { document.getElementById('cartOverlay').style.display = 'block'; }
+function closeCart() { document.getElementById('cartOverlay').style.display = 'none'; }
+
 function openImg(src){ document.getElementById('viewerImg').src=src; document.getElementById('viewer').style.display='flex'; }
-function order(num,name){ window.open(`https://wa.me/${num}?text=${encodeURIComponent('سلامات فيرا مول، أريد طلب: '+name)}`,'_blank'); }
+
+function sendOrder() {
+    if(cart.length === 0) return alert("السلة فارغة يا روحي!");
+    const state = document.getElementById('state').value;
+    const city = document.getElementById('city').value;
+    const street = document.getElementById('street').value;
+    
+    if(!state || !city) return alert("الرجاء إدخال بيانات التوصيل كاملة");
+
+    let msg = `طلب جديد من VIRA MALL ✨%0A%0A`;
+    cart.forEach((item, i) => msg += `${i+1}. ${item.name} (${item.price} SDG)%0A`);
+    msg += `%0A💰 الإجمالي: ${document.getElementById('totalPrice').innerText} SDG`;
+    msg += `%0A%0A📍 بيانات التوصيل:%0Aالولاية: ${state}%0Aالمدينة: ${city}%0Aالشارع: ${street}`;
+    
+    // إرسال لأول رقم واتساب في السلة (أو رقمك الأساسي)
+    const waNum = cart[0].whatsapp || "249967584275";
+    window.open(`https://wa.me/${waNum}?text=${msg}`, '_blank');
+}
+
+function order(num,name){ window.open(`https://wa.me/${num}?text=${encodeURIComponent('سلامات، حابة استفسر عن: '+name)}`,'_blank'); }
 loadProducts();
 </script>
 </body>
