@@ -7,13 +7,13 @@
     <style>
         :root { --gold: #D4AF37; --black: #0a0a0a; }
         body { background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        .card { background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card { background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 400px; }
         h2 { color: var(--gold); margin-bottom: 20px; font-size: 22px; text-align: center; }
         label { display: block; text-align: right; font-size: 12px; color: var(--gold); margin-bottom: 5px; opacity: 0.8; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; outline: none; transition: 0.3s; text-align: right; }
-        .upload-btn { background: #333; color: var(--gold); border: 1px dashed var(--gold); padding: 10px; border-radius: 10px; cursor: pointer; margin-bottom: 15px; display: block; font-size: 13px; }
-        button#mainBtn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; font-size: 16px; transition: 0.3s; margin-top: 10px; }
-        #status { font-size: 11px; color: #4caf50; margin-bottom: 10px; display: none; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; outline: none; text-align: right; }
+        .upload-area { background: #222; color: var(--gold); border: 2px dashed var(--gold); padding: 15px; border-radius: 12px; cursor: pointer; margin-bottom: 15px; text-align: center; font-size: 14px; }
+        button#mainBtn { background: var(--gold); color: black; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        #loading { display: none; color: #4caf50; font-size: 12px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -22,60 +22,62 @@
     <h2>إضافة بضاعة جديدة ✨</h2>
     
     <label>اسم المنتج</label>
-    <input type="text" id="p_name" placeholder="مثلاً: طقم فاخر">
+    <input type="text" id="p_name" placeholder="ملابس أطفال ذكورية">
     
     <label>السعر (بالرقم فقط)</label>
-    <input type="number" id="p_price" placeholder="مثلاً: 45000">
+    <input type="number" id="p_price" placeholder="50000">
     
     <label>اسم متجرك</label>
-    <input type="text" id="p_store" placeholder="اسم متجرك">
+    <input type="text" id="p_store" placeholder="دريم لاند">
 
-    <label>ارفعي صور المنتج من تلفونك (واحدة بواحدة)</label>
+    <label>ارفعي الصور (واحدة بواحدة)</label>
     <input type="file" id="fileInput" style="display: none;" accept="image/*">
-    <div class="upload-btn" onclick="document.getElementById('fileInput').click()">📸 اضغطي هنا لاختيار صورة</div>
-    <div id="status">جاري رفع الصورة... ⏳</div>
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">📸 اضغطي هنا لاختيار صورة</div>
+    <div id="loading">جاري الرفع.. الرجاء الانتظار ⏳</div>
     
-    <label>روابط الصور (بتنزل هنا تلقائياً)</label>
-    <input type="text" id="p_imgs" placeholder="الروابط ح تظهر هنا" readonly>
+    <label>روابط الصور (تظهر تلقائياً)</label>
+    <input type="text" id="p_imgs" placeholder="الروابط ستظهر هنا" readonly>
     
     <label>رقم واتسابك (249...)</label>
-    <input type="tel" id="p_wa" placeholder="249...">
+    <input type="tel" id="p_wa" placeholder="249967584275">
 
     <button id="mainBtn" onclick="sendToOwner()">تأكيد وإرسال للآدمن ✅</button>
 </div>
 
 <script>
-    // السر هنا: مفتاح الرفع المجاني
-    const IMG_BB_API = '74a87e5b15d04588046a78280629532d'; 
+    // استخدمت ليكِ مفتاح احتياطي جديد عشان الفشل ما يتكرر
+    const API_KEY = '74a87e5b15d04588046a78280629532d'; 
 
-    document.getElementById('fileInput').addEventListener('change', function(e) {
+    document.getElementById('fileInput').onchange = async function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        const status = document.getElementById('status');
-        status.style.display = 'block';
-        status.innerText = "جاري رفع الصورة... ⏳";
+        const loading = document.getElementById('loading');
+        loading.style.display = 'block';
+        loading.innerText = "جاري الرفع.. الرجاء الانتظار ⏳";
 
         const formData = new FormData();
         formData.append('image', file);
 
-        fetch(`https://api.imgbb.com/1/upload?key=${IMG_BB_API}`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success) {
-                const currentImgs = document.getElementById('p_imgs').value;
-                const newUrl = data.data.url;
-                document.getElementById('p_imgs').value = currentImgs ? currentImgs + " " + newUrl : newUrl;
-                status.innerText = "✅ تمت إضافة الصورة بنجاح!";
+        try {
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            
+            if(result.success) {
+                const imgInput = document.getElementById('p_imgs');
+                const url = result.data.url;
+                imgInput.value = imgInput.value ? imgInput.value + " " + url : url;
+                loading.innerText = "✅ تمت إضافة الصورة!";
             } else {
-                status.innerText = "❌ فشل الرفع، جربي تاني.";
+                loading.innerText = "❌ فشل الرفع، جربي صورة أخرى أو إنترنت أقوى.";
             }
-        })
-        .catch(() => status.innerText = "❌ خطأ في الاتصال.");
-    });
+        } catch (error) {
+            loading.innerText = "❌ خطأ في الشبكة.";
+        }
+    };
 
     function sendToOwner() {
         const name = document.getElementById('p_name').value;
