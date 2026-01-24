@@ -8,192 +8,184 @@
 :root{--gold:#D4AF37;--dark:#0f1111;--gray:#f5f5f7;--white:#fff;--red:#e41e31;}
 body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:var(--gray);direction:rtl;overflow-x:hidden;}
 
-/* الهيدر */
-header{background:var(--dark);color:white;padding:20px 10px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);}
-header h1{margin:0;font-size:28px;color:var(--gold);letter-spacing:1px;}
-.slogan{margin:5px 0 0;font-size:13px;color:#ddd;}
+/* الهيدر العالمي */
+header{background:var(--dark);color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center;}
+header h1{margin:0;font-size:24px;color:var(--gold);flex-grow:1;letter-spacing:1px;}
+.menu-btn{cursor:pointer;font-size:30px;color:var(--gold);padding:0 10px;}
 
-.menu-btn{cursor:pointer;font-size:26px;color:var(--gold);position:absolute;top:22px;right:20px;z-index:1001;}
-.header-tools{position:absolute;top:22px;left:15px;display:flex;gap:8px;}
-.currency-switch{cursor:pointer;padding:4px 8px;background:#222;border-radius:8px;color:white;font-size:11px;border:1px solid #444;}
-.currency-switch.active{background:var(--gold);color:#000;}
-
-/* الحاوية */
+/* شبكة المنتجات */
 .container{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:15px;max-width:1200px;margin:0 auto;}
 
-/* كرت المنتج والسلايدر */
-.card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column;}
+/* كرت المنتج */
+.card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.1);position:relative;display:flex;flex-direction:column;transition:0.3s;}
+.card:hover{transform: translateY(-5px);}
 
-.slider-container{position:relative;width:100%;height:210px;background:#eee;overflow:hidden;direction:ltr!important;}
-.slider-track{display:flex;width:100%;height:100%;transition:transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);will-change: transform;}
-.slider-track img{min-width:100%;width:100%;height:100%;object-fit:cover;cursor:pointer;flex-shrink: 0;}
+/* السلايدر الزيت */
+.slider-container{position:relative;width:100%;height:220px;background:#eee;overflow:hidden;direction:ltr!important;}
+.slider-track{display:flex;width:100%;height:100%;transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);will-change: transform;}
+.slider-track img{min-width:100%;width:100%;height:100%;object-fit:cover;flex-shrink:0;}
 
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(212,175,55,0.9);color:black;border:none;width:30px;height:30px;cursor:pointer;border-radius:50%;z-index:10;font-weight:bold;display:flex;align-items:center;justify-content:center;}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(212,175,55,0.8);color:black;border:none;width:30px;height:30px;cursor:pointer;border-radius:50%;z-index:10;font-weight:bold;display:flex;align-items:center;justify-content:center;}
 .next{right:8px;} .prev{left:8px;}
 
-.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:4px;z-index:11;}
+.dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:4px;}
 .dot{width:6px;height:6px;background:rgba(255,255,255,0.5);border-radius:50%;transition:0.3s;}
-.dot.active{background:var(--gold);width:12px;border-radius:4px;}
+.dot.active{background:var(--gold);width:15px;border-radius:10px;}
 
-.fav-icon{position:absolute;top:10px;left:10px;z-index:15;color:rgba(255,255,255,0.9);font-size:22px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);transition: 0.3s;}
-.fav-icon.active{color:var(--red);transform: scale(1.2);}
+.fav-icon{position:absolute;top:10px;left:10px;z-index:15;color:rgba(255,255,255,0.8);font-size:24px;cursor:pointer;text-shadow:0 0 5px rgba(0,0,0,0.5);}
+.fav-icon.active{color:var(--red);}
 
-.info{padding:12px;text-align:center;direction:rtl;flex-grow:1;}
-.store{font-size:10px;color:var(--gold);font-weight:bold;margin-bottom:5px;}
-.title{font-size:14px;font-weight:bold;color:var(--dark);height:38px;overflow:hidden;margin-bottom:8px;}
-.price{font-size:16px;font-weight:800;color:#222;margin-bottom:10px;}
-.btn-order{background:var(--gold);color:var(--dark);border:none;width:100%;padding:10px;border-radius:10px;font-weight:bold;cursor:pointer;}
+.info{padding:12px;text-align:center;direction:rtl;}
+.store-tag{font-size:10px;color:var(--gold);font-weight:bold;text-transform:uppercase;margin-bottom:5px;display:block;}
+.title{font-size:14px;font-weight:bold;color:var(--dark);height:38px;overflow:hidden;margin:5px 0;}
+.price{font-size:18px;font-weight:900;color:var(--dark);margin-bottom:10px;}
+.btn-order{background:var(--gold);color:var(--dark);border:none;width:100%;padding:12px;border-radius:10px;font-weight:bold;cursor:pointer;text-decoration:none;display:block;transition:0.2s;}
+.btn-order:active{transform:scale(0.95);}
 
-/* القائمة الجانبية المحدثة */
-.sidebar{height:100%;width:0;position:fixed;z-index:10001;top:0;right:0;background:var(--dark);overflow-x:hidden;transition:0.4s;color:white;}
-.sidebar-content{padding:25px;}
-.sidebar h3{color:var(--gold);font-size:18px;border-bottom:1px solid #333;padding-bottom:10px;margin-top:20px;}
-.side-link{display:block;color:#ccc;text-decoration:none;padding:10px 0;font-size:14px;border-bottom:1px solid #222;}
-.fav-list-item{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;background:#1a1a1a;padding:5px;border-radius:5px;}
-.input-sub{width:100%;padding:10px;margin-top:10px;border-radius:5px;border:none;font-size:13px;}
+/* القائمة الجانبية (المنيو) */
+.sidebar{height:100%;width:0;position:fixed;z-index:10001;top:0;right:0;background:var(--dark);transition:0.4s;color:white;overflow-x:hidden;box-shadow:-5px 0 20px rgba(0,0,0,0.5);}
+.side-content{padding:25px;}
+.side-content h3{color:var(--gold);border-bottom:1px solid #333;padding-bottom:10px;margin-top:25px;font-size:18px;}
+.side-text{font-size:14px;color:#ccc;line-height:1.6;margin:10px 0;}
+.fav-item{display:flex;align-items:center;gap:10px;margin-top:10px;background:#1a1a1a;padding:8px;border-radius:8px;}
+.btn-side{background:var(--gold);color:black;width:100%;padding:12px;border-radius:8px;font-weight:bold;margin-top:15px;border:none;cursor:pointer;display:block;text-align:center;text-decoration:none;}
+.btn-tg{background:#0088cc;color:white;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="menu-btn" onclick="openNav()">☰</div>
+  <div style="width:50px"></div>
   <h1>VIRA MALL</h1>
-  <p class="slogan">منصة البراندات السودانية 🇸🇩</p>
-  <div class="header-tools">
-    <div class="currency-switch active" id="btnSDG" onclick="setCurrency('SDG')">SDG</div>
-    <div class="currency-switch" id="btnSAR" onclick="setCurrency('SAR')">SAR</div>
-  </div>
+  <div class="menu-btn" onclick="openNav()">☰</div>
 </header>
 
-<div class="container" id="grid"></div>
+<div class="container" id="grid">
+    <p style="text-align:center; grid-column:1/-1; padding-top:100px; color:#666;">جاري تحميل أحدث الموديلات... ✨</p>
+</div>
 
 <div id="mySidebar" class="sidebar">
-  <div style="padding:15px;font-size:30px;cursor:pointer;color:var(--gold)" onclick="closeNav()">×</div>
-  <div class="sidebar-content">
-      <h3>🚚 التوصيل</h3>
-      <p style="font-size:13px;color:#ccc;">توصيل سريع لكل الولايات. السعر يحدد عند الطلب.</p>
+  <div style="padding:20px;font-size:35px;cursor:pointer;color:var(--gold)" onclick="closeNav()">×</div>
+  <div class="side-content">
       
-      <h3>❤️ المفضلة</h3>
-      <div id="fav-items-container">
-        <p style="font-size:12px;color:#666;">لا توجد منتجات مضافة.</p>
-      </div>
+      <h3>❤️ المنتجات المفضلة</h3>
+      <div id="fav-list" class="side-text">لا توجد منتجات مضافة للمفضلة.</div>
 
-      <h3>📩 إشتراك التنبيهات</h3>
-      <p style="font-size:12px;color:#ccc;">صلك جديدنا على الواتساب:</p>
-      <input type="tel" class="input-sub" placeholder="رقم الواتساب...">
-      <button onclick="alert('تم الاشتراك بنجاح ✨')" style="background:var(--gold); border:none; padding:5px 10px; margin-top:5px; border-radius:5px; cursor:pointer; font-weight:bold; width:100%">إرسال</button>
+      <h3>🚚 معلومات التوصيل</h3>
+      <p class="side-text">يتم التوصيل لجميع ولايات السودان. سعر التوصيل يحدد بواسطة المتجر عند تأكيد الطلب.</p>
 
-      <h3>💳 الدفع</h3>
-      <p style="font-size:14px;">حساب بنكك: <strong style="color:var(--gold)">2280384</strong></p>
+      <h3>💳 طرق الدفع</h3>
+      <p class="side-text">متوفر الدفع كاش أو عبر الفيزا (حسب المتجر).<br>رقم حساب بنكك المعتمد: <br><strong style="color:var(--gold); font-size:18px;">2280384</strong></p>
+
+      <h3>🔔 اشترك في التنبيهات</h3>
+      <p class="side-text">تابعي جديدنا وعروضنا الحصرية على قناتنا في تلجرام:</p>
+      <a href="https://t.me/+VksKXlPLnnFjYzlk" target="_blank" class="btn-side btn-tg">انضمي لقناة التلجرام ✈️</a>
+
+      <hr style="border:0; border-top:1px solid #333; margin:30px 0;">
       
-      <hr style="border:0;border-top:1px solid #333;margin:25px 0;">
-      <button onclick="window.location.href='admin.html'" style="background:var(--gold);width:100%;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;">👩‍💼 بوابة التاجرات</button>
+      <h3>👩‍💼 بوابة التاجرات</h3>
+      <p class="side-text">للاشتراك وعرض منتجاتك في فيرا مول:</p>
+      <a href="admin.html" class="btn-side">دخول لوحة التحكم 🚀</a>
   </div>
 </div>
 
 <script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
-let currentCurr='SDG', allProducts=[], favorites=JSON.parse(localStorage.getItem('vira_favs') || '[]');
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?output=csv';
+let favs = JSON.parse(localStorage.getItem('vira_favs') || '[]');
 
-function openNav(){document.getElementById("mySidebar").style.width="280px"; renderFavs();}
-function closeNav(){document.getElementById("mySidebar").style.width="0";}
-
-async function loadProducts(){
-  try{
-    const res=await fetch(SHEET_URL + '&cache=' + Date.now());
-    const text=await res.text();
-    const rows=text.split(/\r?\n/).slice(1);
-    allProducts=rows.map((r,idx)=>{
-      const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.replace(/"/g,'').trim());
-      if(!c[0] || c[0].startsWith('=')) return null; 
-      const imgs = c[3] ? c[3].split(/\s+/).filter(i => i.startsWith('http')) : [];
-      return {id:idx, name:c[0], price:parseFloat(c[1])||0, store:c[2], imgs:imgs, wa:c[4]};
-    }).filter(p=>p);
-    renderGrid();
-  }catch(e){console.error("Error loading products");}
+async function loadProducts() {
+    try {
+        const response = await fetch(CSV_URL + '&t=' + Date.now());
+        const data = await response.text();
+        const rows = data.split(/\r?\n/).slice(1);
+        
+        const products = rows.map(row => {
+            const cols = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
+            if (!cols[0] || cols[0].includes('ردود')) return null;
+            const imgs = cols[3] ? cols[3].split(/\s+/).filter(i => i.includes('http')) : [];
+            return { name: cols[0], price: cols[1], store: cols[2], imgs: imgs, wa: cols[4] };
+        }).filter(p => p);
+        
+        renderGrid(products);
+    } catch (e) {
+        document.getElementById('grid').innerHTML = "فشل التحميل، يرجى المحاولة لاحقاً.";
+    }
 }
 
-function renderGrid(){
-  document.getElementById('grid').innerHTML = allProducts.map(p=>{
-    const price = currentCurr==='SDG' ? p.price : (p.price * 0.0031).toFixed(2);
-    const imgsHtml = p.imgs.map(img => `<img src="${img}">`).join('');
-    const dotsHtml = p.imgs.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
-    const isFav = favorites.some(fav => fav.name === p.name) ? 'active' : '';
+function renderGrid(list) {
+    const grid = document.getElementById('grid');
+    if (list.length === 0) { grid.innerHTML = "لا توجد منتجات حالياً."; return; }
     
-    const navs = p.imgs.length > 1 ? `
-      <div class="dots">${dotsHtml}</div>
-      <button class="nav-btn next" onclick="moveSlide(this, 1)">❯</button>
-      <button class="nav-btn prev" onclick="moveSlide(this, -1)">❮</button>
-    ` : '';
+    grid.innerHTML = list.map((p, idx) => {
+        const isFav = favs.some(f => f.name === p.name) ? 'active' : '';
+        const dots = p.imgs.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('');
+        
+        return `
+        <div class="card" id="card-${idx}" data-i="0">
+            <div class="slider-container">
+                <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}', '${p.imgs[0]}', this)">❤</div>
+                <div class="slider-track">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
+                ${p.imgs.length > 1 ? `
+                    <button class="nav-btn prev" onclick="moveSlide(${idx}, -1)">❮</button>
+                    <button class="nav-btn next" onclick="moveSlide(${idx}, 1)">❯</button>
+                    <div class="dots">${dots}</div>
+                ` : ''}
+            </div>
+            <div class="info">
+                <span class="store-tag">✨ ${p.store}</span>
+                <div class="title">${p.name}</div>
+                <div class="price">${p.price} SDG</div>
+                <a class="btn-order" href="https://wa.me/${p.wa.replace(/\s/g,'')}?text=طلب منتج: ${p.name}" target="_blank">طلب واتساب ✅</a>
+            </div>
+        </div>`;
+    }).join('');
     
-    return `<div class="card" data-idx="0">
-      <div class="slider-container">
-        <div class="fav-icon ${isFav}" onclick="toggleFav('${p.name}', '${p.imgs[0]}', this)">❤</div>
-        <div class="slider-track">${imgsHtml}</div>
-        ${navs}
-      </div>
-      <div class="info">
-        <div class="store">✨ ${p.store}</div>
-        <div class="title">${p.name}</div>
-        <div class="price">${price} ${currentCurr}</div>
-        <button class="btn-order" onclick="window.open('https://wa.me/${p.wa.replace(/\s/g,'')}?text=طلب: ${p.name}')">طلب واتساب ✅</button>
-      </div>
-    </div>`;
-  }).join('');
+    // تشغيل التقليب التلقائي كل 5 ثواني
+    setInterval(() => {
+        list.forEach((p, i) => { if (p.imgs.length > 1) moveSlide(i, 1); });
+    }, 5000);
 }
 
-// حل مشكلة السلايدر - الزيت الأصلي
-function moveSlide(btn, dir){
-  const card = btn.closest('.card');
-  const track = card.querySelector('.slider-track');
-  const dots = card.querySelectorAll('.dot');
-  const imgsCount = track.querySelectorAll('img').length;
-  let current = parseInt(card.getAttribute('data-idx')) || 0;
-  
-  current = (current + dir + imgsCount) % imgsCount;
-  card.setAttribute('data-idx', current);
-  
-  // التحريك بنظام النسبة المئوية لضمان الدقة
-  track.style.transform = `translateX(-${current * 100}%)`;
-  
-  if(dots.length) {
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-  }
+function moveSlide(cardIdx, dir) {
+    const card = document.getElementById(`card-${cardIdx}`);
+    if(!card) return;
+    const track = card.querySelector('.slider-track');
+    const dots = card.querySelectorAll('.dot');
+    const total = track.children.length;
+    let i = (parseInt(card.dataset.i) + dir + total) % total;
+    card.dataset.i = i;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    if (dots.length) dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
 }
 
-// نظام المفضلة
 function toggleFav(name, img, el) {
-  const index = favorites.findIndex(f => f.name === name);
-  if (index > -1) {
-    favorites.splice(index, 1);
-    el.classList.remove('active');
-  } else {
-    favorites.push({name, img});
-    el.classList.add('active');
-  }
-  localStorage.setItem('vira_favs', JSON.stringify(favorites));
+    const idx = favs.findIndex(f => f.name === name);
+    if (idx > -1) {
+        favs.splice(idx, 1);
+        el.classList.remove('active');
+    } else {
+        favs.push({ name, img });
+        el.classList.add('active');
+    }
+    localStorage.setItem('vira_favs', JSON.stringify(favs));
 }
 
-function renderFavs() {
-  const container = document.getElementById('fav-items-container');
-  if (favorites.length === 0) {
-    container.innerHTML = '<p style="font-size:12px;color:#666;">لا توجد منتجات مضافة.</p>';
-    return;
-  }
-  container.innerHTML = favorites.map(f => `
-    <div class="fav-list-item">
-      <img src="${f.img}" width="30" height="30" style="border-radius:3px; object-fit:cover;">
-      <span>${f.name}</span>
-    </div>
-  `).join('');
+function updateFavUI() {
+    const list = document.getElementById('fav-list');
+    if (favs.length === 0) {
+        list.innerHTML = "المفضلة فاضية يا قمر..";
+        return;
+    }
+    list.innerHTML = favs.map(f => `
+        <div class="fav-item">
+            <img src="${f.img}" width="40" height="40" style="border-radius:5px; object-fit:cover;">
+            <span>${f.name}</span>
+        </div>
+    `).join('');
 }
 
-function setCurrency(c){
-  currentCurr=c;
-  document.querySelectorAll('.currency-switch').forEach(e=>e.classList.remove('active'));
-  document.getElementById('btn'+c).classList.add('active');
-  renderGrid();
-}
+function openNav() { document.getElementById("mySidebar").style.width = "300px"; updateFavUI(); }
+function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
 
 loadProducts();
 </script>
