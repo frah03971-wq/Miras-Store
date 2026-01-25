@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIRA MALL | فيرا مول</title>
+    <title>VIRA MALL | خيارك الأول في السودان</title>
     <style>
         :root { --gold: #D4AF37; --black: #0a0a0a; --bg: #fdfdfd; }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--black); transition: 0.3s; overflow-x: hidden; }
         
-        /* الهيدر الملكي */
-        header { background: var(--black); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        header h1 { color: var(--gold); margin: 0; font-size: 22px; font-weight: 900; letter-spacing: 2px; }
-        .nav-icons { display: flex; gap: 12px; align-items: center; }
-        .lang-btn { color: white; border: 1px solid var(--gold); padding: 3px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        /* الهيدر الملكي المطور */
+        header { background: var(--black); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .logo-area { display: flex; flex-direction: column; align-items: center; }
+        header h1 { color: var(--gold); margin: 0; font-size: 20px; font-weight: 900; letter-spacing: 2px; }
+        .slogan { color: #f1f1f1; font-size: 10px; font-weight: bold; margin-top: 2px; letter-spacing: 1px; }
 
-        /* شريط التوصيل */
-        .delivery-bar { background: #fffde7; padding: 10px; text-align: center; font-size: 11px; color: #856404; font-weight: bold; border-bottom: 1px solid #ffe57f; }
+        .nav-icons { display: flex; gap: 12px; align-items: center; }
+        .lang-btn { color: white; border: 1px solid var(--gold); padding: 3px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
+
+        /* شريط التوصيل الذهبي */
+        .delivery-bar { background: linear-gradient(90deg, #fffde7, #fff9c4); padding: 10px; text-align: center; font-size: 11px; color: #856404; font-weight: 900; border-bottom: 1px solid #ffe57f; }
 
         /* شبكة المنتجات (ستايل شي إن) */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 12px; }
-        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid #eee; display: flex; flex-direction: column; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid #eee; display: flex; flex-direction: column; transition: 0.3s; }
+        .card:hover { transform: translateY(-3px); }
         
         /* السلايدر المتطور */
         .slider-container { position: relative; width: 100%; aspect-ratio: 1/1.25; overflow: hidden; touch-action: pan-y; background: #f0f0f0; }
@@ -49,7 +53,6 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; backdrop-filter: blur(4px); }
         
         .menu-item { display: flex; align-items: center; gap: 15px; padding: 18px; background: #f9f9f9; border-radius: 15px; margin-bottom: 12px; text-decoration: none; color: black; font-weight: bold; border: 1px solid transparent; }
-        
         .sub-card { background: #fff9e6; border: 1px dashed var(--gold); padding: 15px; border-radius: 15px; margin-top: 20px; text-align: center; }
         
         img:fullscreen { object-fit: contain !important; background: black; }
@@ -61,7 +64,10 @@
 
 <header>
     <div onclick="togglePanel('sideMenu')" style="color:var(--gold); font-size:26px; cursor:pointer;">☰</div>
-    <h1 id="mainTitle">VIRA MALL</h1>
+    <div class="logo-area">
+        <h1>VIRA MALL</h1>
+        <span class="slogan" id="sloganText">خيـارك الأول في السـودان</span>
+    </div>
     <div class="nav-icons">
         <div class="lang-btn" onclick="toggleLang()" id="langBtn">EN</div>
         <div style="color:var(--gold); font-size:24px; cursor:pointer;" onclick="togglePanel('cartPanel')">🛒</div>
@@ -71,7 +77,7 @@
 <div class="delivery-bar" id="deliveryText">🚚 التوصيل متاح لجميع الولايات (السعر حسب المتجر)</div>
 
 <div class="grid" id="mainGrid">
-    <p style="text-align:center; grid-column:1/-1; padding:50px; color:#999;">جاري تحميل الأناقة... ✨</p>
+    <p style="text-align:center; grid-column:1/-1; padding:50px; color:#999;">جاري تحميل الأناقة السودانية... ✨</p>
 </div>
 
 <div class="side-panel" id="cartPanel">
@@ -100,7 +106,6 @@
     let currentLang = 'ar';
     let cart = [];
     let favorites = JSON.parse(localStorage.getItem('vira_favs')) || [];
-    // الرابط الذهبي الخاص بك
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
 
     async function loadData() {
@@ -124,10 +129,7 @@
         grid.innerHTML = data.map(p => `
             <div class="card" id="p-${p.id}" data-idx="0">
                 <div class="fav-btn ${favorites.includes(p.id)?'active':''}" onclick="toggleFav(${p.id})">❤</div>
-                <div class="slider-container" 
-                     ontouchstart="sT(event)" 
-                     ontouchmove="mT(event, ${p.id})"
-                     ondblclick="zoom(${p.id})">
+                <div class="slider-container" ontouchstart="sT(event)" ontouchmove="mT(event, ${p.id})" ondblclick="zoom(${p.id})">
                     <div class="track" style="transform: translateX(0px);">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
                     <div class="dots">${p.imgs.map((_, i) => `<div class="dot ${i==0?'active':''}"></div>`).join('')}</div>
                 </div>
@@ -142,7 +144,6 @@
                 </div>
             </div>
         `).join('');
-        updateFavUI();
     }
 
     let tX = 0;
@@ -162,10 +163,8 @@
         const dots = card.querySelectorAll('.dot');
         const count = track.children.length;
         let idx = parseInt(card.dataset.idx) + dir;
-        
         if (idx >= 0 && idx < count) {
             card.dataset.idx = idx;
-            // تعديل اتجاه السحب حسب اللغة
             const move = currentLang === 'ar' ? idx * 100 : -idx * 100;
             track.style.transform = `translateX(${move}%)`;
             dots.forEach((d, i) => d.classList.toggle('active', i === idx));
@@ -181,6 +180,7 @@
     function addToCart(name, price) {
         cart.push({name, price});
         updateCartUI();
+        alert(currentLang === 'ar' ? "تمت الإضافة للسلة" : "Added to cart");
     }
 
     function updateCartUI() {
@@ -195,15 +195,14 @@
         loadData();
     }
 
-    function updateFavUI() {
-        document.getElementById('favList').innerHTML = favorites.length > 0 ? `<p style="font-size:12px;">لديك ${favorites.length} قطع في المفضلة.</p>` : "";
-    }
-
     function toggleLang() {
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'EN' : 'AR';
-        // تحديث النصوص (يمكن إضافة المزيد هنا)
+        
+        const slogans = { ar: 'خيـارك الأول في السـودان', en: 'Your First Choice in Sudan' };
+        document.getElementById('sloganText').innerText = slogans[currentLang];
+        
         loadData();
     }
 
