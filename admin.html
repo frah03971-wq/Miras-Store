@@ -1,120 +1,161 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRA ADMIN | التحفة البرمجية</title>
-    <style>
-        :root { --gold: #D4AF37; --black: #0d0d0d; --gray: #1a1a1a; }
-        body { background: var(--black); color: white; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        .container { width: 90%; max-width: 450px; background: var(--gray); padding: 30px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; }
-        .container::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, transparent, var(--gold), transparent); border-radius: 30px; z-index: -1; opacity: 0.3; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIRA ADMIN | بوابة التاجرات</title>
 
-        h2 { color: var(--gold); text-align: center; font-size: 26px; letter-spacing: 1px; margin-bottom: 30px; font-weight: 800; }
-        
-        .input-group { margin-bottom: 20px; text-align: right; }
-        label { display: block; font-size: 12px; color: var(--gold); margin-bottom: 8px; font-weight: bold; margin-right: 5px; }
-        input { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #333; background: #050505; color: white; box-sizing: border-box; font-size: 15px; transition: 0.3s; }
-        input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+<style>
+:root{
+  --gold:#D4AF37;
+  --dark:#0f1111;
+}
 
-        /* منطقة رفع الصور الفخمة */
-        .upload-card { background: #050505; border: 2px dashed #333; padding: 25px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 20px; }
-        .upload-card:hover { border-color: var(--gold); background: #0a0a0a; }
-        .upload-card i { font-size: 30px; color: var(--gold); display: block; margin-bottom: 10px; }
-        
-        .img-preview { display: flex; gap: 10px; overflow-x: auto; margin-top: 10px; padding-bottom: 5px; }
-        .img-preview img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; border: 1px solid var(--gold); }
+body{
+  margin:0;
+  font-family:'Segoe UI',Tahoma;
+  background:linear-gradient(135deg,#000,#1a1a1a);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-        button { width: 100%; padding: 18px; border-radius: 15px; border: none; background: linear-gradient(45deg, #D4AF37, #F9E29C); color: black; font-weight: 900; font-size: 18px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
-        button:active { transform: scale(0.96); }
+.box{
+  background:#0b0b0b;
+  width:100%;
+  max-width:420px;
+  padding:25px;
+  border-radius:20px;
+  border:1px solid #222;
+}
 
-        #loader { display: none; text-align: center; margin-top: 10px; color: var(--gold); font-size: 13px; font-weight: bold; }
-    </style>
+.logo{
+  text-align:center;
+  font-size:26px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.sub{
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:20px;
+}
+
+label{
+  font-size:13px;
+  color:#ccc;
+  margin-bottom:5px;
+  display:block;
+}
+
+input,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#111;
+  color:white;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+textarea{height:80px}
+
+input[type="file"]{
+  background:#111;
+  border:1px dashed #444;
+  padding:15px;
+}
+
+.note{
+  font-size:11px;
+  color:#bbb;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  background:var(--gold);
+  color:#000;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>VIRA MALL ✨</h2>
-    
-    <div class="input-group">
-        <label>اسم القطعة</label>
-        <input type="text" id="p_name" placeholder="مثلاً: فستان شيفون راقي">
-    </div>
+<div class="box">
+  <div class="logo">✨ VIRA MALL</div>
+  <div class="sub">بوابة التاجرات – سهلة وبسيطة</div>
 
-    <div class="input-group">
-        <label>السعر (بالرقم)</label>
-        <input type="number" id="p_price" placeholder="مثلاً: 60000">
-    </div>
+  <label>اسم المتجر</label>
+  <input id="store">
 
-    <div class="input-group">
-        <label>اسم متجرك</label>
-        <input type="text" id="p_store" placeholder="مثلاً: لمسة ملكية">
-    </div>
+  <label>اسم القطعة</label>
+  <input id="name">
 
-    <div class="upload-card" onclick="document.getElementById('fileInput').click()">
-        <i>📸</i>
-        <span id="uploadText">اضغطي لرفع صور المنتج</span>
-        <input type="file" id="fileInput" hidden multiple accept="image/*">
-        <div class="img-preview" id="preview"></div>
-    </div>
+  <label>السعر (SDG)</label>
+  <input id="price" type="number">
 
-    <div id="loader">جاري معالجة الصور... ⏳</div>
+  <label>صور المنتج</label>
+  <input type="file" multiple accept="image/*">
+  <div class="note">
+    📸 اختاري الصور من الموبايل<br>
+    👉 بعد فتح واتساب اضغطي 📎 وارسلي الصور
+  </div>
 
-    <input type="hidden" id="p_imgs">
-    <input type="hidden" id="p_wa" value="249967584275"> <button onclick="publishToVira()">نشر المنتج الآن ✅</button>
+  <label>رقم واتساب التاجرة</label>
+  <input id="phone" placeholder="مثال: 249xxxxxxxxx">
+
+  <button onclick="sendWhats()">🚀 إرسال للفيـرا مول</button>
 </div>
 
 <script>
-    const API_KEY = '74a87e5b15d04588046a78280629532d'; 
+function sendWhats(){
+  const store=document.getElementById('store').value;
+  const name=document.getElementById('name').value;
+  const price=document.getElementById('price').value;
+  const phone=document.getElementById('phone').value;
 
-    document.getElementById('fileInput').onchange = async function(e) {
-        const files = e.target.files;
-        const loader = document.getElementById('loader');
-        const preview = document.getElementById('preview');
-        const imgsInput = document.getElementById('p_imgs');
-        
-        loader.style.display = 'block';
-        preview.innerHTML = '';
+  if(!store || !name || !price){
+    alert("كملي البيانات الأساسية 🌸");
+    return;
+  }
 
-        for (let file of files) {
-            const formData = new FormData();
-            formData.append('image', file);
+  const admin="00249967584275";
 
-            try {
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await res.json();
-                if(data.success) {
-                    imgsInput.value += data.data.url + ' ';
-                    preview.innerHTML += `<img src="${data.data.url}">`;
-                }
-            } catch (err) { console.log("خطأ في صورة"); }
-        }
-        loader.innerText = "✅ الصور جاهزة!";
-    };
+  const msg=
+`🛍️ منتج جديد – VIRA MALL
 
-    function publishToVira() {
-        const name = document.getElementById('p_name').value;
-        const price = document.getElementById('p_price').value;
-        const store = document.getElementById('p_store').value;
-        const imgs = document.getElementById('p_imgs').value.trim();
-        const wa = "249967584275"; // التاجرة رقمها ثابت أو نغيره؟ خليناه ثابت رقمك مؤقتاً
+🏪 المتجر:
+${store}
 
-        if(!name || !price || !imgs) {
-            alert("يا قلبي، كملي البيانات وارفعي الصور أولاً! ✨");
-            return;
-        }
+📦 القطعة:
+${name}
 
-        // تحضير سطر الجدول
-        const row = `${name},${price},${store},${imgs},${wa}`;
-        
-        const msg = `مرحباً VIRA MALL ✨%0Aتمت إضافة منتج جديد بنجاح:%0A%0A📦 المنتج: ${name}%0A💰 السعر: ${price}%0A🏪 المتجر: ${store}%0A%0A📋 سطر الجدول الخاص بك (انسخيه للشيت):%0A${row}`;
+💰 السعر:
+${price} SDG
 
-        window.open(`https://wa.me/249967584275?text=${msg}`, '_blank');
-    }
+📲 واتساب التاجرة:
+${phone}
+
+📸 الصور:
+*سيتم إرسال الصور بعد هذه الرسالة مباشرة*`;
+
+  window.open(
+    `https://wa.me/${admin}?text=${encodeURIComponent(msg)}`,
+    '_blank'
+  );
+}
 </script>
 
 </body>
