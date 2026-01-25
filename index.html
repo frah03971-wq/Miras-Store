@@ -44,6 +44,15 @@
             display: flex; align-items: center; justify-content: center;
         }
 
+        /* زر الإغلاق داخل القوائم */
+        .pnl-close {
+            position: absolute; top: 15px; left: 15px;
+            background: var(--black); color: var(--gold);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 18px; z-index: 10001;
+        }
+
         .search-engine { 
             background: rgba(255,255,255,0.1); border-radius: 30px; padding: 10px 20px;
             display: flex; align-items: center; border: 1px solid rgba(212,175,55,0.2);
@@ -76,8 +85,8 @@
         }
 
         .p-visuals { position: relative; width: 100%; aspect-ratio: 3/4.2; overflow: hidden; }
-        .p-track { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-        .p-track img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; }
+        .p-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .p-track img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
 
         .idx-counter {
             position: absolute; bottom: 15px; right: 15px;
@@ -95,12 +104,24 @@
             font-size: 12px; font-weight: bold; cursor: pointer;
         }
 
+        /* --- نافذة تكبير الصور الأسطورية --- */
+        .img-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 20000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .img-overlay img { max-width: 95%; max-height: 85%; border-radius: 10px; }
+        .img-overlay .close-overlay {
+            position: absolute; top: 20px; right: 20px;
+            color: white; font-size: 30px; cursor: pointer;
+        }
+
         /* --- القوائم الجانبية (Panels) --- */
         .pnl {
             position: fixed; top: 0; right: -110%; width: 100%; max-width: 400px;
             height: 100%; background: #fff; z-index: 10000;
             transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            padding: 20px; box-shadow: -20px 0 50px rgba(0,0,0,0.3);
+            padding: 60px 20px 20px; box-shadow: -20px 0 50px rgba(0,0,0,0.3);
             display: flex; flex-direction: column; overflow-y: auto;
         }
         .pnl.active { right: 0; }
@@ -110,7 +131,6 @@
             backdrop-filter: blur(8px);
         }
 
-        /* --- تصميم بوابة التاجرات الجديد --- */
         .merchant-portal-box {
             background: #fffbe6; border: 2px dashed var(--gold);
             border-radius: 20px; padding: 15px; margin-top: 15px;
@@ -128,12 +148,16 @@
             margin-top: auto; border-top: 2px solid #eee; padding: 20px 0;
             display: flex; justify-content: space-between; font-size: 20px; font-weight: 900;
         }
-
     </style>
 </head>
 <body>
 
     <div class="pnl-overlay" id="pnlOverlay" onclick="closePanels()"></div>
+
+    <div class="img-overlay" id="imgOverlay" onclick="this.style.display='none'">
+        <span class="close-overlay">×</span>
+        <img id="fullImg" src="">
+    </div>
 
     <header>
         <div class="h-top">
@@ -164,6 +188,7 @@
     <div class="master-grid" id="masterGrid"></div>
 
     <div class="pnl" id="cartPnl">
+        <div class="pnl-close" onclick="closePanels()"><i class="fa-solid fa-arrow-right"></i></div>
         <h2 style="border-bottom: 3px solid var(--gold); padding-bottom: 15px;">حقيبة المشتريات</h2>
         <div id="cartItems" style="flex-grow:1; overflow-y:auto; margin-top:20px;"></div>
         <div class="f-total">
@@ -176,6 +201,7 @@
     </div>
 
     <div class="pnl" id="menuPnl">
+        <div class="pnl-close" onclick="closePanels()"><i class="fa-solid fa-arrow-right"></i></div>
         <h2 style="color:var(--gold)">إعدادات النظام</h2>
         
         <div style="margin:15px 0;">
@@ -211,10 +237,6 @@
                 </button>
             </div>
         </div>
-
-        <div style="margin-top:30px; text-align:center;">
-            <p style="font-size:10px; opacity:0.6;">VIRA SYSTEM V4.0 © 2026</p>
-        </div>
     </div>
 
     <script>
@@ -243,7 +265,9 @@
             grid.innerHTML = data.map(p => `
                 <div class="p-box" id="p-${p.id}" data-idx="0">
                     <div class="p-visuals" ontouchstart="ts(event)" ontouchmove="tm(event, ${p.id})">
-                        <div class="p-track" style="transform:translateX(0)">${p.imgs.map(img => `<img src="${img}" loading="lazy">`).join('')}</div>
+                        <div class="p-track">
+                            ${p.imgs.map(img => `<img src="${img}" onclick="zoomImg('${img}')" loading="lazy">`).join('')}
+                        </div>
                         ${p.imgs.length > 1 ? `<div class="idx-counter"><span class="idx">1</span>/${p.imgs.length}</div>` : ''}
                     </div>
                     <div class="p-info-box">
@@ -255,17 +279,28 @@
             `).join('');
         }
 
-        // --- سلايدر شي إن الاحترافي ---
+        // تكبير الصورة
+        function zoomImg(src) {
+            document.getElementById('fullImg').src = src;
+            document.getElementById('imgOverlay').style.display = 'flex';
+        }
+
+        // سلايدر أسطوري
         let xDown = null;
         function ts(e) { xDown = e.touches[0].clientX; }
         function tm(e, id) {
             if(!xDown) return;
             let xUp = e.touches[0].clientX;
             let xDiff = xDown - xUp;
-            if(Math.abs(xDiff) > 50) {
-                let card = document.getElementById(`p-${id}`), track = card.querySelector('.p-track'), count = card.querySelector('.idx'), idx = parseInt(card.dataset.idx);
+            if(Math.abs(xDiff) > 40) {
+                let card = document.getElementById(`p-${id}`), 
+                    track = card.querySelector('.p-track'), 
+                    count = card.querySelector('.idx'), 
+                    idx = parseInt(card.dataset.idx);
+                
                 if(xDiff > 0 && idx < track.children.length - 1) idx++;
                 else if(xDiff < 0 && idx > 0) idx--;
+                
                 card.dataset.idx = idx;
                 track.style.transform = `translateX(${idx * 100}%)`;
                 if(count) count.innerText = idx + 1;
@@ -301,19 +336,13 @@
             window.open(`https://wa.me/${OWNER_WA}?text=${encodeURIComponent(msg)}`);
         }
 
-        // وظيفة إرسال منتج التاجرة
         function sendMerchantProduct() {
             const store = document.getElementById('mStore').value;
             const name = document.getElementById('mName').value;
             const price = document.getElementById('mPrice').value;
             const desc = document.getElementById('mDesc').value;
             const imgs = document.getElementById('mImgs').value;
-
-            if(!store || !name || !price || !imgs) {
-                alert("يا جميلة كملي بيانات المنتج أولاً ✨");
-                return;
-            }
-
+            if(!store || !name || !price || !imgs) { alert("يا جميلة كملي بيانات المنتج أولاً ✨"); return; }
             const msg = `🛍️ إضافة منتج جديد لـ VIRA MALL\n\n🏪 المتجر: ${store}\n📦 المنتج: ${name}\n💰 السعر: ${price} SDG\n📝 الوصف: ${desc}\n📸 الصور: ${imgs}`;
             window.open(`https://wa.me/${OWNER_WA}?text=${encodeURIComponent(msg)}`);
         }
@@ -325,7 +354,7 @@
             btn.classList.add('active');
             render(c === 'الكل' ? masterData : masterData.filter(p => p.cat.includes(c)), document.getElementById('currency').value);
         }
-        function searchMaster(q) { render(masterData.filter(p => p.name.includes(q)), document.getElementById('currency').value); }
+        function searchMaster(q) { render(masterData.filter(p => p.name.toLowerCase().includes(q.toLowerCase())), document.getElementById('currency').value); }
 
         loadProducts();
     </script>
