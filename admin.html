@@ -3,158 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIRA ADMIN | بوابة التاجرات</title>
+<title>VIRA MALL | بوابة التاجرات</title>
 
 <style>
 :root{
   --gold:#D4AF37;
   --dark:#0f1111;
+  --gray:#f5f5f7;
+  --white:#ffffff;
 }
 
 body{
   margin:0;
-  font-family:'Segoe UI',Tahoma;
-  background:linear-gradient(135deg,#000,#1a1a1a);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background:linear-gradient(135deg,#000,#111);
   color:white;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
-.box{
-  background:#0b0b0b;
-  width:100%;
+.container{
   max-width:420px;
+  margin:40px auto;
   padding:25px;
-  border-radius:20px;
-  border:1px solid #222;
+  background:#0f1111;
+  border-radius:22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
 .logo{
   text-align:center;
-  font-size:26px;
-  color:var(--gold);
+  font-size:28px;
   font-weight:900;
+  color:var(--gold);
+  margin-bottom:10px;
 }
 
 .sub{
   text-align:center;
   font-size:13px;
   color:#aaa;
-  margin-bottom:20px;
+  margin-bottom:25px;
 }
 
 label{
+  display:block;
   font-size:13px;
   color:#ccc;
-  margin-bottom:5px;
-  display:block;
+  margin:15px 0 6px;
 }
 
 input,textarea{
   width:100%;
   padding:12px;
   border-radius:12px;
-  border:1px solid #333;
-  background:#111;
+  border:none;
+  background:#1c1c1c;
   color:white;
   font-size:14px;
-  margin-bottom:15px;
 }
 
-textarea{height:80px}
+textarea{resize:none;height:70px}
 
-input[type="file"]{
-  background:#111;
-  border:1px dashed #444;
-  padding:15px;
+.btn{
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border-radius:14px;
+  border:none;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-upload{
+  background:#222;
+  border:1px dashed #555;
+  color:white;
+}
+
+.btn-send{
+  background:var(--gold);
+  color:#000;
 }
 
 .note{
-  font-size:11px;
-  color:#bbb;
-  margin-bottom:15px;
+  font-size:12px;
+  color:#aaa;
+  margin-top:10px;
+  line-height:1.6;
+  background:#161616;
+  padding:12px;
+  border-radius:12px;
 }
 
-button{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  background:var(--gold);
-  color:#000;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
+.footer{
+  text-align:center;
+  font-size:11px;
+  color:#555;
+  margin-top:25px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
+
   <div class="logo">✨ VIRA MALL</div>
-  <div class="sub">بوابة التاجرات – سهلة وبسيطة</div>
+  <div class="sub">بوابة التاجرات – أضيفي منتجك بسهولة 💛</div>
 
-  <label>اسم المتجر</label>
-  <input id="store">
+  <label>اسم التاجرة / المتجر</label>
+  <input id="store" placeholder="مثال: VIRA Boutique">
 
-  <label>اسم القطعة</label>
-  <input id="name">
+  <label>اسم المنتج</label>
+  <input id="name" placeholder="مثال: شنطة نسائية">
 
-  <label>السعر (SDG)</label>
-  <input id="price" type="number">
+  <label>السعر (جنيه)</label>
+  <input id="price" type="number" placeholder="مثال: 80000">
 
-  <label>صور المنتج</label>
-  <input type="file" multiple accept="image/*">
+  <label>وصف بسيط (اختياري)</label>
+  <textarea id="desc" placeholder="لون – خامة – ملاحظات"></textarea>
+
+  <!-- زر رفع الصور -->
+  <button class="btn btn-upload" onclick="openUpload()">
+    📸 اضغطي هنا لرفع الصور
+  </button>
+
   <div class="note">
-    📸 اختاري الصور من الموبايل<br>
-    👉 بعد فتح واتساب اضغطي 📎 وارسلي الصور
+    ✅ بعد ما ترفعي الصور:<br>
+    1️⃣ انسخي رابط الصور<br>
+    2️⃣ ارجعي هنا والصقي الرابط<br>
   </div>
 
-  <label>رقم واتساب التاجرة</label>
-  <input id="phone" placeholder="مثال: 249xxxxxxxxx">
+  <label>رابط الصور (من موقع الرفع)</label>
+  <input id="images" placeholder="الصقي الرابط هنا">
 
-  <button onclick="sendWhats()">🚀 إرسال للفيـرا مول</button>
+  <button class="btn btn-send" onclick="sendWhatsApp()">
+    🚀 إرسال المنتج لفيرا مول
+  </button>
+
+  <div class="footer">
+    VIRA MALL © 2026
+  </div>
+
 </div>
 
 <script>
-function sendWhats(){
-  const store=document.getElementById('store').value;
-  const name=document.getElementById('name').value;
-  const price=document.getElementById('price').value;
-  const phone=document.getElementById('phone').value;
+const ADMIN_NUMBER = "249967584275"; // رقمك بدون 00
 
-  if(!store || !name || !price){
-    alert("كملي البيانات الأساسية 🌸");
+function openUpload(){
+  window.open("https://imgbb.com/upload","_blank");
+}
+
+function sendWhatsApp(){
+  const store = document.getElementById('store').value.trim();
+  const name  = document.getElementById('name').value.trim();
+  const price = document.getElementById('price').value.trim();
+  const desc  = document.getElementById('desc').value.trim();
+  const imgs  = document.getElementById('images').value.trim();
+
+  if(!store || !name || !price || !imgs){
+    alert("كملي البيانات الأساسية يا جميلة ✨");
     return;
   }
 
-  const admin="00249967584275";
+  const msg = `
+🛍️ منتج جديد – VIRA MALL
 
-  const msg=
-`🛍️ منتج جديد – VIRA MALL
+🏪 المتجر: ${store}
+📦 المنتج: ${name}
+💰 السعر: ${price} SDG
+📝 الوصف: ${desc || "—"}
 
-🏪 المتجر:
-${store}
+📸 رابط الصور:
+${imgs}
+  `;
 
-📦 القطعة:
-${name}
-
-💰 السعر:
-${price} SDG
-
-📲 واتساب التاجرة:
-${phone}
-
-📸 الصور:
-*سيتم إرسال الصور بعد هذه الرسالة مباشرة*`;
-
-  window.open(
-    `https://wa.me/${admin}?text=${encodeURIComponent(msg)}`,
-    '_blank'
-  );
+  const url = `https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url,"_blank");
 }
 </script>
 
