@@ -19,10 +19,10 @@
 
         /* شبكة المنتجات (ستايل شي إن) */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 12px; }
-        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid #eee; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid #eee; display: flex; flex-direction: column; }
         
         /* السلايدر المتطور */
-        .slider-container { position: relative; width: 100%; aspect-ratio: 1/1.25; overflow: hidden; touch-action: pan-y; }
+        .slider-container { position: relative; width: 100%; aspect-ratio: 1/1.25; overflow: hidden; touch-action: pan-y; background: #f0f0f0; }
         .track { display: flex; width: 100%; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .track img { min-width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
         
@@ -34,23 +34,22 @@
         .fav-btn { position: absolute; top: 12px; right: 12px; z-index: 10; font-size: 22px; color: rgba(255,255,255,0.9); cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
         .fav-btn.active { color: #e91e63; }
 
-        .info { padding: 12px; text-align: center; }
+        .info { padding: 12px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .store-name { font-size: 10px; color: var(--gold); font-weight: bold; margin-bottom: 4px; display: block; }
         .price { font-size: 17px; font-weight: 900; margin: 5px 0; color: var(--black); }
         .title { font-size: 13px; color: #444; height: 34px; overflow: hidden; margin-bottom: 10px; line-height: 1.3; }
         
-        .actions { display: flex; gap: 5px; }
+        .actions { display: flex; gap: 5px; margin-top: auto; }
         .btn-wa { background: var(--black); color: white; flex: 3; padding: 10px; border-radius: 10px; border: none; font-weight: bold; font-size: 12px; cursor: pointer; }
         .btn-plus { background: var(--gold); color: black; flex: 1; padding: 10px; border-radius: 10px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; }
 
         /* القائمة الجانبية */
-        .side-panel { position: fixed; top: 0; right: -100%; width: 310px; height: 100%; background: white; z-index: 3000; transition: 0.4s; padding: 30px 20px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); overflow-y: auto; }
+        .side-panel { position: fixed; top: 0; right: -100%; width: 310px; height: 100%; background: white; z-index: 3000; transition: 0.4s; padding: 30px 20px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); overflow-y: auto; box-sizing: border-box; }
         .side-panel.active { right: 0; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; backdrop-filter: blur(4px); }
         
         .menu-item { display: flex; align-items: center; gap: 15px; padding: 18px; background: #f9f9f9; border-radius: 15px; margin-bottom: 12px; text-decoration: none; color: black; font-weight: bold; border: 1px solid transparent; }
-        .menu-item:hover { border-color: var(--gold); background: #fff; }
-
+        
         .sub-card { background: #fff9e6; border: 1px dashed var(--gold); padding: 15px; border-radius: 15px; margin-top: 20px; text-align: center; }
         
         img:fullscreen { object-fit: contain !important; background: black; }
@@ -65,7 +64,7 @@
     <h1 id="mainTitle">VIRA MALL</h1>
     <div class="nav-icons">
         <div class="lang-btn" onclick="toggleLang()" id="langBtn">EN</div>
-        <div class="icon" style="color:var(--gold); font-size:24px; cursor:pointer;" onclick="togglePanel('cartPanel')">🛒</div>
+        <div style="color:var(--gold); font-size:24px; cursor:pointer;" onclick="togglePanel('cartPanel')">🛒</div>
     </div>
 </header>
 
@@ -81,12 +80,11 @@
     <hr>
     <h3 id="favHeader">❤️ المفضلة</h3>
     <div id="favList"></div>
-    <button class="btn-wa" style="width:100%; margin-top:20px; padding:15px;" onclick="checkout()">تأكيد الطلب واتساب ✅</button>
+    <button class="btn-wa" style="width:100%; margin-top:20px; padding:15px;" onclick="checkoutCart()">تأكيد الطلب واتساب ✅</button>
 </div>
 
 <div class="side-panel" id="sideMenu">
     <h2 id="menuHeader">القائمة</h2>
-    
     <a href="https://t.me/+VksKXlPLnnFjYzlk" target="_blank" class="menu-item">📢 قناة التلجرام الرسمية</a>
     <a href="admin.html" class="menu-item">🚀 بوابة التاجرات (نشر بضاعة)</a>
     
@@ -102,18 +100,23 @@
     let currentLang = 'ar';
     let cart = [];
     let favorites = JSON.parse(localStorage.getItem('vira_favs')) || [];
+    // الرابط الذهبي الخاص بك
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
 
     async function loadData() {
-        const res = await fetch(CSV_URL + '?v=' + Date.now());
-        const text = await res.text();
-        const rows = text.split('\n').slice(1);
-        const products = rows.map((r, i) => {
-            const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
-            if(!c[0] || !c[1]) return null;
-            return { id: i, name: c[0], price: c[1], store: c[2], imgs: c[3].split(/\s+/), wa: c[4] };
-        }).filter(p => p);
-        render(products);
+        try {
+            const res = await fetch(CSV_URL + '&t=' + Date.now());
+            const text = await res.text();
+            const rows = text.split('\n').slice(1);
+            const products = rows.map((r, i) => {
+                const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
+                if(!c[0] || !c[1]) return null;
+                return { id: i, name: c[0], price: c[1], store: c[2], imgs: c[3].split(/\s+/), wa: c[4] };
+            }).filter(p => p);
+            render(products);
+        } catch (e) {
+            document.getElementById('mainGrid').innerHTML = "عفواً، فشل تحميل البيانات. تأكدي من الاتصال.";
+        }
     }
 
     function render(data) {
@@ -122,10 +125,10 @@
             <div class="card" id="p-${p.id}" data-idx="0">
                 <div class="fav-btn ${favorites.includes(p.id)?'active':''}" onclick="toggleFav(${p.id})">❤</div>
                 <div class="slider-container" 
-                     ontouchstart="startTouch(event, ${p.id})" 
-                     ontouchmove="moveTouch(event, ${p.id})"
+                     ontouchstart="sT(event)" 
+                     ontouchmove="mT(event, ${p.id})"
                      ondblclick="zoom(${p.id})">
-                    <div class="track">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
+                    <div class="track" style="transform: translateX(0px);">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
                     <div class="dots">${p.imgs.map((_, i) => `<div class="dot ${i==0?'active':''}"></div>`).join('')}</div>
                 </div>
                 <div class="info">
@@ -134,22 +137,22 @@
                     <div class="price">${p.price}</div>
                     <div class="actions">
                         <button class="btn-wa" onclick="window.open('https://wa.me/${p.wa}?text=أريد طلب: ${p.name}')">${currentLang=='ar'?'طلب':'Order'}</button>
-                        <button class="btn-plus" onclick="addToCart('${p.name}')">+</button>
+                        <button class="btn-plus" onclick="addToCart('${p.name}', '${p.price}')">+</button>
                     </div>
                 </div>
             </div>
         `).join('');
+        updateFavUI();
     }
 
-    // نظام سلايدر شي إن (Swipe)
-    let touchX = 0;
-    function startTouch(e) { touchX = e.touches[0].clientX; }
-    function moveTouch(e, id) {
-        if (!touchX) return;
-        let diff = touchX - e.touches[0].clientX;
+    let tX = 0;
+    function sT(e) { tX = e.touches[0].clientX; }
+    function mT(e, id) {
+        if (!tX) return;
+        let diff = tX - e.touches[0].clientX;
         if (Math.abs(diff) > 40) {
             changeSlide(id, diff > 0 ? 1 : -1);
-            touchX = 0;
+            tX = 0;
         }
     }
 
@@ -157,10 +160,14 @@
         const card = document.getElementById(`p-${id}`);
         const track = card.querySelector('.track');
         const dots = card.querySelectorAll('.dot');
+        const count = track.children.length;
         let idx = parseInt(card.dataset.idx) + dir;
-        if (idx >= 0 && idx < track.children.length) {
+        
+        if (idx >= 0 && idx < count) {
             card.dataset.idx = idx;
-            track.style.transform = `translateX(${currentLang=='ar' ? idx*100 : -idx*100}%)`;
+            // تعديل اتجاه السحب حسب اللغة
+            const move = currentLang === 'ar' ? idx * 100 : -idx * 100;
+            track.style.transform = `translateX(${move}%)`;
             dots.forEach((d, i) => d.classList.toggle('active', i === idx));
         }
     }
@@ -171,6 +178,16 @@
         if (img.requestFullscreen) img.requestFullscreen();
     }
 
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const list = document.getElementById('cartItems');
+        list.innerHTML = cart.map(i => `<div style="font-size:12px; padding:5px; border-bottom:1px solid #eee;">▫️ ${i.name} (${i.price})</div>`).join('');
+    }
+
     function toggleFav(id) {
         if(favorites.includes(id)) favorites = favorites.filter(f => f !== id);
         else favorites.push(id);
@@ -178,22 +195,15 @@
         loadData();
     }
 
+    function updateFavUI() {
+        document.getElementById('favList').innerHTML = favorites.length > 0 ? `<p style="font-size:12px;">لديك ${favorites.length} قطع في المفضلة.</p>` : "";
+    }
+
     function toggleLang() {
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'EN' : 'AR';
-        
-        const trans = {
-            ar: ['🚚 التوصيل لكل الولايات', '🛒 سلتي', '❤️ المفضلة', 'القائمة', 'رسوم الاشتراك', 'رقم الحساب'],
-            en: ['🚚 Shipping to all states', '🛒 My Cart', '❤️ Favorites', 'Menu', 'Subscription Fee', 'Account Number']
-        };
-        const t = trans[currentLang];
-        document.getElementById('deliveryText').innerText = t[0];
-        document.getElementById('cartHeader').innerText = t[1];
-        document.getElementById('favHeader').innerText = t[2];
-        document.getElementById('menuHeader').innerText = t[3];
-        document.getElementById('subTitle').innerText = t[4];
-        document.getElementById('accText').innerText = t[5];
+        // تحديث النصوص (يمكن إضافة المزيد هنا)
         loadData();
     }
 
