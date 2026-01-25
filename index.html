@@ -5,46 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VIRA MALL | فيرا مول</title>
     <style>
-        :root { --gold: #D4AF37; --black: #0a0a0a; --bg: #ffffff; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow-x: hidden; touch-action: manipulation; }
+        :root { --gold: #D4AF37; --black: #0a0a0a; --soft-bg: #fdfdfd; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--soft-bg); color: var(--black); overflow-x: hidden; }
         
-        /* الهيدر */
-        header { background: var(--black); padding: 12px 15px; position: sticky; top: 0; z-index: 2000; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { color: var(--gold); margin: 0; font-size: 18px; font-weight: 900; }
-        .logo-box { text-align: center; }
-        .slogan { color: #fff; font-size: 9px; display: block; }
+        /* الهيدر الملكي */
+        header { background: var(--black); padding: 12px 20px; position: sticky; top: 0; z-index: 2000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .logo-area { text-align: center; }
+        header h1 { color: var(--gold); margin: 0; font-size: 20px; font-weight: 900; letter-spacing: 1.5px; }
+        .slogan { color: #eee; font-size: 10px; font-weight: 300; }
 
-        /* الشبكة */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; }
+        /* الشبكة الأنيقة */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; border: 1px solid #f0f0f0; transition: 0.3s; }
         
         /* سلايدر شي إن الحقيقي */
-        .slider-container { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f9f9f9; cursor: zoom-in; }
-        .track { display: flex; height: 100%; width: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .track img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .slider-container { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f9f9f9; }
+        .track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .track img { min-width: 100%; height: 100%; object-fit: cover; }
         
-        /* عداد الصور 1/3 */
-        .img-counter { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.5); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 10px; z-index: 10; }
+        /* عداد الصور (1/3) */
+        .img-counter { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.4); color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; z-index: 10; font-family: monospace; }
         
-        /* القلب */
-        .fav-icon { position: absolute; top: 8px; left: 8px; font-size: 22px; color: rgba(255,255,255,0.8); z-index: 10; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
-        .fav-icon.active { color: #ff3b30; }
+        /* المفضلة (القلب) */
+        .fav-btn { position: absolute; top: 10px; left: 10px; font-size: 22px; color: rgba(255,255,255,0.9); z-index: 15; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.3); transition: 0.3s; }
+        .fav-btn.active { color: #ff4757; }
 
-        .info { padding: 10px 5px; text-align: center; }
-        .price { font-size: 15px; font-weight: 900; margin-bottom: 5px; }
-        .title { font-size: 11px; color: #555; height: 30px; overflow: hidden; margin-bottom: 8px; }
+        .info { padding: 12px 8px; text-align: center; }
+        .title { font-size: 12px; color: #444; height: 32px; overflow: hidden; margin-bottom: 8px; line-height: 1.3; }
+        .price { font-size: 16px; font-weight: 900; color: var(--black); margin-bottom: 10px; }
         
-        /* زر السلة */
-        .btn-cart { background: var(--black); color: white; width: 100%; padding: 8px; border: none; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; }
-        .btn-cart.added { background: #28a745; }
+        /* زر السلة الجذاب */
+        .btn-add { background: var(--black); color: white; width: 100%; padding: 10px; border: none; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-add:active { transform: scale(0.95); background: var(--gold); }
 
         /* القوائم الجانبية */
-        .side-panel { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: white; z-index: 3000; transition: 0.4s; padding: 20px; box-shadow: -5px 0 20px rgba(0,0,0,0.2); overflow-y: auto; }
+        .side-panel { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: white; z-index: 3000; transition: 0.4s; padding: 30px 20px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         .side-panel.active { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2500; display: none; }
-
-        /* تكبير الصورة */
-        img:fullscreen { object-fit: contain !important; background: black; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; backdrop-filter: blur(4px); }
+        
+        /* كرت الاشتراك (زي ما بتحبي) */
+        .sub-card { background: #fff9e6; border: 1px dashed var(--gold); padding: 15px; border-radius: 15px; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -52,97 +52,96 @@
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 <header>
-    <div onclick="openPanel('menuPanel')" style="color:var(--gold); font-size:24px;">☰</div>
-    <div class="logo-box">
+    <div onclick="togglePanel('menuPanel')" style="color:var(--gold); font-size:26px; cursor:pointer;">☰</div>
+    <div class="logo-area">
         <h1>VIRA MALL</h1>
         <span class="slogan">خيـارك الأول في السـودان</span>
     </div>
-    <div onclick="openPanel('cartPanel')" style="color:var(--gold); font-size:22px; position:relative;">
-        🛒 <span id="cartCount" style="position:absolute; top:-5px; right:-10px; background:#ff3b30; color:white; font-size:10px; padding:2px 5px; border-radius:50%; display:none;">0</span>
+    <div onclick="togglePanel('cartPanel')" style="color:var(--gold); font-size:24px; cursor:pointer; position:relative;">
+        🛒 <span id="badge" style="position:absolute; top:-5px; right:-8px; background:#ff4757; color:white; font-size:10px; padding:2px 5px; border-radius:10px; display:none;">0</span>
     </div>
 </header>
 
-<div class="grid" id="mainGrid"></div>
+<div class="grid" id="mainGrid">
+    <p style="grid-column: span 2; text-align:center; padding:50px; color:var(--gold);">بنجيب ليك في السمح... ✨</p>
+</div>
 
 <div class="side-panel" id="cartPanel">
-    <h3>🛒 سلة المشتريات</h3>
-    <div id="cartItemsList"></div>
-    <hr>
-    <button class="btn-cart" style="background:var(--gold); color:black;" onclick="checkout()">تأكيد الطلب (واتساب)</button>
+    <h2 style="border-bottom: 2px solid var(--gold); padding-bottom: 10px;">🛒 سلتي</h2>
+    <div id="cartItems" style="margin-top:20px;"></div>
+    <button class="btn-add" style="margin-top:30px; background:var(--gold); color:black;" onclick="sendOrder()">تأكيد الطلب واتساب ✅</button>
 </div>
 
 <div class="side-panel" id="menuPanel">
     <h2 style="color:var(--gold)">VIRA MALL</h2>
-    <div style="margin: 20px 0;">
+    <div style="margin:25px 0;">
         <p>💰 <b>العملة:</b> 
-            <select onchange="updateCur(this.value)">
+            <select id="curSelect" onchange="render(allProducts)" style="padding:5px; border-radius:5px;">
                 <option value="SDG">SDG (سوداني)</option>
                 <option value="SAR">SAR (سعودي)</option>
-                <option value="USD">USD (دولار)</option>
             </select>
         </p>
-        <p>🌍 <b>اللغة:</b> <button onclick="alert('قريباً...')">English</button></p>
     </div>
     <hr>
-    <p>🚀 <b>للتاجرات:</b> اشتراك 30,000 SDG</p>
-    <p>💳 <b>بنكك:</b> 2280384</p>
-    <p>🚚 <b>التوصيل:</b> متاح لكل الولايات</p>
+    <div class="sub-card">
+        <strong>رسوم الاشتراك للتاجرات</strong>
+        <p style="color:var(--gold); font-size:18px; font-weight:900; margin:10px 0;">30,000 SDG</p>
+        <small>رقم الحساب (بنكك):</small><br>
+        <b style="font-size:18px;">2280384</b>
+    </div>
 </div>
 
 <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTWD0ZQAKe2KRwLQnNjh2t7Z2Y_BKXxaKZxZwKSXUaZLQ3eeLB1fwj6vNllpNwXCtd9aY9Q_tuuFXXV/pub?gid=0&single=true&output=csv';
-    let products = [];
+    let allProducts = [];
     let cart = [];
-    let cur = 'SDG';
 
-    async function fetchData() {
-        const res = await fetch(CSV_URL + '?t=' + Date.now());
-        const text = await res.text();
-        const rows = text.split('\n').slice(1);
-        products = rows.map((r, i) => {
-            const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
-            return { id: i, name: c[0], price: c[1], store: c[2], imgs: c[3].split(/\s+/), wa: c[4] };
-        }).filter(p => p.name);
-        render();
+    async function load() {
+        try {
+            const res = await fetch(CSV_URL + '&v=' + Date.now());
+            const text = await res.text();
+            const rows = text.split('\n').slice(1);
+            allProducts = rows.map((r, i) => {
+                const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
+                if(!c[0]) return null;
+                return { id: i, name: c[0], price: c[1], store: c[2], imgs: c[3].split(/\s+/), wa: c[4] };
+            }).filter(p => p);
+            render(allProducts);
+        } catch (e) { alert("تأكدي من رابط الجدول يا قلبي"); }
     }
 
-    function render() {
+    function render(data) {
+        const cur = document.getElementById('curSelect').value;
         const grid = document.getElementById('mainGrid');
-        grid.innerHTML = products.map(p => `
+        grid.innerHTML = data.map(p => `
             <div class="card" id="card-${p.id}" data-idx="0">
-                <div class="fav-icon" onclick="toggleFav(${p.id}, this)">❤</div>
-                <div class="slider-container" 
-                     ontouchstart="sT(event)" 
-                     ontouchmove="mT(event, ${p.id})" 
-                     ondblclick="zoomImg(event)">
-                    <div class="track" style="transform: translateX(0px);">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
+                <div class="fav-btn" onclick="this.classList.toggle('active')">❤</div>
+                <div class="slider-container" ontouchstart="sT(event)" ontouchmove="mT(event, ${p.id})">
+                    <div class="track" style="transform:translateX(0px)">${p.imgs.map(img => `<img src="${img}" ondblclick="this.requestFullscreen()">`).join('')}</div>
                     ${p.imgs.length > 1 ? `<div class="img-counter"><span class="idx">1</span>/${p.imgs.length}</div>` : ''}
                 </div>
                 <div class="info">
                     <div class="title">${p.name}</div>
                     <div class="price">${p.price} ${cur}</div>
-                    <button class="btn-cart" id="btn-${p.id}" onclick="addToCart(${p.id})">إضافة للسلة 🛒</button>
+                    <button class="btn-add" onclick="addToCart(${p.id})">إضافة للسلة 🛒</button>
                 </div>
             </div>
         `).join('');
     }
 
-    // سلايدر شي إن (يمين ويسار)
+    // سلايدر حنين وسلس (يمين وشمال)
     let startX = 0;
     function sT(e) { startX = e.touches[0].clientX; }
     function mT(e, id) {
-        if (!startX) return;
+        if(!startX) return;
         let diff = startX - e.touches[0].clientX;
-        if (Math.abs(diff) > 40) {
+        if(Math.abs(diff) > 40) {
             let card = document.getElementById(`card-${id}`);
             let track = card.querySelector('.track');
             let counter = card.querySelector('.idx');
             let idx = parseInt(card.dataset.idx);
-            let total = track.children.length;
-
-            if (diff > 0 && idx < total - 1) idx++; // يسار
-            else if (diff < 0 && idx > 0) idx--; // يمين
-
+            if(diff > 0 && idx < track.children.length - 1) idx++;
+            else if(diff < 0 && idx > 0) idx--;
             card.dataset.idx = idx;
             track.style.transform = `translateX(${idx * 100}%)`;
             if(counter) counter.innerText = idx + 1;
@@ -150,34 +149,22 @@
         }
     }
 
-    // تكبير الصور
-    function zoomImg(e) {
-        if (e.target.tagName === 'IMG') {
-            if (e.target.requestFullscreen) e.target.requestFullscreen();
-        }
-    }
-
-    // السلة والمفضلة
     function addToCart(id) {
-        let p = products[id];
-        cart.push(p);
-        document.getElementById('cartCount').innerText = cart.size = cart.length;
-        document.getElementById('cartCount').style.display = 'block';
-        document.getElementById(`btn-${id}`).innerText = "تمت الإضافة ✅";
-        updateCartList();
+        cart.push(allProducts[id]);
+        document.getElementById('badge').innerText = cart.length;
+        document.getElementById('badge').style.display = 'block';
+        updateCartUI();
     }
 
-    function updateCartList() {
-        const list = document.getElementById('cartItemsList');
-        list.innerHTML = cart.map(item => `<div style="padding:10px; border-bottom:1px solid #eee;">${item.name} - ${item.price}</div>`).join('');
+    function updateCartUI() {
+        const list = document.getElementById('cartItems');
+        list.innerHTML = cart.map(i => `<div style="padding:10px; border-bottom:1px solid #eee; font-size:12px;">▫️ ${i.name} (${i.price})</div>`).join('');
     }
 
-    function toggleFav(id, el) { el.classList.toggle('active'); }
-    function openPanel(id) { document.getElementById(id).classList.add('active'); document.getElementById('overlay').style.display = 'block'; }
+    function togglePanel(id) { document.getElementById(id).classList.add('active'); document.getElementById('overlay').style.display = 'block'; }
     function closeAll() { document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active')); document.getElementById('overlay').style.display = 'none'; }
-    function updateCur(v) { cur = v; render(); }
-
-    fetchData();
+    
+    load();
 </script>
 </body>
 </html>
